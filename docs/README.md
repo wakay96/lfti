@@ -1,3 +1,3 @@
 # lfti app landing page
 
-https://lfti.github.io/lfti/
+https://wakay96.github.io/lfti/
