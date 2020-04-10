@@ -1,0 +1,297 @@
+{
+  "firstName": "Richmond",
+  "lastName": "Escalona",
+  "dob": { "month": 9, "day": 6, "year": 1990 },
+  "email": "test@test.com",
+  "lastSession": {
+    "name": "Taco Tuesday",
+    "description": "Second workout of the week",
+    "date": "03/25/2019"
+  },
+  "nextSession": {
+    "name": "Chestday Monday",
+    "description": "First workout of the week",
+    "date": null
+  },
+  "workouts": [
+    {
+      "id": "tempid1",
+      "name": "Chestday",
+      "description": "First workout of the week",
+      "routines": [
+        {
+          "type": "COUNTED",
+          "exercise": { "name": "Barbell Bench Press", "focus": "Chest" },
+          "reps": 10,
+          "sets": 3
+        },
+        {
+          "type": "TIMED",
+          "exercise": { "name": "Rest", "focus": null },
+          "timeToPerformInSeconds": 60
+        },
+        {
+          "type": "COUNTED",
+          "exercise": { "name": "Dumbell Press", "focus": "Chest" },
+          "reps": 10,
+          "sets": 3
+        },
+        {
+          "type": "TIMED",
+          "exercise": { "name": "Rest", "focus": null },
+          "timeToPerformInSeconds": 60
+        },
+        {
+          "type": "COUNTED",
+          "exercise": { "name": "Dumbell Fly", "focus": "Chest" },
+          "reps": 10,
+          "sets": 3
+        },
+        {
+          "type": "TIMED",
+          "exercise": { "name": "Rest", "focus": null },
+          "timeToPerformInSeconds": 60
+        },
+        {
+          "type": "COUNTED",
+          "exercise": { "name": "Push Up", "focus": "Chest" },
+          "reps": 10,
+          "sets": 3
+        },
+        {
+          "type": "TIMED",
+          "exercise": { "name": "Rest", "focus": null },
+          "timeToPerformInSeconds": 60
+        },
+        {
+          "type": "COUNTED",
+          "exercise": { "name": "Fly", "focus": "Chest" },
+          "reps": 10,
+          "sets": 3
+        },
+        {
+          "type": "TIMED",
+          "exercise": { "name": "Rest", "focus": null },
+          "timeToPerformInSeconds": 60
+        },
+        {
+          "type": "COUNTED",
+          "exercise": {
+            "name": "Decline dumbbell bench press",
+            "focus": "Chest"
+          },
+          "reps": 10,
+          "sets": 3
+        },
+        {
+          "type": "TIMED",
+          "exercise": { "name": "Rest", "focus": null },
+          "timeToPerformInSeconds": 60
+        },
+        {
+          "type": "COUNTED",
+          "exercise": { "name": "Dumbell pullover", "focus": "Chest" },
+          "reps": 10,
+          "sets": 3
+        },
+        {
+          "type": "TIMED",
+          "exercise": { "name": "Rest", "focus": null },
+          "timeToPerformInSeconds": 60
+        },
+        {
+          "type": "COUNTED",
+          "exercise": { "name": "Cable Iron Cross", "focus": "Chest" },
+          "reps": 10,
+          "sets": 3
+        }
+      ]
+    },
+    {
+      "id": "tempid0",
+      "name": "Backday",
+      "description": "Second workout of the week",
+      "routines": [
+        {
+          "type": "COUNTED",
+          "exercise": { "name": "Barbell Deadlift", "focus": "Back" },
+          "reps": 10,
+          "sets": 3
+        },
+        {
+          "type": "TIMED",
+          "exercise": { "name": "Rest", "focus": null },
+          "timeToPerformInSeconds": 60
+        },
+        {
+          "type": "COUNTED",
+          "exercise": { "name": "Pull-Ups With A Wide Grip", "focus": "Back" },
+          "reps": 10,
+          "sets": 3
+        },
+        {
+          "type": "TIMED",
+          "exercise": { "name": "Rest", "focus": null },
+          "timeToPerformInSeconds": 60
+        },
+        {
+          "type": "COUNTED",
+          "exercise": { "name": "Standing T-Bar Rowing", "focus": "Back" },
+          "reps": 10,
+          "sets": 3
+        },
+        {
+          "type": "TIMED",
+          "exercise": { "name": "Rest", "focus": null },
+          "timeToPerformInSeconds": 60
+        },
+        {
+          "type": "COUNTED",
+          "exercise": {
+            "name": "Seated Cable Rowing With A Wide Grip",
+            "focus": "Back"
+          },
+          "reps": 10,
+          "sets": 3
+        },
+        {
+          "type": "TIMED",
+          "exercise": { "name": "Rest", "focus": null },
+          "timeToPerformInSeconds": 60
+        },
+        {
+          "type": "COUNTED",
+          "exercise": { "name": "Smith Machine Rowing", "focus": "Back" },
+          "reps": 10,
+          "sets": 3
+        },
+        {
+          "type": "TIMED",
+          "exercise": { "name": "Rest", "focus": null },
+          "timeToPerformInSeconds": 60
+        },
+        {
+          "type": "COUNTED",
+          "exercise": {
+            "name": "Pull-Downs With A Narrow Grip",
+            "focus": "Back"
+          },
+          "reps": 10,
+          "sets": 3
+        },
+        {
+          "type": "TIMED",
+          "exercise": { "name": "Rest", "focus": null },
+          "timeToPerformInSeconds": 60
+        },
+        {
+          "type": "COUNTED",
+          "exercise": { "name": "Single-Arm Dumbbell Row", "focus": "Back" },
+          "reps": 10,
+          "sets": 3
+        },
+        {
+          "type": "TIMED",
+          "exercise": { "name": "Rest", "focus": null },
+          "timeToPerformInSeconds": 60
+        },
+        {
+          "exercise": {
+            "name": "Dumbbell Pull-Over On A Decline Bench",
+            "focus": "Back"
+          },
+          "reps": 10,
+          "sets": 3
+        }
+      ]
+    },
+    {
+      "id": "tempid2",
+      "name": "Leg Day",
+      "description": "Third workout of the week",
+      "routines": [
+        {
+          "type": "COUNTED",
+          "exercise": { "name": "Barbell Squat", "focus": "Leg" },
+          "reps": 10,
+          "sets": 3
+        },
+        {
+          "type": "TIMED",
+          "exercise": { "name": "Rest", "focus": null },
+          "timeToPerformInSeconds": 60
+        },
+        {
+          "type": "COUNTED",
+          "exercise": { "name": "Leg Press", "focus": "Leg" },
+          "reps": 10,
+          "sets": 3
+        },
+        {
+          "type": "TIMED",
+          "exercise": { "name": "Rest", "focus": null },
+          "timeToPerformInSeconds": 60
+        },
+        {
+          "type": "COUNTED",
+          "exercise": { "name": "Dumbbell Walking Lunge", "focus": "Leg" },
+          "reps": 10,
+          "sets": 3
+        },
+        {
+          "type": "TIMED",
+          "exercise": { "name": "Rest", "focus": null },
+          "timeToPerformInSeconds": 60
+        },
+        {
+          "type": "COUNTED",
+          "exercise": { "name": "Leg Extensions", "focus": "Leg" },
+          "reps": 10,
+          "sets": 3
+        },
+        {
+          "type": "TIMED",
+          "exercise": { "name": "Rest", "focus": null },
+          "timeToPerformInSeconds": 60
+        },
+        {
+          "type": "COUNTED",
+          "exercise": { "name": "Romanian Deadlift", "focus": "Leg" },
+          "reps": 10,
+          "sets": 3
+        },
+        {
+          "type": "TIMED",
+          "exercise": { "name": "Rest", "focus": null },
+          "timeToPerformInSeconds": 60
+        },
+        {
+          "type": "COUNTED",
+          "exercise": { "name": "Lying Leg Curls", "focus": "Leg" },
+          "reps": 10,
+          "sets": 3
+        },
+        {
+          "type": "TIMED",
+          "exercise": { "name": "Rest", "focus": null },
+          "timeToPerformInSeconds": 60
+        },
+        {
+          "type": "COUNTED",
+          "exercise": { "name": "Standing Calf Raises", "focus": "Leg" },
+          "reps": 10,
+          "sets": 3
+        }
+      ]
+    }
+  ],
+  "checklist": [
+    "shoes",
+    "shaker",
+    "pre-workout",
+    "protien shake",
+    "sanitizer",
+    "self",
+    "friend"
+  ]
+}
