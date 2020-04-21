@@ -17,7 +17,7 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomCard(
-      color: Colors.transparent,
+      color: kCardBackground.withOpacity(0.5),
       cardChild: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

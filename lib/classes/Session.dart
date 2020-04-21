@@ -80,8 +80,24 @@ class Session {
     return _currentSet;
   }
 
-  String getElapseTime() {
-    return this._elapseTime;
+  Map<String, String> getElapseTime() {
+    RegExp exp = new RegExp(r"\d\d");
+    Iterable<RegExpMatch> matches = exp.allMatches(this._elapseTime);
+    String hour = matches.elementAt(0).group(0);
+    hour = hour[0] == "0" ? hour[1] : hour;
+    String min = matches.elementAt(1).group(0);
+    min = min[0] == "0" ? min[1] : min;
+    String sec = matches.elementAt(2).group(0);
+    sec = sec[0] == "0" ? sec[1] : sec;
+    return {"hour": hour, "min": min, "sec": sec};
+  }
+
+  String getFormattedElapseTime() {
+    var time = getElapseTime();
+    String hour = time["hour"];
+    String min = time["min"];
+    String sec = time["sec"];
+    return "$hour hrs $min min, $sec sec";
   }
 
   void togglePause() {
@@ -103,8 +119,6 @@ class Session {
         _isNotRestRoutine(routine)) {
       this._performedRoutines.add(routine);
     }
-
-    printValues();
   }
 
   void previous() {
@@ -115,13 +129,6 @@ class Session {
     } else {
       previousRoutine();
     }
-
-    printValues();
-  }
-
-  void skip() {
-    nextRoutine();
-    printValues();
   }
 
   void nextRoutine() {

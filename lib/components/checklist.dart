@@ -12,8 +12,8 @@ class Checklist extends StatefulWidget {
 class _ChecklistState extends State<Checklist> {
   var _checklist = List<ChecklistItem>();
 
-  _ChecklistState(var _list) {
-    for (var item in _list) {
+  _ChecklistState(var l) {
+    for (var item in l) {
       _checklist.add(ChecklistItem(item, false));
     }
   }
@@ -21,23 +21,25 @@ class _ChecklistState extends State<Checklist> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: _checklist.map(
-        (item) {
-          return CheckboxListTile(
-            activeColor: Colors.blueAccent,
-            value: item.getStatus(),
-            title: Text(
-              item.getDescription(),
-              style: kSmallBoldTextStyle,
-            ),
-            onChanged: (bool newStatus) {
-              setState(
-                () => item.setStatus(newStatus),
-              );
-            },
-          );
-        },
-      ).toList(),
+      children: _checklist.map((item) {
+        var style = item.isChecked()
+            ? kSmallTextStyle.copyWith(
+                color: Colors.grey, decoration: TextDecoration.lineThrough)
+            : kSmallBoldTextStyle;
+        return Column(
+          children: <Widget>[
+            CheckboxListTile(
+                dense: true,
+                value: item.isChecked(),
+                title: Text(item.getDescription(), style: style),
+                onChanged: (newStatus) {
+                  setState(() {
+                    item.setStatus(newStatus);
+                  });
+                }),
+          ],
+        );
+      }).toList(),
     );
   }
 }

@@ -19,8 +19,6 @@ class ChecklistItem {
     }
   }
 
-  bool getStatus() => this._checked;
-
   void setStatus(bool newStatus) => this._checked = newStatus;
 
   bool isChecked() => this._checked;

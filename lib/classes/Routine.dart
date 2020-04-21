@@ -8,8 +8,10 @@ class Routine {
   Exercise exercise;
   int sets;
   int reps;
+  double weight;
 
-  Routine({@required this.exercise, this.reps = 1, this.sets = 1}) {
+  Routine(
+      {@required this.exercise, this.reps = 1, this.sets = 1, this.weight}) {
     this.id = "R" + DateFormat(kFormatDateId).format(DateTime.now());
   }
 }

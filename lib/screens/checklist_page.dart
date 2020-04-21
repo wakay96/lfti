@@ -4,6 +4,7 @@ import "package:flutter/material.dart";
 import "package:lfti_app/classes/Constants.dart";
 import "package:lfti_app/classes/User.dart";
 import 'package:lfti_app/components/custom_dialog_button.dart';
+import "package:lfti_app/classes/Crud.dart";
 
 // component imports
 import "package:lfti_app/components/menu.dart";
@@ -123,19 +124,6 @@ class _ChecklistPageState extends State<ChecklistPage> {
     });
   }
 
-  void _saveChanges() {
-    try {
-      Firestore.instance.runTransaction((transaction) async {
-        await transaction.update(_currentUser.getFirestoreReference(),
-            {"checklist": _currentUser.getChecklist()});
-      });
-      print("Success: Checklist Updated!");
-      Navigator.pushNamed(context, "/dashboard", arguments: _currentUser);
-    } catch (e) {
-      print("Error: Failed to update Checklist :" + e.toString());
-    }
-  }
-
   void _onReorder(int oldIndex, int newIndex) {
     setState(() {
       if (newIndex > oldIndex) {
@@ -150,15 +138,13 @@ class _ChecklistPageState extends State<ChecklistPage> {
     final routines = List<ChecklistItemCard>();
     if (this._checklist.isNotEmpty) {
       for (int i = 0; i < this._checklist.length; i++) {
-        routines.add(
-          ChecklistItemCard(
-            key: Key("C" + _checklist[i] + i.toString()),
-            onOptionsTap: () => _removeChecklistAt(i),
-            optionsIcon: Icons.delete,
-            data: _checklist[i],
-            onTap: () => _showEditChecklistDialog(i),
-          ),
-        );
+        routines.add(ChecklistItemCard(
+          key: Key("C" + _checklist[i] + i.toString()),
+          onOptionsTap: () => _removeChecklistAt(i),
+          optionsIcon: Icons.delete,
+          data: _checklist[i],
+          onTap: () => _showEditChecklistDialog(i),
+        ));
       }
     }
     return routines;
@@ -167,42 +153,40 @@ class _ChecklistPageState extends State<ChecklistPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-              );
+      appBar: AppBar(
+        leading: Builder(builder: (BuildContext context) {
+          return IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
             },
-          ),
-          title: Text(
-            "CHECKLIST",
-          ),
-        ),
-        drawer: Menu(this._currentUser),
-        body: this._checklist.isNotEmpty
-            ? ReorderableListView(
+            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+          );
+        }),
+        title: Text("Checklist"),
+      ),
+      drawer: Menu(this._currentUser),
+      body: this._checklist.isNotEmpty
+          ? Theme(
+              data: ThemeData(canvasColor: Colors.transparent),
+              child: ReorderableListView(
                 onReorder: _onReorder,
                 children: _getChecklistItems(),
-              )
-            : Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    EmptyStateNotification(
-                        sub: "Add Items to your Checklist first."),
-                  ],
-                ),
               ),
-        floatingActionButton: CustomFloatingActionButton(
-          icon: Icons.add,
-          onPressed: () => _showAddChecklistDialog(),
-        ),
-        bottomNavigationBar: BottomNavigationButton(
-            label: "SAVE", action: _saveChanges, color: kBlueButtonColor));
+            )
+          : EmptyStateNotification(sub: "Add Items to your Checklist first."),
+      floatingActionButton: CustomFloatingActionButton(
+        icon: Icons.add,
+        onPressed: () => _showAddChecklistDialog(),
+      ),
+      bottomNavigationBar: BottomNavigationButton(
+          label: "SAVE",
+          color: kBlueButtonColor,
+          action: () {
+            Crud(this._currentUser)
+                .updateDatabase("checklist", _currentUser.getChecklist());
+            Navigator.pushNamed(context, "/dashboard", arguments: _currentUser);
+          }),
+    );
   }
 }

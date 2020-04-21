@@ -21,7 +21,6 @@ class TimeDropdownMenu extends StatefulWidget {
 class _TimeDropdownMenuState extends State<TimeDropdownMenu> {
   int _selectedValue;
 
-  @override
   void _initSelectedValue(int val) {
     this._selectedValue = val;
   }

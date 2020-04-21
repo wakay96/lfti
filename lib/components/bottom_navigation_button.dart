@@ -5,10 +5,12 @@ class BottomNavigationButton extends StatelessWidget {
   final String label;
   final Function action;
   final Color color;
+  final IconData icon;
   BottomNavigationButton({
     @required this.label,
     @required this.action,
     @required this.color,
+    this.icon,
   });
 
   @override
@@ -17,11 +19,23 @@ class BottomNavigationButton extends StatelessWidget {
       onTap: action,
       child: Container(
         color: color,
-        height: kStartButtonHeight,
+        height: kBottomButtonHeight,
         child: Center(
-          child: Text(
-            label,
-            style: kBottomButtonTextFontStyle,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                label,
+                style: kBottomButtonTextFontStyle,
+              ),
+              icon != null
+                  ? Icon(
+                      icon,
+                      size: 50.0,
+                      color: Colors.white,
+                    )
+                  : SizedBox()
+            ],
           ),
         ),
       ),

@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:lfti_app/classes/Constants.dart";
 
 class CustomDropdownMenu extends StatefulWidget {
   final String initialValue;

@@ -1,5 +1,8 @@
 import "package:flutter/material.dart";
 import "package:lfti_app/classes/Constants.dart";
+import "package:lfti_app/components/loader.dart";
+import "package:lfti_app/classes/Crud.dart";
+import "package:lfti_app/classes/User.dart";
 
 // firebase imports
 import "package:firebase_auth/firebase_auth.dart";
@@ -17,64 +20,27 @@ class _SignUpPageState extends State<SignUpPage> {
   final _firstNameTextController = TextEditingController();
   final _lastNameTextController = TextEditingController();
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final _usersRef = Firestore.instance.collection("users");
+  Loader _loader = Loader();
+  User _user = User();
 
-  AuthResult _newUser;
-  DocumentReference _userDocumentRef;
-
-  void _signUp() async {
-    setState(() async {
-      try {
-        _newUser = await _auth.createUserWithEmailAndPassword(
-            email: _emailTextController.text,
-            password: _passwordTextController.text);
-        print("Sign Up Successfull. UID : " + _newUser.user.uid.toString());
-        _initUser();
-        _login();
-      } catch (e) {
-        print(e.toString());
-      }
-    });
-  }
-
-  void _initUser() {
-    print("Adding new user id : " + _newUser.user.uid.toString());
-    setState(() {
-      _userDocumentRef = _usersRef.document(_newUser.user.uid.toString());
-    });
-
-    _userDocumentRef == null
-        ? print("Error: Document Reference not Set!")
-        : print("Document Reference Set!");
-
-    // initialize user database
-    _userDocumentRef.setData({
-      "firstName": _firstNameTextController.text,
-      "lastName": _lastNameTextController.text,
-//      "dob": {
-//        "month": int.parse(
-//            _monthTextController.text.isEmpty ? 1 : _monthTextController.text),
-//        "day": int.parse(_dayTextController.text.isEmpty
-//            ? 1
-//            : _dayTextController.text.isEmpty),
-//        "year": int.parse(
-//            _yearTextController.text.isEmpty ? 1990 : _yearTextController.text)
-//      },
-      "email": _emailTextController.text.trim(),
-    }).then((res) {
-      print("User Added!");
-    }).catchError((e) {
-      print("Failed to Add User! " + e.toString());
-    });
-  }
-
-  void _login() {
-    print("Loggin in as : " + _newUser.user.uid);
-    Navigator.pushNamed(context, "/login", arguments: {
-      "email": _emailTextController.text.trim(),
-      "pw": _passwordTextController.text
-    });
+  void _signUp() {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    _auth
+        .createUserWithEmailAndPassword(
+            email: _emailTextController.text.trim(),
+            password: _passwordTextController.text)
+        .then((res) {
+      this._user.setAuthResult(res);
+      this._user.setDatabaseReference(
+          Firestore.instance.collection("users").document(res.user.uid));
+      this._user.setFirstName(_firstNameTextController.text.trim());
+      this._user.setLastName(_lastNameTextController.text.trim());
+      this._user.setEmail(_emailTextController.text.trim());
+      Crud(this._user).signUp();
+      print("Sign Up Successfull. UID : " + this._user.getUID());
+      _loader.dismissDialog(context);
+    }).catchError((e) => print("Error: Failed to sign up! $e"));
+    _loader.showLoadingDialog(context);
   }
 
   bool _isAllInputNotEmpty() {
@@ -138,8 +104,13 @@ class _SignUpPageState extends State<SignUpPage> {
                       onPressed: () async {
                         if (_isAllInputNotEmpty()) {
                           _signUp();
+                          Navigator.pushNamed(context, "/login", arguments: {
+                            "email": _emailTextController.text.trim(),
+                            "pw": _passwordTextController.text
+                          });
                         } else {
-                          // TODO: implement alert dialog box
+                          _loader.showAlertDialog(
+                              "Incomplete", "Please complete form!", context);
                           print("Alert: Empty Fields");
                         }
                       }),

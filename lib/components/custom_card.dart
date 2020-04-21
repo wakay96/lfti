@@ -7,8 +7,11 @@ class CustomCard extends StatelessWidget {
   final Widget cardChild;
   final Function onTap;
   final Color color;
-  bool dottedBorder;
-  Key key;
+  final bool dottedBorder;
+  final Key key;
+  final bool shadow;
+  final double width;
+  final double height;
 
   CustomCard({
     @required this.cardChild,
@@ -16,6 +19,9 @@ class CustomCard extends StatelessWidget {
     this.dottedBorder = false,
     this.color = kCardBackground,
     this.key,
+    this.shadow = false,
+    this.height,
+    this.width,
   });
 
   @override
@@ -24,7 +30,19 @@ class CustomCard extends StatelessWidget {
       onTap: this.onTap,
       child: Container(
         margin: kCardMargin,
+        height: this.height,
+        width: this.width,
         decoration: BoxDecoration(
+          boxShadow: shadow == true
+              ? [
+                  BoxShadow(
+                    color: Colors.black45,
+                    blurRadius: 3.0,
+                    spreadRadius: 1.0,
+                    offset: Offset(4.0, 2.0),
+                  )
+                ]
+              : null,
           borderRadius: BorderRadius.circular(12.0),
           color: this.color,
         ),

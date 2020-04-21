@@ -1,26 +1,18 @@
 import 'package:flutter/material.dart';
 import 'RouteGenerator.dart';
 import 'package:lfti_app/classes/Constants.dart';
-import "package:flutter/services.dart";
 
-void main() => runApp(MyApp());
+void main() => runApp(App());
 
-class MyApp extends StatelessWidget {
+String _appName = "lfti";
+
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'lfti',
-      theme: ThemeData(
-        brightness: Brightness.light,
-        buttonTheme: ButtonThemeData(
-          minWidth: double.infinity,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10.0))),
-          padding: kButtonPadding,
-          buttonColor: kBlueButtonColor,
-        ),
-      ),
-      initialRoute: '/',
+      title: _appName,
+      theme: kThemeData,
+      initialRoute: "/",
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }

@@ -1,10 +1,8 @@
 import "package:flutter/material.dart";
 
 // class imports
-import "package:lfti_app/classes/Constants.dart";
 import "package:lfti_app/classes/User.dart";
 import "package:lfti_app/classes/Workout.dart";
-import "package:lfti_app/classes/Routine.dart";
 
 // component imports
 import "package:lfti_app/components/workout_card.dart";
@@ -45,9 +43,7 @@ class _ViewWorkoutsPageState extends State<ViewWorkoutsPage> {
             );
           },
         ),
-        title: Text(
-          "WORKOUTS",
-        ),
+        title: Text("Workouts"),
       ),
       drawer: Menu(_currentUser),
       body: _workoutList.length > 0

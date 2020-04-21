@@ -111,52 +111,64 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
     );
   }
 
+  List<Container> getWorkoutListCards() {
+    var workouts = List<Container>();
+    for (int i = 0; i < this._workoutList.length; i++) {
+      workouts.add(
+        Container(
+          key: Key(i.toString() + this._workoutList[i].name),
+          child: WorkoutCard(
+            shadowOn: true,
+            onOptionsTap: () => _showDeleteConfirmationDialog(i),
+            optionsIcon: Icons.delete,
+            user: this._currentUser,
+            index: i,
+            onTap: () {
+              Navigator.of(context).pushNamed(
+                '/updateWorkout',
+                arguments: {"user": this._currentUser, "index": i},
+              );
+            },
+          ),
+        ),
+      );
+    }
+    return workouts;
+  }
+
+  void _onReorder(int oldIndex, int newIndex) {
+    setState(() {
+      if (newIndex > oldIndex) {
+        newIndex -= 1;
+      }
+      var r = this._workoutList.removeAt(oldIndex);
+      this._workoutList.insert(newIndex, r);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-            );
-          },
-        ),
-        title: Text(
-          "WORKOUTS",
-        ),
+        leading: Builder(builder: (BuildContext context) {
+          return IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+          );
+        }),
+        title: Text("Workouts"),
       ),
       drawer: Menu(_currentUser),
       body: _workoutList.isNotEmpty
-          ? CustomScrollView(
-              slivers: <Widget>[
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                    Widget item;
-                    if (index < _workoutList.length) {
-                      item = WorkoutCard(
-                          onOptionsTap: () =>
-                              _showDeleteConfirmationDialog(index),
-                          optionsIcon: Icons.delete,
-                          user: this._currentUser,
-                          index: index,
-                          onTap: () {
-                            Navigator.of(context).pushNamed('/updateWorkout',
-                                arguments: {
-                                  "user": this._currentUser,
-                                  "index": index
-                                });
-                          });
-                    }
-                    return item;
-                  }),
-                ),
-              ],
+          ? Theme(
+              data: ThemeData(canvasColor: Colors.transparent),
+              child: ReorderableListView(
+                onReorder: _onReorder,
+                children: getWorkoutListCards(),
+              ),
             )
           : EmptyStateNotification(sub: "Create workout routines first."),
       floatingActionButton: CustomFloatingActionButton(

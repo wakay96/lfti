@@ -4,7 +4,6 @@ import "package:flutter/material.dart";
 // component imports
 import "package:lfti_app/components/routine_card.dart";
 import "package:lfti_app/components/bottom_navigation_button.dart";
-import "package:lfti_app/components/menu.dart";
 
 // class imports
 import "package:lfti_app/classes/Workout.dart";
@@ -25,7 +24,7 @@ class ViewRoutinesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(_workout.name, style: kSmallTextStyle),
+          title: Text(_workout.name.toString()),
         ),
         body: SafeArea(
           child: CustomScrollView(
@@ -35,6 +34,7 @@ class ViewRoutinesPage extends StatelessWidget {
                   Widget item;
                   if (index < _workout.routines.length) {
                     item = RoutineCard(
+                      shadowOn: false,
                       routine: _workout.routines[index],
                       onTap: null,
                     );
@@ -47,12 +47,14 @@ class ViewRoutinesPage extends StatelessWidget {
         ),
         bottomNavigationBar: BottomNavigationButton(
           label: "START SESSION",
-          action: () {
-            _currentUser.setSession(Session(_workout));
-            Navigator.pushNamed(context, '/startSession',
-                arguments: _currentUser);
-          },
-          color: kBlueButtonColor,
+          action: _workout.routines.isNotEmpty
+              ? () {
+                  _currentUser.setSession(Session(_workout));
+                  Navigator.pushNamed(context, '/startSession',
+                      arguments: _currentUser);
+                }
+              : null,
+          color: _workout.routines.isNotEmpty ? kBlueButtonColor : Colors.grey,
         ));
   }
 }

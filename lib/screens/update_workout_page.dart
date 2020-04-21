@@ -61,24 +61,14 @@ class _UpdateWorkoutPageState extends State<UpdateWorkoutPage> {
           ),
           actions: <Widget>[
             CustomDialogButton(
-              label: "DELETE",
-              onPressed: () {
-                setState(() {
-                  this._currentUser.deleteRoutineAt(this._workoutIndex, index);
-                });
-                Navigator.of(context).pop();
-              },
-            ),
-            CustomDialogButton(
-              label: "CONFIRM",
-              onPressed: () {
-                setState(() {
-                  _workout.routines[index].timeToPerformInSeconds =
-                      _timeDropdownMenu.getValue();
-                });
-                Navigator.of(context).pop();
-              },
-            ),
+                label: "CONFIRM",
+                onPressed: () {
+                  setState(() {
+                    _workout.routines[index].timeToPerformInSeconds =
+                        _timeDropdownMenu.getValue();
+                  });
+                  Navigator.of(context).pop();
+                }),
           ],
         );
       },
@@ -161,10 +151,10 @@ class _UpdateWorkoutPageState extends State<UpdateWorkoutPage> {
       for (int i = 0; i < this._routineList.length; i++) {
         routines.add(
           RoutineCard(
-            dottedBorder: true,
+            shadowOn: true,
             key: Key(_routineList[i].id + i.toString()),
-            onOptionsTap: () => _removeWorkoutAt(i),
-            optionsIcon: Icons.delete,
+            onOptionsTap: () => _removeRoutineAt(i),
+            onDupOptionTap: () => _duplicateRoutine(i),
             routine: _routineList[i],
             onTap: _routineList[i] is TimedRoutine
                 ? () => _showUpdateRestTimeDialog(i)
@@ -176,10 +166,28 @@ class _UpdateWorkoutPageState extends State<UpdateWorkoutPage> {
     return routines;
   }
 
-  void _removeWorkoutAt(int index) {
+  void _removeRoutineAt(int index) {
     setState(() {
       _routineList.removeAt(index);
     });
+  }
+
+  void _duplicateRoutine(int index) {
+    int nextIndex = index + 1;
+    Exercise e = Exercise(
+        name: _routineList[index].exercise.name,
+        focus: _routineList[index].exercise.focus);
+    Routine r = Routine(
+      exercise: e,
+      sets: _routineList[index].sets,
+      reps: _routineList[index].reps,
+    );
+    setState(() {
+      _routineList.insert(nextIndex, r);
+    });
+    for (var item in _routineList) {
+      print(item.exercise.name);
+    }
   }
 
   void _onReorder(int oldIndex, int newIndex) {
@@ -215,46 +223,42 @@ class _UpdateWorkoutPageState extends State<UpdateWorkoutPage> {
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              flex: 12,
-              child: ReorderableListView(
-                onReorder: _onReorder,
-                scrollDirection: Axis.vertical,
-                header: // workout name
-                    Column(
-                  children: <Widget>[
-                    CustomTextFormField(
-                      textController: _nameTextController,
-                      label: "Name",
-                    ), // workout description
-                    CustomTextFormField(
-                      textController: _descriptionTextController,
-                      label: "Description",
-                    ),
-                    Container(
-                      child: _routineList.isEmpty
-                          ? Column(
-                              children: <Widget>[
-                                kLineDivider,
-                                Text(
-                                  "No Routines Yet!",
-                                  style: kSmallBoldTextStyle,
-                                  textAlign: TextAlign.center,
-                                ),
-                                kLineDivider,
-                              ],
-                            )
-                          : null,
-                    ),
-                  ],
+        child: Theme(
+          data: ThemeData(canvasColor: Colors.transparent),
+          child: ReorderableListView(
+            onReorder: _onReorder,
+            scrollDirection: Axis.vertical,
+            header: // workout name
+                Column(
+              children: <Widget>[
+                CustomTextFormField(
+                  textController: _nameTextController,
+                  label: "Name",
+                ), // workout description
+                CustomTextFormField(
+                  textController: _descriptionTextController,
+                  label: "Description",
                 ),
-                // routines section
-                children: _getRoutineCards(),
-              ),
+                Container(
+                  child: _routineList.isEmpty
+                      ? Column(
+                          children: <Widget>[
+                            kLineDivider,
+                            Text(
+                              "No Routines Yet!",
+                              style: kSmallBoldTextStyle,
+                              textAlign: TextAlign.center,
+                            ),
+                            kLineDivider,
+                          ],
+                        )
+                      : null,
+                ),
+              ],
             ),
-          ],
+            // routines section
+            children: _getRoutineCards(),
+          ),
         ),
       ),
       floatingActionButton: CustomFloatingActionButton(

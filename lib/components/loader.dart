@@ -17,7 +17,7 @@ class Loader {
           backgroundColor: kCardBackground,
           actions: <Widget>[
             CustomDialogButton(
-              label: "Try Again",
+              label: "Retry",
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -28,23 +28,24 @@ class Loader {
     );
   }
 
-  void showLoadingDialog(BuildContext context, double progress) async {
+  void showLoadingDialog(BuildContext context) async {
     return await showDialog<void>(
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return Dialog(
-          child: Center(
-            child: CircularProgressIndicator(
-              value: null,
-              strokeWidth: 5,
-              backgroundColor: kBlueButtonColor.withOpacity(0.1),
-              valueColor: AlwaysStoppedAnimation<Color>(kBlueButtonColor),
-            ),
+        return Center(
+          child: CircularProgressIndicator(
+            value: null,
+            strokeWidth: 6.0,
+            backgroundColor: kCardBackground,
+            valueColor: AlwaysStoppedAnimation<Color>(kBlueButtonColor),
           ),
-          backgroundColor: kCardBackground.withOpacity(0.1),
         );
       },
     );
+  }
+
+  void dismissDialog(context) {
+    Navigator.pop(context);
   }
 }

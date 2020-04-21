@@ -5,7 +5,6 @@ import "package:intl/intl.dart";
 
 // class imports
 import "package:lfti_app/classes/Constants.dart";
-import 'package:lfti_app/classes/Exercise.dart';
 import "package:lfti_app/classes/User.dart";
 import "package:lfti_app/classes/Workout.dart";
 import "package:lfti_app/classes/Routine.dart";
@@ -13,9 +12,7 @@ import "package:lfti_app/classes/Routine.dart";
 // component imports
 import "package:lfti_app/components/menu.dart";
 import "package:lfti_app/components/bottom_navigation_button.dart";
-import "package:lfti_app/components/empty_state_notification.dart";
 import "package:lfti_app/components/routine_card.dart";
-import "package:lfti_app/components/time_dropdown_menu.dart";
 import "package:lfti_app/components/custom_button_card.dart";
 import "package:lfti_app/components/custom_card.dart";
 

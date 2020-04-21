@@ -97,7 +97,7 @@ class _SessionPageState extends State<SessionPage> {
 
   void _skip() {
     _routineTimerController.restart();
-    _session.skip();
+    _session.nextRoutine();
     _updateState();
   }
 
@@ -131,150 +131,172 @@ class _SessionPageState extends State<SessionPage> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: ListView(
             children: <Widget>[
               // Excercise Section
-              Expanded(
-                flex: 2,
-                child: CustomCard(
-                  cardChild: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      // Exercise Name Section
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "EXERCISE",
-                            style: kLabelTextStyle,
-                          ),
-                          SizedBox(height: kSmallSizedBoxHeight),
-                          Text(
-                            _session.getCurrentRoutine().exercise.name,
-                            style: kMediumBoldTextStyle,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          // Target Section
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "TARGET",
-                                  style: kLabelTextStyle,
-                                ),
-                                Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.baseline,
-                                  textBaseline: TextBaseline.alphabetic,
-                                  children: <Widget>[
-                                    Text(
-                                        _currentRoutine is TimedRoutine
-                                            ? _currentRoutine
-                                                .timeToPerformInSeconds
-                                                .toString()
-                                            : _currentRoutine.reps.toString(),
-                                        style: kLargeBoldTextStyle1x),
-                                    Text(
+              CustomCard(
+                cardChild: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    // Exercise Name Section
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "EXERCISE",
+                          style: kLabelTextStyle,
+                        ),
+                        Text(
+                          _session.getCurrentRoutine().exercise.name,
+                          style: kMediumBoldTextStyle,
+                        ),
+                      ],
+                    ),
+                    // Weight Section
+                    SizedBox(height: kSmallSizedBoxHeight * 3),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "TARGET",
+                                style: kLabelTextStyle,
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.baseline,
+                                textBaseline: TextBaseline.alphabetic,
+                                children: <Widget>[
+                                  Text(
                                       _currentRoutine is TimedRoutine
-                                          ? " seconds"
-                                          : " reps",
-                                      style: kUnitLabelTextStyle,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                          ? _currentRoutine
+                                              .timeToPerformInSeconds
+                                              .toString()
+                                          : _currentRoutine.reps.toString(),
+                                      style: kLargeBoldTextStyle1x),
+                                  Text(
+                                    _currentRoutine is TimedRoutine
+                                        ? " sec"
+                                        : " reps",
+                                    style: kUnitLabelTextStyle,
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                          // Sets Section
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "SETS",
-                                  style: kLabelTextStyle,
-                                ),
-                                Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.baseline,
-                                  textBaseline: TextBaseline.alphabetic,
+                        ),
+                        Container(
+                          child: _session.getCurrentRoutine().weight != null
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      _currentSet.toString(),
-                                      style: kLargeBoldTextStyle1x,
+                                      "WEIGHT",
+                                      style: kLabelTextStyle,
                                     ),
-                                    Text(
-                                      " / " + _currentRoutine.sets.toString(),
-                                      style: kLargeBoldTextStyle1x,
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.baseline,
+                                      textBaseline: TextBaseline.alphabetic,
+                                      children: <Widget>[
+                                        Text(
+                                          _session
+                                              .getCurrentRoutine()
+                                              .weight
+                                              .toString(),
+                                          style: kLargeBoldTextStyle1x,
+                                        ),
+                                        Text(
+                                          " lbs",
+                                          style: kUnitLabelTextStyle,
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      " sets",
-                                      style: kUnitLabelTextStyle,
-                                    )
                                   ],
-                                ),
-                              ],
+                                )
+                              : SizedBox(height: 0.0),
+                        ),
+                      ],
+                    ),
+
+                    SizedBox(height: kSmallSizedBoxHeight * 3),
+                    // status section
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "STATUS",
+                          style: kLabelTextStyle,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: <Widget>[
+                            Text(
+                              _currentSet.toString(),
+                              style: kLargeBoldTextStyle1x,
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                            Text(
+                              " / " + _currentRoutine.sets.toString(),
+                              style: kLargeBoldTextStyle1x,
+                            ),
+                            Text(
+                              " sets",
+                              style: kUnitLabelTextStyle,
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
 
               // Routine Navigation Buttons Section
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.all(10.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      // Next Button
-                      RaisedButton(
-                        onPressed: _session.isPaused || _session.isFinished()
-                            ? null
-                            : () => _next(),
-                        child: Text("NEXT", style: kButtonTextFontStyle),
-                      ),
-                      SizedBox(height: kSizedBoxHeight),
-                      Row(
-                        children: <Widget>[
-                          // Back Button
-                          Expanded(
-                            child: RaisedButton(
-                              onPressed:
-                                  _session.isPaused || _isFirstRoutineAndSet()
-                                      ? null
-                                      : () => _back(),
-                              child: Text("BACK", style: kButtonTextFontStyle),
-                              color: kRedButtonColor,
-                            ),
+              Container(
+                padding: EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    // Next Button
+                    RaisedButton(
+                      onPressed: _session.isPaused || _session.isFinished()
+                          ? null
+                          : () => _next(),
+                      child: Text("NEXT", style: kButtonTextFontStyle),
+                    ),
+                    SizedBox(height: kSizedBoxHeight),
+                    Row(
+                      children: <Widget>[
+                        // Back Button
+                        Expanded(
+                          child: RaisedButton(
+                            onPressed:
+                                _session.isPaused || _isFirstRoutineAndSet()
+                                    ? null
+                                    : () => _back(),
+                            child: Text("BACK", style: kButtonTextFontStyle),
+                            color: kRedButtonColor,
                           ),
-                          SizedBox(width: kSizedBoxHeight),
-                          // Skip Button
-                          Expanded(
-                            child: RaisedButton(
-                              onPressed:
-                                  _session.isPaused || _session.isLastRoutine()
-                                      ? null
-                                      : () => _skip(),
-                              child: Text("SKIP",
-                                  style: kButtonTextFontStyle.copyWith()),
-                              color: kAmberButtonColor,
-                            ),
+                        ),
+                        SizedBox(width: kSizedBoxHeight),
+                        // Skip Button
+                        Expanded(
+                          child: RaisedButton(
+                            onPressed:
+                                _session.isPaused || _session.isLastRoutine()
+                                    ? null
+                                    : () => _skip(),
+                            child: Text("SKIP",
+                                style: kButtonTextFontStyle.copyWith()),
+                            color: kAmberButtonColor,
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
 
@@ -283,16 +305,26 @@ class _SessionPageState extends State<SessionPage> {
                 cardChild: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      "NEXT ROUTINE",
-                      style: kLabelTextStyle,
-                    ),
-                    SizedBox(height: kSmallSizedBoxHeight),
-                    Container(
-                        child: Text(
-                      _session.getNextRoutine().exercise.name,
-                      style: kMediumBoldTextStyle,
-                    )),
+                    Text("NEXT ROUTINE", style: kLabelTextStyle),
+                    Text(_session.getNextRoutine().exercise.name,
+                        style: kMediumBoldTextStyle),
+                    _session.getNextRoutine().weight != null
+                        ? Column(
+                            children: <Widget>[
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.baseline,
+                                textBaseline: TextBaseline.alphabetic,
+                                children: <Widget>[
+                                  Text(
+                                    _session.getNextRoutine().weight.toString(),
+                                    style: kMediumBoldTextStyle,
+                                  ),
+                                  Text(" lbs", style: kUnitLabelTextStyle),
+                                ],
+                              ),
+                            ],
+                          )
+                        : SizedBox(height: 0.0)
                   ],
                 ),
               ),
@@ -300,6 +332,7 @@ class _SessionPageState extends State<SessionPage> {
               // Timer Section
               Container(
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Expanded(
                       child: CustomCard(
@@ -324,14 +357,16 @@ class _SessionPageState extends State<SessionPage> {
           onLongPress: () => _showSessionConfirmationDialogBox(),
           child: _session.isFinished()
               ? BottomNavigationButton(
-                  label: "END",
+                  label: "",
+                  icon: Icons.stop,
                   action: () {
                     _showSessionConfirmationDialogBox();
                   },
                   color: kRedButtonColor,
                 )
               : BottomNavigationButton(
-                  label: _session.isPaused ? "CONTINUE" : "PAUSE",
+                  label: _session.isPaused ? "" : "",
+                  icon: _session.isPaused ? Icons.play_arrow : Icons.pause,
                   action: () => _togglePause(),
                   color:
                       _session.isPaused ? kGreenButtonColor : kBlueButtonColor,

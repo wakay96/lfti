@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lfti_app/classes/Constants.dart';
-import 'package:lfti_app/classes/Routine.dart';
 import 'package:lfti_app/classes/TimedRoutine.dart';
 import 'package:lfti_app/components/custom_card.dart';
 
@@ -10,13 +9,19 @@ class RoutineCard extends StatelessWidget {
   final Function onTap;
   final bool dottedBorder;
   final Function onOptionsTap;
-  IconData optionsIcon;
+  final IconData optionsIcon;
+  final IconData dupOptionIcon;
+  final Function onDupOptionTap;
+  final bool shadowOn;
   RoutineCard(
       {@required this.routine,
       this.onTap,
       this.dottedBorder = false,
+      this.optionsIcon = Icons.delete,
       this.onOptionsTap,
-      this.optionsIcon,
+      this.dupOptionIcon = Icons.content_copy,
+      this.onDupOptionTap,
+      this.shadowOn = false,
       this.key});
 
   String _generateTargetString() {
@@ -35,11 +40,12 @@ class RoutineCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomCard(
+      shadow: this.shadowOn,
       key: Key(routine.id),
       onTap: this.onTap,
       color: routine.exercise.name == "Rest"
           ? kCardBackground
-          : kBlueButtonColor.withOpacity(0.3),
+          : kBlueAccentColor.shade100,
       dottedBorder: this.dottedBorder,
       cardChild: Container(
         child: Column(
@@ -53,10 +59,9 @@ class RoutineCard extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Expanded(
+                      flex: 8,
                       child: Text(
-                        routine.exercise.name == null
-                            ? "Null"
-                            : routine.exercise.name,
+                        this.routine.exercise.name.toString(),
                         style: kMediumBoldTextStyle,
                       ),
                     ),
@@ -65,6 +70,7 @@ class RoutineCard extends StatelessWidget {
                         : Expanded(
                             child: GestureDetector(
                               child: Container(
+                                  padding: EdgeInsets.zero,
                                   alignment: AlignmentDirectional.topEnd,
                                   child: Icon(optionsIcon, size: 25.0)),
                               onTap: this.onOptionsTap,
@@ -72,26 +78,38 @@ class RoutineCard extends StatelessWidget {
                           ),
                   ],
                 ),
-                SizedBox(
-                  height: kSmallSizedBoxHeight,
-                ),
+                Divider(thickness: 3),
                 // Exercise Description
                 Container(
-                  child: routine is TimedRoutine
+                  child: this.routine is TimedRoutine
                       ? null
                       : Text(
-                          routine.exercise.focus == null
+                          this.routine.exercise.focus == null
                               ? "Null"
-                              : routine.exercise.focus,
-                          style: kMediumLabelTextStyle,
+                              : this.routine.exercise.focus,
+                          style: kSmallTextStyle,
                         ),
                 ),
               ],
             ),
-            SizedBox(height: kSizedBoxHeight),
-            Text(
-              "Target: " + _generateTargetString(),
-              style: kMediumLabelTextStyle,
+            Row(
+              children: <Widget>[
+                Text(
+                  "Target: " + _generateTargetString(),
+                  style: kMediumLabelTextStyle,
+                ),
+                this.onDupOptionTap == null
+                    ? SizedBox(height: 0.0)
+                    : Expanded(
+                        child: GestureDetector(
+                          child: Container(
+                              padding: EdgeInsets.zero,
+                              alignment: AlignmentDirectional.topEnd,
+                              child: Icon(dupOptionIcon, size: 25.0)),
+                          onTap: this.onDupOptionTap,
+                        ),
+                      ),
+              ],
             )
           ],
         ),

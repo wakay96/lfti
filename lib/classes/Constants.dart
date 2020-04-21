@@ -1,31 +1,24 @@
 import 'package:flutter/material.dart';
 
-// const kContentMargin = EdgeInsets.all(10.0);
-// const kCardMargin = EdgeInsets.fromLTRB(10.0, 10, 10.0, 10.0);
-// const kContentPadding = EdgeInsets.all(20.0);
-// const kButtonPadding = EdgeInsets.all(20.0);
-// const kStartButtonHeight = 100.0;
-// const kSizedBoxHeight = 12.0;
-// const kSmallSizedBoxHeight = 5.0;
-// const kStartButtonColor = Colors.blueAccent;
-// const kMainBackgroundColor = Color(0x0B0A0E21);
-// const kInactiveCardColor = Color(0xFF1f1f22);
-// const kCardBackground = Color(0xFF1f1f22);
-// const kActiveCardColor = Color(0xFF111328);
-// final kGreenButtonColor = Colors.green;
-// final kBlueButtonColor = Colors.blueAccent[700];
-// final kRedButtonColor = Colors.redAccent[700];
-// final kOrangeButtonColor = Colors.orangeAccent[700];
-// const kIconColor = Colors.white70;
-// const kGrayTextColor = Colors.white60;
+final kThemeData = ThemeData(
+  brightness: Brightness.light,
+  buttonTheme: ButtonThemeData(
+    minWidth: double.infinity,
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10.0))),
+    padding: kButtonPadding,
+    buttonColor: kBlueButtonColor,
+  ),
+);
 
 const kContentMargin = EdgeInsets.all(10.0);
-const kCardMargin = EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0);
+const kCardMargin = EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 5.0);
 const kContentPadding = EdgeInsets.all(20.0);
 const kButtonPadding = EdgeInsets.all(20.0);
-const kStartButtonHeight = 100.0;
+const kBottomButtonHeight = 85.0;
 const kSizedBoxHeight = 12.0;
 const kSmallSizedBoxHeight = 5.0;
+const kTextSpacerSizedBoxHeight = 2.0;
 const kStartButtonColor = Colors.blueAccent;
 const kMainBackgroundColor = Color(0x0B0A0E21);
 const kInactiveCardColor = Color(0xFF1f1f22);
@@ -39,9 +32,11 @@ final kAmberButtonColor = Colors.amberAccent[700];
 final kIconColor = Color(0xFF404040);
 const kGrayTextColor = Colors.white60;
 final kFloatingActionButtonColor = Colors.blue;
+final kAmberAccentColor = Colors.amberAccent;
+final kBlueAccentColor = Colors.blueAccent;
 
 const kLabelTextStyle = TextStyle(
-  fontSize: 15.0,
+  fontSize: 12.0,
   color: Color(0xFF404040),
 );
 

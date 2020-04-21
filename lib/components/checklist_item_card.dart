@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 import "package:lfti_app/classes/Constants.dart";
-import "package:lfti_app/components/custom_card.dart";
 
 class ChecklistItemCard extends StatefulWidget {
   final Key key;
@@ -36,29 +35,19 @@ class _ChecklistItemCardState extends State<ChecklistItemCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => this.onTap(),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: CustomCard(
-          cardChild: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Flexible(
-                child: Row(
-                  children: <Widget>[
-                    SizedBox(width: kSizedBoxHeight),
-                    Text(
-                      this.data,
-                      style: kSmallBoldTextStyle,
-                    ),
-                  ],
-                ),
-              ),
-              GestureDetector(
-                onTap: () => this.onOptionsTap(),
-                child: Icon(this.optionsIcon, color: kIconColor),
-              )
-            ],
-          ),
+      child: Container(
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Flexible(
+              child: Text(this.data, style: kSmallBoldTextStyle),
+            ),
+            GestureDetector(
+              onTap: () => this.onOptionsTap(),
+              child: Icon(this.optionsIcon, color: kIconColor),
+            ),
+          ],
         ),
       ),
     );
