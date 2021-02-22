@@ -1,4 +1,4 @@
-import 'package:lfti/data.models/workout.dart';
+import 'package:lfti/data/models/workout.dart';
 
 import 'date_time_info.dart';
 
