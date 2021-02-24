@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:lfti/data/models/activity.dart';
 import 'package:lfti/data/models/exercise.dart';
+import 'package:lfti/data/models/user_data.dart';
 import 'package:lfti/data/models/workout.dart';
 import 'package:lfti/data/repository/i_repository.dart';
 import 'package:lfti/helpers/app_enums.dart';
@@ -12,6 +13,13 @@ import 'package:uuid/uuid.dart';
 class MockRepository implements IRepository {
   List<Workout> _userWorkouts = [];
   List<Exercise> _userExercises = [];
+  UserData _userData = UserData(
+    currentWeight: 153.5,
+    targetWeight: 180.0,
+    currentBodyFat: 21.2,
+    targetBodyFat: 16,
+    height: 67,
+  );
 
   /// Temporary Standard workouts
   /// to be requested form server
@@ -52,6 +60,12 @@ class MockRepository implements IRepository {
   /// Returns all available exercises
   /// only use for search functionality
   /// when adding activities for a workout
+
+  @override
+  UserData getUserData() {
+    return _userData;
+  }
+
   @override
   List<Exercise> getAllExercises() {
     return [
@@ -157,5 +171,9 @@ class MockRepository implements IRepository {
     } catch (e) {
       throw e;
     }
+  }
+
+  void updateUserData(UserData update) {
+    _userData = update;
   }
 }

@@ -16,6 +16,7 @@ const String MINUTES_UNIT = 'mins';
 /// App Messages
 const String GOAL_MET_MESSAGE = 'Goal Met!';
 const String TIME_UP_MESSAGE = 'Time\'s up!';
+const String NOT_SET_MESSAGE = 'Not set.';
 
 /// App Bar Titles
 const String DASHBOARD_HEADER_TEXT = 'dashboard';

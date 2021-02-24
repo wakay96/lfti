@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lfti/data/models/exercise.dart';
 import 'package:lfti/data/models/rest.dart';
+import 'package:lfti/data/models/user_data.dart';
 import 'package:lfti/data/models/workout.dart';
 import 'package:lfti/data/repository/i_repository.dart';
 import 'package:lfti/helpers/app_enums.dart';
@@ -331,6 +332,74 @@ void repositoryTest() {
               () => repository.updateWorkoutById(
                   IdGenerator.generateV4(), Workout.empty()),
               throwsA(isInstanceOf<Exception>()));
+        });
+      });
+
+      group('updateUserData', () {
+        setUp(() {
+          repository.updateUserData(UserData(
+            currentWeight: 0.0,
+            targetWeight: 0.0,
+            currentBodyFat: 0.0,
+            targetBodyFat: 0,
+            height: 0,
+          ));
+        });
+
+        test(' - should update currentWeight', () {
+          repository.updateUserData(UserData(
+            currentWeight: 1.0,
+            targetWeight: 0.0,
+            currentBodyFat: 0.0,
+            targetBodyFat: 0,
+            height: 0,
+          ));
+          var res = repository.getUserData();
+          expect(res.currentWeight, 1.0);
+        });
+        test(' - should update targetWeight', () {
+          repository.updateUserData(UserData(
+            currentWeight: 0.0,
+            targetWeight: 1.0,
+            currentBodyFat: 0.0,
+            targetBodyFat: 0.0,
+            height: 0,
+          ));
+          var res = repository.getUserData();
+          expect(res.targetWeight, 1.0);
+        });
+        test(' - should update currentBodyFat', () {
+          repository.updateUserData(UserData(
+            currentWeight: 0.0,
+            targetWeight: 0.0,
+            currentBodyFat: 1.0,
+            targetBodyFat: 0.0,
+            height: 0,
+          ));
+          var res = repository.getUserData();
+          expect(res.currentBodyFat, 1.0);
+        });
+        test(' - should update targetBodyFat', () {
+          repository.updateUserData(UserData(
+            currentWeight: 0.0,
+            targetWeight: 0.0,
+            currentBodyFat: 0.0,
+            targetBodyFat: 1.0,
+            height: 0,
+          ));
+          var res = repository.getUserData();
+          expect(res.targetBodyFat, 1.0);
+        });
+        test(' - should update height', () {
+          repository.updateUserData(UserData(
+            currentWeight: 0.0,
+            targetWeight: 0.0,
+            currentBodyFat: 0.0,
+            targetBodyFat: 0,
+            height: 60,
+          ));
+          var res = repository.getUserData();
+          expect(res.height, 60);
         });
       });
     });
