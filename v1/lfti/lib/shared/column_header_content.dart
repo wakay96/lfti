@@ -2,22 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:lfti/helpers/app_styles.dart' as appStyles;
 
 class ColumnHeaderContent extends StatelessWidget {
+  final String header;
+  final String content1;
+  final String content2;
+
+  ColumnHeaderContent({
+    @required this.header,
+    @required this.content1,
+    this.content2 = '',
+  });
+
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'CHEST & BACK',
+          header,
           style: appStyles.whiteBmLText,
         ),
         Text(
-          'SUPERSET',
+          content1,
           style: appStyles.whiteNMText,
         ),
         Text(
-          'chest',
+          content2,
           style: appStyles.whiteIMText,
         ),
       ],

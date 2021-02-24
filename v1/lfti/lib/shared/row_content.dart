@@ -4,7 +4,7 @@ import 'package:lfti/helpers/app_styles.dart' as appStyles;
 class RowContent extends StatelessWidget {
   RowContent({
     this.content,
-    this.subContent,
+    this.subContent = '',
   });
 
   final String content;
@@ -12,19 +12,21 @@ class RowContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.baseline,
-      children: [
-        Text(
-          content,
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(children: [
+        TextSpan(
+          text: content,
           style: appStyles.whiteBLText,
         ),
-        Text(
-          subContent,
+        TextSpan(
+          text: ' ',
+        ),
+        TextSpan(
+          text: subContent,
           style: appStyles.whiteNMText,
         ),
-      ],
+      ]),
     );
   }
 }

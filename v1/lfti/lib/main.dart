@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lfti/screens/dashboard_screen/dashboard_provider_screen.dart';
+import 'package:lfti/screens/dashboard/dashboard_provider_screen.dart';
 import 'package:lfti/services/app_manager.dart';
 
 void main() {

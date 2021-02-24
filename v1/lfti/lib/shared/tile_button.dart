@@ -16,27 +16,24 @@ class TileButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       flex: 1,
-      child: Container(
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 150),
         decoration: BoxDecoration(
           color: isActive
               ? appStyles.primaryActiveColor
               : appStyles.inactiveBackgroundColor,
-          borderRadius: BorderRadius.all(
-            Radius.circular(6.0),
-          ),
+          borderRadius: BorderRadius.all(Radius.circular(6.0)),
           border: appStyles.inactiveBorder,
         ),
         padding: EdgeInsets.all(5.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              label,
-              style: appStyles.whiteLabelText,
-            ),
-            content
-          ],
-        ),
+        child:
+            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          Text(
+            label,
+            style: appStyles.whiteLabelText,
+          ),
+          content
+        ]),
       ),
     );
   }

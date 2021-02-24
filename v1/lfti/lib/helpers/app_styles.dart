@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 /// Colors
 const Color inactiveBackgroundColor = Colors.transparent;
 const Color primaryInactiveColor = Color(0xFF448FA3);
-const Color primaryActiveColor = Color(0xFF68c5db);
+const Color primaryActiveColor = Color(0xFF0197F6);
 const Color tertiaryColor = Colors.grey;
-const Color mainBackgroundColor = Color(0xFF02182b);
+const Color primaryColor = Color(0xFF02182b);
 const Color dangerColor = Color(0xFFD7263D);
 
 /// Padding
@@ -51,7 +51,11 @@ const TextStyle grayLabelText = TextStyle(
   fontSize: 10,
 );
 
-/// black text
+/// dark text
+const TextStyle darkLabelText = TextStyle(
+  color: primaryColor,
+  fontSize: 10,
+);
 const TextStyle blackBLText = TextStyle(
   color: Colors.black,
   fontSize: 25,

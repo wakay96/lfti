@@ -24,3 +24,12 @@ enum WorkoutType {
   TwoMuscleGroup,
   SingleMuscleFocus,
 }
+
+enum Section {
+  DateAndTime,
+  Weight,
+  BodyFat,
+  Activity,
+  PreviousSession,
+  NextSession
+}
