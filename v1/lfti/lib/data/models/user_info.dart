@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class UserAccountData {
+class UserInfo {
   String id;
   String firstName;
   String lastName;
   String email;
 
-  UserAccountData({
+  UserInfo({
     @required this.id,
     @required this.firstName,
     @required this.lastName,

@@ -1,7 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
+import 'package:lfti/data/models/date_time_info.dart';
 import 'package:lfti/data/models/exercise.dart';
 import 'package:lfti/data/models/rest.dart';
+import 'package:lfti/data/models/session.dart';
+import 'package:lfti/data/models/session_data.dart';
 import 'package:lfti/data/models/user_data.dart';
 import 'package:lfti/data/models/workout.dart';
 import 'package:lfti/data/repository/i_repository.dart';
@@ -400,6 +403,148 @@ void repositoryTest() {
           ));
           var res = repository.getUserData();
           expect(res.height, 60);
+        });
+      });
+
+      group('updateSessionData', () {
+        SessionsData _sessionData = SessionsData(
+          daysWorkedOutThisWeek: [
+            false,
+            false,
+            true,
+            false,
+            true,
+            false,
+            false
+          ],
+          currentWorkoutDuration: Duration(minutes: 30),
+          targetWorkoutDuration: Duration(minutes: 60),
+          previousSession: Session(
+            datePerformed: DateTimeInfo(DateTime(2, 21, 2022)),
+            duration: Duration(minutes: 20),
+            workoutPerformed: Workout(
+                name: 'W1',
+                description: 'Description 1',
+                targetBodyParts: [Target.Chest, Target.Arm, Target.Shoulder],
+                id: IdGenerator.generateV4(),
+                days: [WeekdayNames.Monday],
+                activities: []),
+          ),
+          nextSession: Session(
+            datePerformed: DateTimeInfo(DateTime(2, 22, 2022)),
+            duration: Duration(minutes: 20),
+            workoutPerformed: Workout(
+                name: 'W2',
+                description: 'Description 2',
+                targetBodyParts: [Target.Arm],
+                id: IdGenerator.generateV4(),
+                days: [WeekdayNames.Tuesday, WeekdayNames.Thursday],
+                activities: []),
+          ),
+        );
+
+        Session newSession = Session(
+          id: IdGenerator.generateV4(),
+          datePerformed: DateTimeInfo(DateTime(2, 21, 2022)),
+          duration: Duration(minutes: 20),
+          workoutPerformed: Workout(
+              name: 'New Session',
+              description: 'Session Description',
+              targetBodyParts: [Target.Chest, Target.Arm],
+              id: IdGenerator.generateV4(),
+              days: [WeekdayNames.Monday],
+              activities: []),
+        );
+
+        test(' - should update daysWorkedOutThisWeek', () {
+          SessionsData update = _sessionData;
+          update.daysWorkedOutThisWeek = [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ];
+          repository.updateSessionData(update);
+          var res = repository.getSessionData();
+          res.daysWorkedOutThisWeek.forEach((element) => expect(element, true));
+        });
+
+        test(' - should update currentWorkoutDuration', () {
+          SessionsData update = _sessionData;
+          update.currentWorkoutDuration = Duration(minutes: 5);
+          repository.updateSessionData(update);
+          var res =
+              repository.getSessionData().currentWorkoutDuration.inMinutes;
+          expect(res, 5);
+        });
+
+        test(' - should update targetWorkoutDuration', () {
+          SessionsData update = _sessionData;
+          update.targetWorkoutDuration = Duration(minutes: 5);
+          repository.updateSessionData(update);
+          var res = repository.getSessionData().targetWorkoutDuration.inMinutes;
+          expect(res, 5);
+        });
+
+        test(' - should update previousSession', () {
+          SessionsData update = _sessionData;
+          String newId = IdGenerator.generateV4();
+          newSession.id = newId;
+          update.previousSession = newSession;
+          repository.updateSessionData(update);
+          var res = repository.getSessionData().previousSession.id;
+          expect(res, newId);
+        });
+
+        test(' - should update nextSession', () {
+          String newId = IdGenerator.generateV4();
+          SessionsData update = _sessionData;
+          newSession.id = newId;
+          update.nextSession = newSession;
+          repository.updateSessionData(update);
+          var res = repository.getSessionData().nextSession.id;
+          expect(res, newId);
+        });
+      });
+
+      group('updateUserData', () {
+        UserData newUserData;
+        setUp(() {
+          newUserData = UserData(
+            currentWeight: 120.5,
+            targetWeight: 122.5,
+            height: 67.0,
+            currentBodyFat: 21.0,
+            targetBodyFat: 16.0,
+          );
+        });
+        test(' - should update currentWeight', () {
+          newUserData.currentWeight = 100.0;
+          repository.updateUserData(newUserData);
+          expect(repository.getUserData().currentWeight, 100.0);
+        });
+        test(' - should update targetWeight', () {
+          newUserData.targetWeight = 100.0;
+          repository.updateUserData(newUserData);
+          expect(repository.getUserData().targetWeight, 100.0);
+        });
+        test(' - should update height', () {
+          newUserData.height = 100.0;
+          repository.updateUserData(newUserData);
+          expect(repository.getUserData().height, 100.0);
+        });
+        test(' - should update currentBodyFat', () {
+          newUserData.currentBodyFat = 20.0;
+          repository.updateUserData(newUserData);
+          expect(repository.getUserData().currentBodyFat, 20.0);
+        });
+        test(' - should update targetBodyFat', () {
+          newUserData.targetBodyFat = 16.6;
+          repository.updateUserData(newUserData);
+          expect(repository.getUserData().targetBodyFat, 16.6);
         });
       });
     });

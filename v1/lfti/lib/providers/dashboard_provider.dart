@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lfti/data/models/date_time_info.dart';
-import 'package:lfti/data/models/session_info.dart';
+import 'package:lfti/data/models/session_data.dart';
 import 'package:lfti/data/models/user_data.dart';
 import 'package:lfti/data/repository/i_repository.dart';
 import 'package:lfti/helpers/app_enums.dart';
@@ -27,16 +27,11 @@ class DashboardProvider extends ChangeNotifier {
   String currentWeekdayText = '';
   String currentMonthDayText = '';
   String remainingHoursText = '';
+  int weekSessionCount = 0;
 
   UserData userData;
-
-  List<bool> weekActivity = [];
-  int weekActivityPerformedCount = 0;
   Section activeSection;
-
-  /// TODO: Implement Session class
-  // Session previousSession;
-  // Session currentSession;
+  SessionsData sessionData;
 
   ProgressViewWidgetDataModel progressViewData = ProgressViewWidgetDataModel();
 
@@ -49,10 +44,10 @@ class DashboardProvider extends ChangeNotifier {
     currentWeekdayText = _dateTimeInfo.dayName;
     currentMonthDayText = "${_dateTimeInfo.monthName} ${_dateTimeInfo.day}";
 
-    /// User Data
     userData = repository.getUserData();
+    sessionData = repository.getSessionData();
 
-    weekActivityPerformedCount = calcWeeklyActivityPerformedCount();
+    weekSessionCount = getWeekSessionCount();
 
     selectWeeklyAndDailySection();
     notifyListeners();
@@ -65,9 +60,9 @@ class DashboardProvider extends ChangeNotifier {
         activeSection == Section.PreviousSession;
   }
 
-  int calcWeeklyActivityPerformedCount() {
+  int getWeekSessionCount() {
     int count = 0;
-    userData.weeklyActivityHistory.forEach((element) {
+    sessionData.daysWorkedOutThisWeek.forEach((element) {
       if (element == true) count++;
     });
     return count;
@@ -135,12 +130,12 @@ class DashboardProvider extends ChangeNotifier {
       selectWeeklyAndDailySection();
     } else {
       progressViewData.message = getFormattedMessageRemaining(
-          spent: userData.currentDailyActivity.inMinutes.toDouble(),
-          total: userData.targetDailyActivity.inMinutes.toDouble(),
+          spent: sessionData.currentWorkoutDuration.inMinutes.toDouble(),
+          total: sessionData.targetWorkoutDuration.inMinutes.toDouble(),
           unit: MINUTE_UNIT,
           message: GOAL_MET_MESSAGE);
-      progressViewData.total = userData.targetDailyActivity.inMinutes;
-      progressViewData.current = userData.currentDailyActivity.inMinutes;
+      progressViewData.total = sessionData.currentWorkoutDuration.inMinutes;
+      progressViewData.current = sessionData.targetWorkoutDuration.inMinutes;
       activeSection = Section.Activity;
       notifyListeners();
     }

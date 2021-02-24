@@ -17,8 +17,8 @@ class DailyAndWeeklyActivity extends StatelessWidget {
       label1: 'WEEK',
       label2: 'DAY',
       content1: RowContent(
-        content: '${viewModel.weekActivityPerformedCount}',
-        subContent: viewModel.weekActivityPerformedCount > 1
+        content: '${viewModel.weekSessionCount}',
+        subContent: viewModel.weekSessionCount > 1
             ? '${appStrings.SESSION_TEXT}s this week'
             : '${appStrings.SESSION_TEXT} this week',
       ),
@@ -26,12 +26,13 @@ class DailyAndWeeklyActivity extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           RowContent(
-            content: '${viewModel.userData.currentDailyActivity.inMinutes}',
+            content:
+                '${viewModel.sessionData.currentWorkoutDuration.inMinutes}',
             subContent: 'of',
           ),
           SizedBox(width: 5.0),
           RowContent(
-            content: '${viewModel.userData.targetDailyActivity.inMinutes}',
+            content: '${viewModel.sessionData.targetWorkoutDuration.inMinutes}',
             subContent: '${appStrings.MINUTE_UNIT}s',
           ),
         ],
