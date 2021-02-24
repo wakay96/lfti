@@ -1,14 +1,13 @@
-import 'package:flutter/material.dart';
-
 class UserData {
   double currentWeight;
   double targetWeight;
   double height;
-
-  /// TODO: account for metric system
-  /// Currently in in inches
+  Duration targetDailyActivity;
+  Duration currentDailyActivity;
   double currentBodyFat;
   double targetBodyFat;
+  List<bool> weeklyActivityHistory;
+  int targetSessionCount;
 
   UserData({
     this.currentWeight,
@@ -16,5 +15,9 @@ class UserData {
     this.currentBodyFat,
     this.targetBodyFat,
     this.height,
+    this.targetDailyActivity,
+    this.currentDailyActivity,
+    this.weeklyActivityHistory,
+    this.targetSessionCount,
   });
 }

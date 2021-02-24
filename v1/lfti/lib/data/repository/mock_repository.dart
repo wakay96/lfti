@@ -14,12 +14,15 @@ class MockRepository implements IRepository {
   List<Workout> _userWorkouts = [];
   List<Exercise> _userExercises = [];
   UserData _userData = UserData(
-    currentWeight: 153.5,
-    targetWeight: 180.0,
-    currentBodyFat: 21.2,
-    targetBodyFat: 16,
-    height: 67,
-  );
+      currentWeight: 153.5,
+      targetWeight: 180.0,
+      currentBodyFat: 21.2,
+      targetBodyFat: 16,
+      height: 67,
+      targetDailyActivity: Duration(minutes: 60),
+      currentDailyActivity: Duration(minutes: 35),
+      weeklyActivityHistory: [false, false, true, false, true, false, false],
+      targetSessionCount: 5);
 
   /// Temporary Standard workouts
   /// to be requested form server
