@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
-import 'package:lfti/helpers/app_enums.dart';
+import 'package:flutter/material.dart';
 import 'package:lfti/helpers/id_generator.dart';
 
 import 'activity.dart';
 
 class Exercise extends Activity {
-  Target target;
+  String target;
   int setCount;
   int repCount;
 

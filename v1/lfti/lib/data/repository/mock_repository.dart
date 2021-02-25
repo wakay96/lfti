@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:lfti/data/models/activity.dart';
 import 'package:lfti/data/models/date_time_info.dart';
 import 'package:lfti/data/models/exercise.dart';
@@ -9,10 +7,8 @@ import 'package:lfti/data/models/user_data.dart';
 import 'package:lfti/data/models/user_info.dart';
 import 'package:lfti/data/models/workout.dart';
 import 'package:lfti/data/repository/i_repository.dart';
-import 'package:lfti/helpers/app_enums.dart';
 import 'package:lfti/helpers/app_strings.dart';
 import 'package:lfti/helpers/id_generator.dart';
-import 'package:uuid/uuid.dart';
 
 class MockRepository implements IRepository {
   List<Workout> _userWorkouts = [];
@@ -69,29 +65,29 @@ class MockRepository implements IRepository {
     Exercise(name: 'RE5', setCount: 3, repCount: 25, target: Target.Shoulder),
   ];
 
-  static List<Workout> _sampleWorkouts = [
-    Workout(
-        id: IdGenerator.generateV4(),
-        name: 'W1',
-        description: 'W1 Description',
-        targetBodyParts: [Target.Chest],
-        days: [WeekdayNames.Monday],
-        activities: [..._sampleExercises]),
-    Workout(
-        id: IdGenerator.generateV4(),
-        name: 'W2',
-        description: 'W2 Description',
-        targetBodyParts: [Target.Leg],
-        days: [WeekdayNames.Tuesday, WeekdayNames.Wednesday],
-        activities: [..._sampleExercises]),
-    Workout(
-        id: IdGenerator.generateV4(),
-        name: 'W3',
-        description: 'W3 Description',
-        targetBodyParts: [Target.Arm],
-        days: [WeekdayNames.Thursday, WeekdayNames.Friday],
-        activities: [..._sampleExercises]),
-  ];
+  // static List<Workout> _sampleWorkouts = [
+  //   Workout(
+  //       id: IdGenerator.generateV4(),
+  //       name: 'W1',
+  //       description: 'W1 Description',
+  //       targetBodyParts: [Target.Chest],
+  //       days: [WeekdayNames.Monday],
+  //       activities: [..._sampleExercises]),
+  //   Workout(
+  //       id: IdGenerator.generateV4(),
+  //       name: 'W2',
+  //       description: 'W2 Description',
+  //       targetBodyParts: [Target.Leg],
+  //       days: [WeekdayNames.Tuesday, WeekdayNames.Wednesday],
+  //       activities: [..._sampleExercises]),
+  //   Workout(
+  //       id: IdGenerator.generateV4(),
+  //       name: 'W3',
+  //       description: 'W3 Description',
+  //       targetBodyParts: [Target.Arm],
+  //       days: [WeekdayNames.Thursday, WeekdayNames.Friday],
+  //       activities: [..._sampleExercises]),
+  // ];
 
   @override
   void addExercise(Exercise exercise) {

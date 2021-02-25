@@ -1,14 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lfti/data/models/exercise.dart';
-import 'package:lfti/data/models/rest.dart';
 import 'package:lfti/data/models/workout.dart';
 
 void workoutTest() {
   group('Workout Model Class', () {
     Workout workout;
-    Exercise e1 = Exercise(name: 'Ex1', setCount: 3, repCount: 10);
-    Rest r1 = Rest(60);
-    Rest r2 = Rest(30);
 
     setUp(() {
       workout = Workout.empty();

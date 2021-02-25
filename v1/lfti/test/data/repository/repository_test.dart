@@ -8,7 +8,7 @@ import 'package:lfti/data/models/session_data.dart';
 import 'package:lfti/data/models/user_data.dart';
 import 'package:lfti/data/models/workout.dart';
 import 'package:lfti/data/repository/i_repository.dart';
-import 'package:lfti/helpers/app_enums.dart';
+import 'package:lfti/helpers/app_strings.dart';
 import 'package:lfti/helpers/id_generator.dart';
 
 void repositoryTest() {
@@ -23,8 +23,6 @@ void repositoryTest() {
     Exercise e1;
     Rest r15 = Rest(15);
     Rest r30 = Rest(30);
-    Rest r60 = Rest(60);
-    Rest r120 = Rest(120);
     Workout w = Workout.empty();
 
     setUp(() {

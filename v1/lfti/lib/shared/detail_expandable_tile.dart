@@ -4,7 +4,7 @@ import 'package:lfti/helpers/app_styles.dart' as appStyles;
 class DetailExpandableTile extends StatelessWidget {
   final String title;
   final Widget header;
-  final Widget content;
+  final Widget expandedContent;
   final Function onTap;
   final bool isExpanded;
 
@@ -12,7 +12,7 @@ class DetailExpandableTile extends StatelessWidget {
     this.title = '',
     this.onTap,
     this.isExpanded = false,
-    this.content,
+    this.expandedContent,
     @required this.header,
   });
 
@@ -38,13 +38,15 @@ class DetailExpandableTile extends StatelessWidget {
               duration: Duration(milliseconds: 150),
               padding: EdgeInsets.all(8.0),
               decoration: BoxDecoration(
-                color: appStyles.inactiveBackgroundColor,
+                color: isExpanded
+                    ? appStyles.primaryActiveColor
+                    : appStyles.inactiveBackgroundColor,
                 borderRadius: BorderRadius.all(Radius.circular(8.0)),
                 border: appStyles.inactiveBorder,
               ),
               child: isExpanded
                   ? Column(
-                      children: [header, content],
+                      children: [header, expandedContent],
                     )
                   : header,
             ),

@@ -1,5 +1,4 @@
 import 'package:lfti/helpers/app_strings.dart';
-import 'package:lfti/helpers/id_generator.dart';
 
 abstract class Activity {
   String id;

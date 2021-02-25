@@ -1,16 +1,15 @@
 import 'dart:core';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:lfti/data/models/activity.dart';
-import 'package:lfti/helpers/app_enums.dart';
 import 'package:lfti/helpers/app_strings.dart';
 import 'package:lfti/helpers/id_generator.dart';
 
 class Workout {
   String id;
   List<Activity> activities;
-  List<WeekdayNames> days;
-  List<Target> targetBodyParts;
+  List<String> days;
+  List<String> targetBodyParts;
   String name;
   String description;
 

@@ -1,26 +1,31 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lfti/data/models/date_time_info.dart';
+import 'package:lfti/data/models/session.dart';
 import 'package:lfti/data/models/session_data.dart';
 import 'package:lfti/data/models/user_data.dart';
 import 'package:lfti/data/repository/i_repository.dart';
 import 'package:lfti/helpers/app_enums.dart';
 import 'package:lfti/helpers/app_strings.dart';
+import 'package:lfti/helpers/app_styles.dart' as appStyles;
 
 class ProgressViewWidgetDataModel {
   String message;
   int total;
   int current;
+  Color color;
 
   ProgressViewWidgetDataModel({
     this.message = '',
     this.total = 100,
     this.current = 0,
+    this.color = appStyles.secondaryColor,
   });
 }
 
 class DashboardProvider extends ChangeNotifier {
-  final IRepository repository = GetIt.I<IRepository>();
+  final IRepository _repository = GetIt.I<IRepository>();
   DateTimeInfo _dateTimeInfo;
 
   /// Screen Data
@@ -28,6 +33,8 @@ class DashboardProvider extends ChangeNotifier {
   String currentMonthDayText = '';
   String remainingHoursText = '';
   int weekSessionCount = 0;
+  Session previousSession;
+  Session nextSession;
 
   UserData userData;
   Section activeSection;
@@ -44,18 +51,22 @@ class DashboardProvider extends ChangeNotifier {
     currentWeekdayText = _dateTimeInfo.dayName;
     currentMonthDayText = "${_dateTimeInfo.monthName} ${_dateTimeInfo.day}";
 
-    userData = repository.getUserData();
-    sessionData = repository.getSessionData();
+    userData = _repository.getUserData();
+    sessionData = _repository.getSessionData();
 
+    previousSession = sessionData.previousSession;
+    nextSession = sessionData.nextSession;
     weekSessionCount = getWeekSessionCount();
 
-    selectWeeklyAndDailySection();
+    selectMinutesSection();
     notifyListeners();
   }
 
   int calcRemainingHrsOfTheDay() => 24 - _dateTimeInfo.militaryHours;
 
-  bool hasExpandedSection() {
+  /// only show progress indicator iff no expandable widgets
+  /// are expanded
+  bool shouldShowProgressIndicator() {
     return activeSection == Section.NextSession ||
         activeSection == Section.PreviousSession;
   }
@@ -81,7 +92,16 @@ class DashboardProvider extends ChangeNotifier {
     }
   }
 
-  void selectWeeklyAndDailySection() {
+  String getFormattedArrayEnumValues(List<dynamic> list) {
+    String formattedString = '';
+    list.forEach((element) {
+      formattedString += (element.toString() + ', ');
+    });
+    // remove last comma
+    return formattedString.substring(0, formattedString.length - 2);
+  }
+
+  void selectMinutesSection() {
     progressViewData.message = getFormattedMessageRemaining(
         spent: _dateTimeInfo.militaryHours.toDouble(),
         total: 24,
@@ -89,13 +109,14 @@ class DashboardProvider extends ChangeNotifier {
         message: TIME_UP_MESSAGE);
     progressViewData.total = 24;
     progressViewData.current = _dateTimeInfo.militaryHours;
+    progressViewData.color = appStyles.workoutThemeColor;
     activeSection = Section.DateAndTime;
     notifyListeners();
   }
 
   void selectWeightSection() {
     if (activeSection == Section.Weight) {
-      selectWeeklyAndDailySection();
+      selectMinutesSection();
     } else {
       progressViewData.message = getFormattedMessageRemaining(
           spent: userData.currentWeight,
@@ -104,6 +125,7 @@ class DashboardProvider extends ChangeNotifier {
           message: GOAL_MET_MESSAGE);
       progressViewData.total = userData.targetWeight.floor();
       progressViewData.current = userData.currentWeight.floor();
+      progressViewData.color = appStyles.weightThemeColor;
       activeSection = Section.Weight;
       notifyListeners();
     }
@@ -111,7 +133,7 @@ class DashboardProvider extends ChangeNotifier {
 
   void selectBodyFatSection() {
     if (activeSection == Section.BodyFat) {
-      selectWeeklyAndDailySection();
+      selectMinutesSection();
     } else {
       progressViewData.message = getFormattedMessageRemaining(
           spent: userData.currentBodyFat,
@@ -120,6 +142,7 @@ class DashboardProvider extends ChangeNotifier {
           message: GOAL_MET_MESSAGE);
       progressViewData.total = userData.currentBodyFat.floor();
       progressViewData.current = userData.targetBodyFat.floor();
+      progressViewData.color = appStyles.bodyFatThemeColor;
       activeSection = Section.BodyFat;
       notifyListeners();
     }
@@ -127,15 +150,15 @@ class DashboardProvider extends ChangeNotifier {
 
   void selectActivitySection() {
     if (activeSection == Section.Activity) {
-      selectWeeklyAndDailySection();
+      selectMinutesSection();
     } else {
       progressViewData.message = getFormattedMessageRemaining(
           spent: sessionData.currentWorkoutDuration.inMinutes.toDouble(),
           total: sessionData.targetWorkoutDuration.inMinutes.toDouble(),
           unit: MINUTE_UNIT,
           message: GOAL_MET_MESSAGE);
-      progressViewData.total = sessionData.currentWorkoutDuration.inMinutes;
-      progressViewData.current = sessionData.targetWorkoutDuration.inMinutes;
+      progressViewData.total = sessionData.targetWorkoutDuration.inMinutes;
+      progressViewData.current = sessionData.currentWorkoutDuration.inMinutes;
       activeSection = Section.Activity;
       notifyListeners();
     }
@@ -143,7 +166,7 @@ class DashboardProvider extends ChangeNotifier {
 
   void selectPreviousSession() {
     if (activeSection == Section.PreviousSession) {
-      selectWeeklyAndDailySection();
+      selectMinutesSection();
     } else {
       activeSection = Section.PreviousSession;
       notifyListeners();
@@ -152,7 +175,7 @@ class DashboardProvider extends ChangeNotifier {
 
   void selectNextSession() {
     if (activeSection == Section.NextSession) {
-      selectWeeklyAndDailySection();
+      selectMinutesSection();
     } else {
       activeSection = Section.NextSession;
       notifyListeners();

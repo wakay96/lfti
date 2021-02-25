@@ -18,7 +18,7 @@ class DashboardProgressIndicator extends StatelessWidget {
             currentStep: viewModel.progressViewData.current,
             stepSize: 15,
             selectedStepSize: 20,
-            selectedColor: appStyles.primaryActiveColor,
+            selectedColor: viewModel.progressViewData.color,
             unselectedColor: Colors.grey[200],
             padding: 0,
             width: 180,

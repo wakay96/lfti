@@ -17,6 +17,7 @@ dependencies:
   step_progress_indicator: ^0.2.5+8
   date_time_format: ^1.1.1+1
   uuid: 2.2.2
+  font_awesome_flutter: ^8.11.0
 
 dev_dependencies:
   flutter_test:
