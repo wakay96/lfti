@@ -7,7 +7,7 @@ import 'package:lfti/shared/row_content.dart';
 import 'package:lfti/shared/tile_button.dart';
 import 'package:provider/provider.dart';
 
-class MinutesSection extends StatelessWidget {
+class ActivitySection extends StatelessWidget {
   final color = appStyles.workoutThemeColor;
   final unit = appStrings.MINUTE_UNIT + 's';
 
@@ -20,7 +20,7 @@ class MinutesSection extends StatelessWidget {
       children: [
         Expanded(
           child: TileButton(
-            onTap: viewModel.selectWeightSection,
+            onTap: viewModel.selectActivitySection,
             label: 'Current Mins',
             icon: IconService.workoutIcon,
             content: RowContent(
@@ -33,7 +33,7 @@ class MinutesSection extends StatelessWidget {
         ),
         Expanded(
           child: TileButton(
-            onTap: viewModel.selectWeightSection,
+            onTap: viewModel.selectActivitySection,
             label: 'Target Mins.',
             content: RowContent(
               content: viewModel.sessionData.targetWorkoutDuration.inMinutes

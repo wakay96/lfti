@@ -58,7 +58,7 @@ class DashboardProvider extends ChangeNotifier {
     nextSession = sessionData.nextSession;
     weekSessionCount = getWeekSessionCount();
 
-    selectMinutesSection();
+    selectDayAndTimeSection();
     notifyListeners();
   }
 
@@ -101,7 +101,7 @@ class DashboardProvider extends ChangeNotifier {
     return formattedString.substring(0, formattedString.length - 2);
   }
 
-  void selectMinutesSection() {
+  void selectDayAndTimeSection() {
     progressViewData.message = getFormattedMessageRemaining(
         spent: _dateTimeInfo.militaryHours.toDouble(),
         total: 24,
@@ -109,14 +109,14 @@ class DashboardProvider extends ChangeNotifier {
         message: TIME_UP_MESSAGE);
     progressViewData.total = 24;
     progressViewData.current = _dateTimeInfo.militaryHours;
-    progressViewData.color = appStyles.workoutThemeColor;
+    progressViewData.color = appStyles.secondaryColor;
     activeSection = Section.DateAndTime;
     notifyListeners();
   }
 
   void selectWeightSection() {
     if (activeSection == Section.Weight) {
-      selectMinutesSection();
+      selectDayAndTimeSection();
     } else {
       progressViewData.message = getFormattedMessageRemaining(
           spent: userData.currentWeight,
@@ -133,7 +133,7 @@ class DashboardProvider extends ChangeNotifier {
 
   void selectBodyFatSection() {
     if (activeSection == Section.BodyFat) {
-      selectMinutesSection();
+      selectDayAndTimeSection();
     } else {
       progressViewData.message = getFormattedMessageRemaining(
           spent: userData.currentBodyFat,
@@ -150,7 +150,7 @@ class DashboardProvider extends ChangeNotifier {
 
   void selectActivitySection() {
     if (activeSection == Section.Activity) {
-      selectMinutesSection();
+      selectDayAndTimeSection();
     } else {
       progressViewData.message = getFormattedMessageRemaining(
           spent: sessionData.currentWorkoutDuration.inMinutes.toDouble(),
@@ -166,7 +166,7 @@ class DashboardProvider extends ChangeNotifier {
 
   void selectPreviousSession() {
     if (activeSection == Section.PreviousSession) {
-      selectMinutesSection();
+      selectDayAndTimeSection();
     } else {
       activeSection = Section.PreviousSession;
       notifyListeners();
@@ -175,7 +175,7 @@ class DashboardProvider extends ChangeNotifier {
 
   void selectNextSession() {
     if (activeSection == Section.NextSession) {
-      selectMinutesSection();
+      selectDayAndTimeSection();
     } else {
       activeSection = Section.NextSession;
       notifyListeners();

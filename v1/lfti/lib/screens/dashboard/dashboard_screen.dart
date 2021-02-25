@@ -5,7 +5,7 @@ import 'package:lfti/helpers/app_strings.dart' as appStrings;
 import 'package:lfti/helpers/app_enums.dart';
 import 'package:lfti/providers/dashboard_provider.dart';
 import 'package:lfti/screens/dashboard/widgets/body_fat_section.dart';
-import 'package:lfti/screens/dashboard/widgets/minutes_section.dart';
+import 'package:lfti/screens/dashboard/widgets/activity_section.dart';
 import 'package:lfti/screens/dashboard/widgets/dashboard_progress_indicator.dart';
 import 'package:lfti/screens/dashboard/widgets/weight_section.dart';
 import 'package:lfti/shared/column_header_content.dart';
@@ -86,7 +86,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               SizedBox(height: 8.0),
 
               /// Daily and Weekly Activity
-              MinutesSection(),
+              ActivitySection(),
               SizedBox(height: 8.0),
 
               /// Previous Session
