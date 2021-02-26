@@ -1,4 +1,4 @@
-enum Section {
+enum DashboardSection {
   Day,
   Weight,
   BodyFat,

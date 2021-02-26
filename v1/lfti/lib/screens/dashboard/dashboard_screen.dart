@@ -47,11 +47,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
               /// Weight Section
               UserDataTiles(
-                  isActive: viewModel.activeSection == Section.Weight,
+                  isActive: viewModel.activeSection == DashboardSection.Weight,
                   unit: appStrings.LB_UNIT_TEXT + 's',
                   icons: [AppIcon.weightIcon],
                   color: appStyles.weightThemeColor,
-                  onTap: () => viewModel.setActiveSection(Section.Weight),
+                  onTap: () =>
+                      viewModel.setActiveSection(DashboardSection.Weight),
                   labels: ['Current Weight', 'Target Weight'],
                   contents: [
                     '${viewModel.userData.currentWeight}',
@@ -60,11 +61,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
               /// Body Fat
               UserDataTiles(
-                  isActive: viewModel.activeSection == Section.BodyFat,
+                  isActive: viewModel.activeSection == DashboardSection.BodyFat,
                   unit: appStrings.PERCENT_UNIT,
                   icons: [AppIcon.bodyFatIcon],
                   color: appStyles.bodyFatThemeColor,
-                  onTap: () => viewModel.setActiveSection(Section.BodyFat),
+                  onTap: () =>
+                      viewModel.setActiveSection(DashboardSection.BodyFat),
                   labels: ['Current Body Fat', 'Target Body Fat'],
                   contents: [
                     '${viewModel.userData.currentBodyFat}',
@@ -73,11 +75,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
               /// Daily and Weekly Activity
               UserDataTiles(
-                  isActive: viewModel.activeSection == Section.Activity,
+                  isActive:
+                      viewModel.activeSection == DashboardSection.Activity,
                   icons: [AppIcon.workoutIcon],
                   unit: appStrings.MINUTE_UNIT + 's',
                   color: appStyles.workoutThemeColor,
-                  onTap: () => viewModel.setActiveSection(Section.Activity),
+                  onTap: () =>
+                      viewModel.setActiveSection(DashboardSection.Activity),
                   labels: ['Current Mins', 'Target Mins'],
                   contents: [
                     '${viewModel.sessionData.currentWorkoutDuration.inMinutes}',
@@ -87,16 +91,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
               /// Previous Session
               SessionDataTile(
                 session: viewModel.sessionData.previousSession,
-                isExpanded: viewModel.activeSection == Section.PreviousSession,
-                onTap: () =>
-                    viewModel.setActiveSection(Section.PreviousSession),
+                isExpanded:
+                    viewModel.activeSection == DashboardSection.PreviousSession,
+                onTap: () => viewModel
+                    .setActiveSection(DashboardSection.PreviousSession),
               ),
 
               /// Next Session
               SessionDataTile(
                 session: viewModel.sessionData.nextSession,
-                isExpanded: viewModel.activeSection == Section.NextSession,
-                onTap: () => viewModel.setActiveSection(Section.NextSession),
+                isExpanded:
+                    viewModel.activeSection == DashboardSection.NextSession,
+                onTap: () =>
+                    viewModel.setActiveSection(DashboardSection.NextSession),
               )
             ]),
           ),

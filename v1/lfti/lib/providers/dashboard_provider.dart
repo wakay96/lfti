@@ -37,8 +37,8 @@ class DashboardProvider extends ChangeNotifier {
   Session nextSession;
 
   UserData userData;
-  Section activeSection;
-  Section previousSection;
+  DashboardSection activeSection;
+  DashboardSection previousSection;
   SessionsData sessionData;
 
   ProgressViewWidgetDataModel progressViewData = ProgressViewWidgetDataModel();
@@ -55,7 +55,7 @@ class DashboardProvider extends ChangeNotifier {
     userData = _repository.getUserData();
     sessionData = _repository.getSessionData();
 
-    activeSection = Section.Day;
+    activeSection = DashboardSection.Day;
     previousSection = activeSection;
 
     previousSession = sessionData.previousSession;
@@ -71,8 +71,8 @@ class DashboardProvider extends ChangeNotifier {
   /// only show progress indicator iff no expandable widgets
   /// are expanded
   bool shouldShowProgressIndicator() {
-    return activeSection == Section.NextSession ||
-        activeSection == Section.PreviousSession;
+    return activeSection == DashboardSection.NextSession ||
+        activeSection == DashboardSection.PreviousSession;
   }
 
   int getWeekSessionCount() {
@@ -105,7 +105,7 @@ class DashboardProvider extends ChangeNotifier {
     progressViewData.total = 24;
     progressViewData.current = _dateTimeInfo.militaryHours;
     progressViewData.color = appStyles.secondaryColor;
-    activeSection = Section.Day;
+    activeSection = DashboardSection.Day;
   }
 
   void selectWeightSection() {
@@ -117,7 +117,7 @@ class DashboardProvider extends ChangeNotifier {
     progressViewData.total = userData.targetWeight.floor();
     progressViewData.current = userData.currentWeight.floor();
     progressViewData.color = appStyles.weightThemeColor;
-    activeSection = Section.Weight;
+    activeSection = DashboardSection.Weight;
   }
 
   void selectBodyFatSection() {
@@ -129,7 +129,7 @@ class DashboardProvider extends ChangeNotifier {
     progressViewData.total = userData.currentBodyFat.floor();
     progressViewData.current = userData.targetBodyFat.floor();
     progressViewData.color = appStyles.bodyFatThemeColor;
-    activeSection = Section.BodyFat;
+    activeSection = DashboardSection.BodyFat;
   }
 
   void selectActivitySection() {
@@ -141,22 +141,22 @@ class DashboardProvider extends ChangeNotifier {
     progressViewData.total = sessionData.targetWorkoutDuration.inMinutes;
     progressViewData.current = sessionData.currentWorkoutDuration.inMinutes;
     progressViewData.color = appStyles.workoutThemeColor;
-    activeSection = Section.Activity;
+    activeSection = DashboardSection.Activity;
   }
 
   void selectPreviousSession() {
-    activeSection = Section.PreviousSession;
+    activeSection = DashboardSection.PreviousSession;
   }
 
   void selectNextSession() {
-    activeSection = Section.NextSession;
+    activeSection = DashboardSection.NextSession;
   }
 
-  bool isCurrentlyActive(Section section) => section == activeSection;
+  bool isCurrentlyActive(DashboardSection section) => section == activeSection;
 
-  void setActiveSection(Section section) {
+  void setActiveSection(DashboardSection section) {
     switch (section) {
-      case Section.PreviousSession:
+      case DashboardSection.PreviousSession:
         if (isCurrentlyActive(section)) {
           setActiveSection(previousSection);
         } else {
@@ -164,7 +164,7 @@ class DashboardProvider extends ChangeNotifier {
           selectPreviousSession();
         }
         break;
-      case Section.NextSession:
+      case DashboardSection.NextSession:
         if (isCurrentlyActive(section)) {
           setActiveSection(previousSection);
         } else {
@@ -172,20 +172,20 @@ class DashboardProvider extends ChangeNotifier {
           selectNextSession();
         }
         break;
-      case Section.Activity:
+      case DashboardSection.Activity:
         isCurrentlyActive(section)
             ? selectDaySection()
             : selectActivitySection();
         break;
-      case Section.BodyFat:
+      case DashboardSection.BodyFat:
         isCurrentlyActive(section)
             ? selectDaySection()
             : selectBodyFatSection();
         break;
-      case Section.Weight:
+      case DashboardSection.Weight:
         isCurrentlyActive(section) ? selectDaySection() : selectWeightSection();
         break;
-      case Section.Day:
+      case DashboardSection.Day:
         isCurrentlyActive(section) ? selectDaySection() : selectDaySection();
         break;
     }
