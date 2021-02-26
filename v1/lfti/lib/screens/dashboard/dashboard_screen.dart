@@ -90,23 +90,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ]),
 
               /// Previous Session
-              SessionDataTile(
-                session: viewModel.sessionData.previousSession,
-                isExpanded:
-                    viewModel.activeSection == DashboardSection.PreviousSession,
-                onTap: () => viewModel
-                    .setActiveSection(DashboardSection.PreviousSession),
-              ),
+              SessionDataTile(viewModel.sessionData.previousSession),
 
               /// Next Session
-              SessionDataTile(
-                session: viewModel.sessionData.nextSession,
-                isExpanded:
-                    viewModel.activeSection == DashboardSection.NextSession,
-                onTap: () => viewModel.setActiveSection(
-                  DashboardSection.NextSession,
-                ),
-              )
+              SessionDataTile(viewModel.sessionData.nextSession)
             ]),
           ),
           Container(

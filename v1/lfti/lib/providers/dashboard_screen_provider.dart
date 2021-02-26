@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+
 import 'package:lfti/data/models/date_time_info.dart';
-import 'package:lfti/data/models/session.dart';
 import 'package:lfti/data/models/session_data.dart';
 import 'package:lfti/data/models/user_data.dart';
 import 'package:lfti/data/repository/i_repository.dart';
@@ -33,8 +33,6 @@ class DashboardScreenProvider extends ChangeNotifier {
   String currentMonthDayText = '';
   String remainingHoursText = '';
   int weekSessionCount = 0;
-  Session previousSession;
-  Session nextSession;
 
   UserData userData;
   DashboardSection activeSection;
@@ -58,8 +56,6 @@ class DashboardScreenProvider extends ChangeNotifier {
     activeSection = DashboardSection.Day;
     previousSection = activeSection;
 
-    previousSession = sessionData.previousSession;
-    nextSession = sessionData.nextSession;
     weekSessionCount = getWeekSessionCount();
 
     selectDaySection();
@@ -67,13 +63,6 @@ class DashboardScreenProvider extends ChangeNotifier {
   }
 
   int calcRemainingHrsOfTheDay() => 24 - _dateTimeInfo.militaryHours;
-
-  /// only show progress indicator iff no expandable widgets
-  /// are expanded
-  bool shouldShowProgressIndicator() {
-    return activeSection == DashboardSection.NextSession ||
-        activeSection == DashboardSection.PreviousSession;
-  }
 
   int getWeekSessionCount() {
     int count = 0;
@@ -144,34 +133,10 @@ class DashboardScreenProvider extends ChangeNotifier {
     activeSection = DashboardSection.Activity;
   }
 
-  void selectPreviousSession() {
-    activeSection = DashboardSection.PreviousSession;
-  }
-
-  void selectNextSession() {
-    activeSection = DashboardSection.NextSession;
-  }
-
   bool isCurrentlyActive(DashboardSection section) => section == activeSection;
 
   void setActiveSection(DashboardSection section) {
     switch (section) {
-      case DashboardSection.PreviousSession:
-        if (isCurrentlyActive(section)) {
-          setActiveSection(previousSection);
-        } else {
-          previousSection = activeSection;
-          selectPreviousSession();
-        }
-        break;
-      case DashboardSection.NextSession:
-        if (isCurrentlyActive(section)) {
-          setActiveSection(previousSection);
-        } else {
-          previousSection = activeSection;
-          selectNextSession();
-        }
-        break;
       case DashboardSection.Activity:
         isCurrentlyActive(section)
             ? selectDaySection()
@@ -187,6 +152,9 @@ class DashboardScreenProvider extends ChangeNotifier {
         break;
       case DashboardSection.Day:
         isCurrentlyActive(section) ? selectDaySection() : selectDaySection();
+        break;
+      case DashboardSection.PreviousSession:
+      case DashboardSection.NextSession:
         break;
     }
     notifyListeners();

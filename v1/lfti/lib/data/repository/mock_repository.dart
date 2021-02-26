@@ -1,7 +1,6 @@
 import 'package:lfti/data/models/activity.dart';
 import 'package:lfti/data/models/date_time_info.dart';
 import 'package:lfti/data/models/exercise.dart';
-import 'package:lfti/data/models/rest.dart';
 import 'package:lfti/data/models/session.dart';
 import 'package:lfti/data/models/session_data.dart';
 import 'package:lfti/data/models/user_data.dart';
