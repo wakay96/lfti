@@ -28,7 +28,7 @@ class SplitDetailTile extends StatelessWidget {
       children: [
         Text(
           title.toUpperCase(),
-          style: appStyles.labelMediumTextStyle,
+          style: appStyles.labelSmallTextStyle,
         ),
         SizedBox(height: 3.0),
         GestureDetector(

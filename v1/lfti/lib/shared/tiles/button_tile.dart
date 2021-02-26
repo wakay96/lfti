@@ -26,25 +26,20 @@ class ButtonTile extends StatelessWidget {
         color: appStyles.inactiveCardColor,
         child: Padding(
           padding: cardPadding,
-          child: Container(
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          label,
-                          style: TextStyle(
-                              color: appStyles.currentAppThemeTextColor),
-                          textAlign: TextAlign.start,
-                        ),
-                        content,
-                      ]),
-                  Container(child: icon),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(
+                    label,
+                    style: TextStyle(color: appStyles.currentAppThemeTextColor),
+                    textAlign: TextAlign.start,
+                  ),
+                  content,
                 ]),
-          ),
+                Container(child: icon),
+              ]),
         ),
       ),
     );

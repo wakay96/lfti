@@ -39,7 +39,12 @@ const TextStyle workoutMediumTextStyle = TextStyle(
   fontSize: MEDIUM_TEXT,
 );
 
-const TextStyle labelMediumTextStyle = TextStyle(
+const TextStyle buttonTextStyle = TextStyle(
+  color: currentAppThemeTextColor,
+  fontSize: SMALL_TEXT,
+);
+
+const TextStyle labelSmallTextStyle = TextStyle(
   color: currentAppThemeTextColor,
   fontSize: SMALL_TEXT,
 );

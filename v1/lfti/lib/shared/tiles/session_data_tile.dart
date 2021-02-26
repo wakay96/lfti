@@ -54,7 +54,7 @@ class SessionDataTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text('DATE PERFORMED', style: labelMediumTextStyle),
+                Text('Date Performed', style: labelSmallTextStyle),
                 Text(
                   session.datePerformed.fullDate,
                   style: workoutMediumTextStyle,
@@ -63,27 +63,43 @@ class SessionDataTile extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('TOTAL TIME', style: labelMediumTextStyle),
+                  Text('Total Time', style: labelSmallTextStyle),
                   Text('${session.duration.inMinutes}',
                       style: workoutMediumTextStyle),
                 ],
               ),
-              Row(children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text('PERFORMED', style: labelMediumTextStyle),
-                    Text('${session.performedExercises.length}',
-                        style: workoutMediumTextStyle)
-                  ],
-                ),
-                SizedBox(width: 15.0),
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text('SKIPPED', style: labelMediumTextStyle),
-                  Text('${session.skippedExercises.length}',
-                      style: workoutMediumTextStyle)
-                ]),
-              ]),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Performed', style: labelSmallTextStyle),
+                        Text('${session.performedExercises.length}',
+                            style: workoutMediumTextStyle)
+                      ],
+                    ),
+                    SizedBox(width: 15.0),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Skipped', style: labelSmallTextStyle),
+                          Text('${session.skippedExercises.length}',
+                              style: workoutMediumTextStyle)
+                        ]),
+                    Spacer(flex: 1),
+                    RaisedButton(
+                      color: inactiveCardColor,
+                      onPressed: () => print('pressed me'),
+                      child: Text(
+                        'View Workout',
+                        style: buttonTextStyle.copyWith(
+                          color: workoutThemeColor,
+                        ),
+                      ),
+                    )
+                  ]),
             ],
           ),
         ],
