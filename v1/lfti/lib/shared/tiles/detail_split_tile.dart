@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lfti/shared/tile_button.dart';
+import 'package:lfti/shared/tiles/button_tile.dart';
 import 'package:lfti/helpers/app_styles.dart' as appStyles;
 
 class DetailSplitTile extends StatelessWidget {
@@ -36,13 +36,13 @@ class DetailSplitTile extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              TileButton(
+              ButtonTile(
                 isActive: isActive,
                 label: label1,
                 content: content1,
               ),
               SizedBox(width: 10.0),
-              TileButton(
+              ButtonTile(
                 isActive: isActive,
                 label: label2,
                 content: content2,

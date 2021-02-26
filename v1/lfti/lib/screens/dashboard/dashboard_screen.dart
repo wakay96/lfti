@@ -1,16 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:lfti/helpers/app_strings.dart';
+import 'package:lfti/providers/dashboard_screen_provider.dart';
+import 'package:lfti/shared/nav_bar.dart';
+import 'package:provider/provider.dart';
+import 'package:lfti/screens/dashboard/dashboard_progress_indicator.dart';
+import 'package:lfti/shared/tiles/session_data_tile.dart';
+import 'package:lfti/shared/tiles/user_data_tiles.dart';
 import 'package:lfti/helpers/app_icon.dart';
 import 'package:lfti/helpers/app_styles.dart' as appStyles;
 import 'package:lfti/helpers/app_strings.dart' as appStrings;
 import 'package:lfti/helpers/app_enums.dart';
-import 'package:lfti/providers/dashboard_provider.dart';
-import 'package:lfti/screens/dashboard/dashboard_progress_indicator.dart';
-import 'package:lfti/shared/session_data_tile.dart';
-import 'package:lfti/shared/user_data_tiles.dart';
-import 'package:provider/provider.dart';
 
+/// This class builds and links the provider for the screen
+class DashboardScreenBuilder extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<DashboardScreenProvider>(
+      create: (BuildContext context) => DashboardScreenProvider(),
+      child: DashboardScreen(),
+    );
+  }
+}
+
+/// Contains actual UI elements
 class DashboardScreen extends StatefulWidget {
+  static const String id = "DashboardScreen";
   @override
   _DashboardScreenState createState() => _DashboardScreenState();
 }
@@ -18,24 +33,10 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
-    final DashboardProvider viewModel = Provider.of<DashboardProvider>(context);
+    final DashboardScreenProvider viewModel =
+        Provider.of<DashboardScreenProvider>(context);
     return Scaffold(
-      appBar: AppBar(
-        leading: Icon(
-          Icons.menu,
-          size: 35,
-        ),
-        backgroundColor: appStyles.primaryColor,
-        shadowColor: Colors.transparent,
-        title: Container(
-          alignment: Alignment.bottomRight,
-          child: Text(
-            appStrings.DASHBOARD_HEADER_TEXT,
-            style: appStyles.appBarTitleTextStyleLight,
-          ),
-        ),
-        centerTitle: false,
-      ),
+      appBar: NavBar(DASHBOARD_SCREEN_APPBAR_TEXT).build(context),
       body: Container(
         color: appStyles.primaryColor,
         padding: appStyles.primaryContainerSidePadding,

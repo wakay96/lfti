@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lfti/data/models/session.dart';
 import 'package:lfti/helpers/app_icon.dart';
 import 'package:lfti/helpers/app_styles.dart';
-import 'package:lfti/shared/detail_expandable_tile.dart';
-import 'package:lfti/shared/overflowing_text.dart';
+import 'package:lfti/shared/tiles/detail_expandable_tile.dart';
+import 'package:lfti/shared/text/overflowing_text.dart';
 
 class SessionDataTile extends StatelessWidget {
   SessionDataTile({

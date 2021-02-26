@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lfti/helpers/app_styles.dart' as appStyles;
 
-class RowContent extends StatelessWidget {
+class RowText extends StatelessWidget {
   final String content;
   final String subContent;
   final Color color;
-  RowContent({
+  RowText({
     this.content,
     this.subContent = '',
     this.color = appStyles.currentAppThemeTextColor,

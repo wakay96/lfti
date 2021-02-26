@@ -24,7 +24,7 @@ class ProgressViewWidgetDataModel {
   });
 }
 
-class DashboardProvider extends ChangeNotifier {
+class DashboardScreenProvider extends ChangeNotifier {
   final IRepository _repository = GetIt.I<IRepository>();
   DateTimeInfo _dateTimeInfo;
 
@@ -43,7 +43,7 @@ class DashboardProvider extends ChangeNotifier {
 
   ProgressViewWidgetDataModel progressViewData = ProgressViewWidgetDataModel();
 
-  DashboardProvider() {
+  DashboardScreenProvider() {
     initializeData();
   }
 

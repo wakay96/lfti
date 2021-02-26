@@ -20,7 +20,8 @@ const String TIME_UP_MESSAGE = 'Time\'s up!';
 const String NOT_SET_MESSAGE = 'Not set.';
 
 /// App Bar Titles
-const String DASHBOARD_HEADER_TEXT = 'dashboard';
+const String DASHBOARD_SCREEN_APPBAR_TEXT = 'dashboard';
+const String WORKOUT_SCREEN_APPBAR_TEXT = 'workouts';
 
 /// Error Strings
 const String EMPTY_LIST_ERROR = 'No items in List.';

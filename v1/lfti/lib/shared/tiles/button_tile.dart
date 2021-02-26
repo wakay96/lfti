@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:lfti/helpers/app_styles.dart' as appStyles;
 import 'package:lfti/helpers/app_styles.dart';
 
-class TileButton extends StatelessWidget {
+class ButtonTile extends StatelessWidget {
   final String label;
   final Widget content;
   final bool isActive;
   final Widget icon;
   final Function onTap;
-  TileButton({
+  ButtonTile({
     @required this.content,
     this.label = '',
     this.isActive = false,

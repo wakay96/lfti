@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lfti/shared/tile_button.dart';
+import 'package:lfti/shared/tiles/button_tile.dart';
 
 class DetailExpandableTile extends StatelessWidget {
   final String label;
@@ -20,7 +20,7 @@ class DetailExpandableTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TileButton(
+    return ButtonTile(
       onTap: onTap,
       label: label,
       icon: icon,

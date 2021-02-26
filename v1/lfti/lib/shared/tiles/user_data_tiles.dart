@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lfti/shared/row_content.dart';
-import 'package:lfti/shared/tile_button.dart';
+import 'package:lfti/shared/text/row_text.dart';
+import 'package:lfti/shared/tiles/button_tile.dart';
 
 class UserDataTiles extends StatelessWidget {
   const UserDataTiles(
@@ -27,11 +27,11 @@ class UserDataTiles extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: TileButton(
+            child: ButtonTile(
               isActive: isActive,
               onTap: onTap,
               label: labels[0],
-              content: RowContent(
+              content: RowText(
                 content: contents[0],
                 subContent: unit,
                 color: color,
@@ -39,12 +39,12 @@ class UserDataTiles extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: TileButton(
+            child: ButtonTile(
               isActive: isActive,
               onTap: onTap,
               icon: icons == null ? null : icons[0],
               label: labels[1],
-              content: RowContent(
+              content: RowText(
                 content: contents[1],
                 subContent: unit,
                 color: color,

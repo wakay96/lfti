@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lfti/screens/dashboard/dashboard_provider_screen.dart';
+import 'package:lfti/screens/dashboard/dashboard_screen.dart';
+import 'package:lfti/screens/workout/workout_screen.dart';
 import 'package:lfti/services/app_manager.dart';
 
 void main() {
@@ -12,9 +13,10 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'lfti',
-        initialRoute: DashboardProviderScreen.id,
+        initialRoute: DashboardScreen.id,
         routes: {
-          DashboardProviderScreen.id: (context) => DashboardProviderScreen(),
+          DashboardScreen.id: (context) => DashboardScreenBuilder(),
+          WorkoutScreen.id: (context) => WorkoutScreenBuilder(),
         });
   }
 }
