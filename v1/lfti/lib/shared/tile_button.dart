@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lfti/helpers/app_styles.dart' as appStyles;
+import 'package:lfti/helpers/app_styles.dart';
 
 class TileButton extends StatelessWidget {
   final String label;
@@ -20,25 +21,30 @@ class TileButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Card(
+        shape: RoundedRectangleBorder(borderRadius: appStyles.borderRadius),
         color: appStyles.inactiveCardColor,
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    label,
-                    style: TextStyle(color: appStyles.currentAppThemeTextColor),
-                    textAlign: TextAlign.start,
-                  ),
-                  content,
-                ],
-              ),
-              icon == null ? Container() : icon,
-            ],
+          padding: cardPadding,
+          child: Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      label,
+                      style:
+                          TextStyle(color: appStyles.currentAppThemeTextColor),
+                      textAlign: TextAlign.start,
+                    ),
+                    content,
+                  ],
+                ),
+                icon == null ? Container() : icon,
+              ],
+            ),
           ),
         ),
       ),

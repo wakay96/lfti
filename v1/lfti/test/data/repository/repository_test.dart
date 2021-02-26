@@ -420,7 +420,7 @@ void repositoryTest() {
           previousSession: Session(
             datePerformed: DateTimeInfo(DateTime(2, 21, 2022)),
             duration: Duration(minutes: 20),
-            workoutPerformed: Workout(
+            workout: Workout(
                 name: 'W1',
                 description: 'Description 1',
                 targetBodyParts: [Target.Chest, Target.Arm, Target.Shoulder],
@@ -431,7 +431,7 @@ void repositoryTest() {
           nextSession: Session(
             datePerformed: DateTimeInfo(DateTime(2, 22, 2022)),
             duration: Duration(minutes: 20),
-            workoutPerformed: Workout(
+            workout: Workout(
                 name: 'W2',
                 description: 'Description 2',
                 targetBodyParts: [Target.Arm],
@@ -445,7 +445,7 @@ void repositoryTest() {
           id: IdGenerator.generateV4(),
           datePerformed: DateTimeInfo(DateTime(2, 21, 2022)),
           duration: Duration(minutes: 20),
-          workoutPerformed: Workout(
+          workout: Workout(
               name: 'New Session',
               description: 'Session Description',
               targetBodyParts: [Target.Chest, Target.Arm],

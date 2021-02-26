@@ -19,8 +19,9 @@ const Color inactiveCardColor = Color(0xFF053055);
 
 /// Padding
 const EdgeInsets primaryContainerPadding = EdgeInsets.all(20.0);
+const EdgeInsets cardPadding = EdgeInsets.all(10.0);
 const EdgeInsets primaryContainerSidePadding =
-    EdgeInsets.only(left: 20.0, right: 20.0);
+    EdgeInsets.only(left: 10.0, right: 10.0);
 
 /// FONT SIZE
 const double SMALL_TEXT = 12;
@@ -33,6 +34,11 @@ const Color darkThemeTextColor = Colors.white;
 const Color currentAppThemeTextColor = darkThemeTextColor;
 
 /// TextStyles
+const TextStyle workoutMediumTextStyle = TextStyle(
+  color: workoutThemeColor,
+  fontSize: MEDIUM_TEXT,
+);
+
 const TextStyle appBarTitleTextStyleLight = TextStyle(
   color: Colors.white,
 );
@@ -106,3 +112,5 @@ final activeBorder = Border.all(
 final inactiveBorder = Border.all(
   color: primaryInactiveColor,
 );
+
+final borderRadius = BorderRadius.circular(8.0);

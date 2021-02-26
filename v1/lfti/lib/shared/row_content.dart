@@ -5,10 +5,11 @@ class RowContent extends StatelessWidget {
   final String content;
   final String subContent;
   final Color color;
-  RowContent(
-      {this.content,
-      this.subContent = '',
-      this.color = appStyles.currentAppThemeTextColor});
+  RowContent({
+    this.content,
+    this.subContent = '',
+    this.color = appStyles.currentAppThemeTextColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +22,7 @@ class RowContent extends StatelessWidget {
               color: color,
               fontWeight: FontWeight.w900),
         ),
-        TextSpan(
-          text: ' ',
-        ),
+        TextSpan(text: ' '),
         TextSpan(
           text: subContent.toUpperCase(),
           style: TextStyle(fontSize: appStyles.MEDIUM_TEXT, color: color),

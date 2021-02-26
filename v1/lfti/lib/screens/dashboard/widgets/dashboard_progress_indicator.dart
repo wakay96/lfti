@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lfti/providers/dashboard_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
-import 'package:lfti/helpers/app_styles.dart' as appStyles;
 
 class DashboardProgressIndicator extends StatelessWidget {
   @override

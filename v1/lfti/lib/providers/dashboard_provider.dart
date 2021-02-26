@@ -38,6 +38,7 @@ class DashboardProvider extends ChangeNotifier {
 
   UserData userData;
   Section activeSection;
+  Section previousSection;
   SessionsData sessionData;
 
   ProgressViewWidgetDataModel progressViewData = ProgressViewWidgetDataModel();
@@ -54,11 +55,14 @@ class DashboardProvider extends ChangeNotifier {
     userData = _repository.getUserData();
     sessionData = _repository.getSessionData();
 
+    activeSection = Section.Day;
+    previousSection = activeSection;
+
     previousSession = sessionData.previousSession;
     nextSession = sessionData.nextSession;
     weekSessionCount = getWeekSessionCount();
 
-    selectDayAndTimeSection();
+    selectDaySection();
     notifyListeners();
   }
 
@@ -92,16 +96,7 @@ class DashboardProvider extends ChangeNotifier {
     }
   }
 
-  String getFormattedArrayEnumValues(List<dynamic> list) {
-    String formattedString = '';
-    list.forEach((element) {
-      formattedString += (element.toString() + ', ');
-    });
-    // remove last comma
-    return formattedString.substring(0, formattedString.length - 2);
-  }
-
-  void selectDayAndTimeSection() {
+  void selectDaySection() {
     progressViewData.message = getFormattedMessageRemaining(
         spent: _dateTimeInfo.militaryHours.toDouble(),
         total: 24,
@@ -110,75 +105,96 @@ class DashboardProvider extends ChangeNotifier {
     progressViewData.total = 24;
     progressViewData.current = _dateTimeInfo.militaryHours;
     progressViewData.color = appStyles.secondaryColor;
-    activeSection = Section.DateAndTime;
-    notifyListeners();
+    activeSection = Section.Day;
   }
 
   void selectWeightSection() {
-    if (activeSection == Section.Weight) {
-      selectDayAndTimeSection();
-    } else {
-      progressViewData.message = getFormattedMessageRemaining(
-          spent: userData.currentWeight,
-          total: userData.targetWeight,
-          unit: LB_UNIT_TEXT,
-          message: GOAL_MET_MESSAGE);
-      progressViewData.total = userData.targetWeight.floor();
-      progressViewData.current = userData.currentWeight.floor();
-      progressViewData.color = appStyles.weightThemeColor;
-      activeSection = Section.Weight;
-      notifyListeners();
-    }
+    progressViewData.message = getFormattedMessageRemaining(
+        spent: userData.currentWeight,
+        total: userData.targetWeight,
+        unit: LB_UNIT_TEXT,
+        message: GOAL_MET_MESSAGE);
+    progressViewData.total = userData.targetWeight.floor();
+    progressViewData.current = userData.currentWeight.floor();
+    progressViewData.color = appStyles.weightThemeColor;
+    activeSection = Section.Weight;
   }
 
   void selectBodyFatSection() {
-    if (activeSection == Section.BodyFat) {
-      selectDayAndTimeSection();
-    } else {
-      progressViewData.message = getFormattedMessageRemaining(
-          spent: userData.currentBodyFat,
-          total: userData.targetBodyFat,
-          unit: PERCENT_UNIT,
-          message: GOAL_MET_MESSAGE);
-      progressViewData.total = userData.currentBodyFat.floor();
-      progressViewData.current = userData.targetBodyFat.floor();
-      progressViewData.color = appStyles.bodyFatThemeColor;
-      activeSection = Section.BodyFat;
-      notifyListeners();
-    }
+    progressViewData.message = getFormattedMessageRemaining(
+        spent: userData.currentBodyFat,
+        total: userData.targetBodyFat,
+        unit: PERCENT_UNIT,
+        message: GOAL_MET_MESSAGE);
+    progressViewData.total = userData.currentBodyFat.floor();
+    progressViewData.current = userData.targetBodyFat.floor();
+    progressViewData.color = appStyles.bodyFatThemeColor;
+    activeSection = Section.BodyFat;
   }
 
   void selectActivitySection() {
-    if (activeSection == Section.Activity) {
-      selectDayAndTimeSection();
-    } else {
-      progressViewData.message = getFormattedMessageRemaining(
-          spent: sessionData.currentWorkoutDuration.inMinutes.toDouble(),
-          total: sessionData.targetWorkoutDuration.inMinutes.toDouble(),
-          unit: MINUTE_UNIT,
-          message: GOAL_MET_MESSAGE);
-      progressViewData.total = sessionData.targetWorkoutDuration.inMinutes;
-      progressViewData.current = sessionData.currentWorkoutDuration.inMinutes;
-      activeSection = Section.Activity;
-      notifyListeners();
-    }
+    progressViewData.message = getFormattedMessageRemaining(
+        spent: sessionData.currentWorkoutDuration.inMinutes.toDouble(),
+        total: sessionData.targetWorkoutDuration.inMinutes.toDouble(),
+        unit: MINUTE_UNIT,
+        message: GOAL_MET_MESSAGE);
+    progressViewData.total = sessionData.targetWorkoutDuration.inMinutes;
+    progressViewData.current = sessionData.currentWorkoutDuration.inMinutes;
+    progressViewData.color = appStyles.workoutThemeColor;
+    activeSection = Section.Activity;
+  }
+
+  void setPreviousSession() {
+    if (activeSection != Section.NextSession ||
+        activeSection != Section.PreviousSession)
+      previousSection = activeSection;
   }
 
   void selectPreviousSession() {
-    if (activeSection == Section.PreviousSession) {
-      selectDayAndTimeSection();
-    } else {
-      activeSection = Section.PreviousSession;
-      notifyListeners();
-    }
+    activeSection = Section.PreviousSession;
   }
 
   void selectNextSession() {
-    if (activeSection == Section.NextSession) {
-      selectDayAndTimeSection();
-    } else {
-      activeSection = Section.NextSession;
-      notifyListeners();
+    activeSection = Section.NextSession;
+  }
+
+  bool isCurrentlyActive(Section section) => section == activeSection;
+
+  void setActiveSection(Section section) {
+    switch (section) {
+      case Section.PreviousSession:
+        if (isCurrentlyActive(section)) {
+          setActiveSection(previousSection);
+        } else {
+          setPreviousSession();
+          selectPreviousSession();
+        }
+        break;
+      case Section.NextSession:
+        if (isCurrentlyActive(section)) {
+          setActiveSection(previousSection);
+        } else {
+          setPreviousSession();
+          selectNextSession();
+        }
+        break;
+      case Section.Activity:
+        isCurrentlyActive(section)
+            ? selectDaySection()
+            : selectActivitySection();
+        break;
+      case Section.BodyFat:
+        isCurrentlyActive(section)
+            ? selectDaySection()
+            : selectBodyFatSection();
+        break;
+      case Section.Weight:
+        isCurrentlyActive(section) ? selectDaySection() : selectWeightSection();
+        break;
+      case Section.Day:
+        isCurrentlyActive(section) ? selectDaySection() : selectDaySection();
+        break;
     }
+    notifyListeners();
   }
 }

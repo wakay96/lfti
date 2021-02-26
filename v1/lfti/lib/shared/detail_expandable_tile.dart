@@ -1,58 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:lfti/helpers/app_styles.dart' as appStyles;
+import 'package:lfti/shared/tile_button.dart';
 
 class DetailExpandableTile extends StatelessWidget {
-  final String title;
-  final Widget header;
+  final String label;
   final Widget expandedContent;
   final Function onTap;
   final bool isExpanded;
+  final Widget collapsedContent;
+  final Widget icon;
 
   DetailExpandableTile({
-    this.title = '',
+    this.label = '',
+    this.icon,
     this.onTap,
     this.isExpanded = false,
-    this.expandedContent,
-    @required this.header,
+    @required this.collapsedContent,
+    @required this.expandedContent,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return TileButton(
       onTap: onTap,
-      child: AnimatedContainer(
-        duration: Duration(milliseconds: 200),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            /// title
-            Text(
-              title.toUpperCase(),
-              style: appStyles.grayLabelText,
-            ),
-
-            SizedBox(height: 3.0),
-
-            /// Widget content
-            AnimatedContainer(
-              duration: Duration(milliseconds: 150),
-              padding: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: isExpanded
-                    ? appStyles.primaryActiveColor
-                    : appStyles.inactiveBackgroundColor,
-                borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                border: appStyles.inactiveBorder,
-              ),
-              child: isExpanded
-                  ? Column(
-                      children: [header, expandedContent],
-                    )
-                  : header,
-            ),
-          ],
-        ),
-      ),
+      label: label,
+      icon: icon,
+      content: isExpanded ? expandedContent : collapsedContent,
     );
   }
 }

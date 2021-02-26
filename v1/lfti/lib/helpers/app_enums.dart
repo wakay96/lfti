@@ -1,5 +1,5 @@
 enum Section {
-  DateAndTime,
+  Day,
   Weight,
   BodyFat,
   Activity,

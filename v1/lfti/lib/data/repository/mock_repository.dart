@@ -31,10 +31,10 @@ class MockRepository implements IRepository {
     currentWorkoutDuration: Duration(minutes: 30),
     targetWorkoutDuration: Duration(minutes: 60),
     previousSession: Session(
-      datePerformed: DateTimeInfo(DateTime(2, 21, 2022)),
+      datePerformed: DateTimeInfo(DateTime(2022, 2, 21)),
       duration: Duration(minutes: 20),
-      workoutPerformed: Workout(
-          name: 'W1',
+      workout: Workout(
+          name: 'Chest Superset with Arms and Shoulders',
           description: 'Description 1',
           targetBodyParts: [Target.Chest, Target.Arm, Target.Shoulder],
           id: IdGenerator.generateV4(),
@@ -42,12 +42,16 @@ class MockRepository implements IRepository {
           activities: [..._sampleExercises]),
     ),
     nextSession: Session(
-      datePerformed: DateTimeInfo(DateTime(2, 22, 2022)),
-      duration: Duration(minutes: 20),
-      workoutPerformed: Workout(
-          name: 'W2',
+      datePerformed: DateTimeInfo(DateTime(
+        2022,
+        2,
+        22,
+      )),
+      duration: Duration(minutes: 35),
+      workout: Workout(
+          name: 'Arm Day with Core',
           description: 'Description 2',
-          targetBodyParts: [Target.Arm],
+          targetBodyParts: [Target.Arm, Target.Core],
           id: IdGenerator.generateV4(),
           days: [WeekdayNames.Tuesday, WeekdayNames.Thursday],
           activities: [..._sampleExercises]),
