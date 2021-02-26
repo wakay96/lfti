@@ -144,12 +144,6 @@ class DashboardProvider extends ChangeNotifier {
     activeSection = Section.Activity;
   }
 
-  void setPreviousSession() {
-    if (activeSection != Section.NextSession ||
-        activeSection != Section.PreviousSession)
-      previousSection = activeSection;
-  }
-
   void selectPreviousSession() {
     activeSection = Section.PreviousSession;
   }
@@ -166,7 +160,7 @@ class DashboardProvider extends ChangeNotifier {
         if (isCurrentlyActive(section)) {
           setActiveSection(previousSection);
         } else {
-          setPreviousSession();
+          previousSection = activeSection;
           selectPreviousSession();
         }
         break;
@@ -174,7 +168,7 @@ class DashboardProvider extends ChangeNotifier {
         if (isCurrentlyActive(section)) {
           setActiveSection(previousSection);
         } else {
-          setPreviousSession();
+          previousSection = activeSection;
           selectNextSession();
         }
         break;
