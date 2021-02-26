@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lfti/data/models/session.dart';
 import 'package:lfti/helpers/app_icon.dart';
 import 'package:lfti/helpers/app_styles.dart';
+import 'package:lfti/helpers/string_formatter.dart';
 import 'package:lfti/shared/tiles/expandable_detail_tile.dart';
 import 'package:lfti/shared/text/overflowing_text.dart';
 
@@ -34,7 +35,7 @@ class _SessionDataTileState extends State<SessionDataTile> {
           style: workoutMediumTextStyle,
         ),
         Text(
-          arrayToString(session.workout.targetBodyParts),
+          ListToString(session.workout.targetBodyParts).parse(),
           style: TextStyle(
             color: currentAppThemeTextColor,
             fontSize: SMALL_TEXT,
@@ -91,14 +92,5 @@ class _SessionDataTileState extends State<SessionDataTile> {
         ]),
       ]),
     );
-  }
-
-  String arrayToString(List<dynamic> list) {
-    String formattedString = '';
-    list.forEach((element) {
-      formattedString += (element.toString() + ', ');
-    });
-    // remove last comma
-    return formattedString.substring(0, formattedString.length - 2);
   }
 }
