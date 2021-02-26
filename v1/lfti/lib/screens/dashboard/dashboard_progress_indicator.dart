@@ -30,9 +30,7 @@ class DashboardProgressIndicator extends StatelessWidget {
             child: Center(
               child: RichText(
                 textAlign: TextAlign.center,
-                text: TextSpan(children: [
-                  TextSpan(text: viewModel.progressViewData.message),
-                ]),
+                text: TextSpan(text: viewModel.progressViewData.message),
               ),
             ),
           )
