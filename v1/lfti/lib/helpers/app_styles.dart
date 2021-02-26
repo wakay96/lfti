@@ -39,69 +39,13 @@ const TextStyle workoutMediumTextStyle = TextStyle(
   fontSize: MEDIUM_TEXT,
 );
 
+const TextStyle labelMediumTextStyle = TextStyle(
+  color: currentAppThemeTextColor,
+  fontSize: SMALL_TEXT,
+);
+
 const TextStyle appBarTitleTextStyleLight = TextStyle(
   color: Colors.white,
-);
-
-const TextStyle whiteBLText = TextStyle(
-  color: Colors.white,
-  fontSize: 25,
-  fontWeight: FontWeight.bold,
-);
-
-const TextStyle whiteBmLText = TextStyle(
-  color: Colors.white,
-  fontSize: 15,
-  fontWeight: FontWeight.bold,
-);
-
-const TextStyle whiteNMText = TextStyle(
-  color: Colors.white,
-  fontSize: 12,
-);
-
-const TextStyle whiteIMText = TextStyle(
-  color: Colors.white,
-  fontSize: 12,
-  fontStyle: FontStyle.italic,
-);
-
-const TextStyle whiteLabelText = TextStyle(
-  color: Colors.white,
-  fontSize: 10,
-);
-
-const TextStyle grayLabelText = TextStyle(
-  color: tertiaryColor,
-  fontSize: 10,
-);
-
-/// dark text
-const TextStyle darkLabelText = TextStyle(
-  color: primaryColor,
-  fontSize: 10,
-);
-const TextStyle blackBLText = TextStyle(
-  color: Colors.black,
-  fontSize: 25,
-  fontWeight: FontWeight.bold,
-);
-
-const TextStyle blackBmLText = TextStyle(
-  color: Colors.black,
-  fontSize: 15,
-  fontWeight: FontWeight.bold,
-);
-
-const TextStyle blackNMText = TextStyle(
-  color: Colors.black,
-  fontSize: 12,
-);
-
-const TextStyle blackIMText = TextStyle(
-  color: Colors.black,
-  fontSize: 12,
-  fontStyle: FontStyle.italic,
 );
 
 /// decorations
