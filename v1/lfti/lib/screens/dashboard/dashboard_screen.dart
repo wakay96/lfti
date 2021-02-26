@@ -103,8 +103,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 session: viewModel.sessionData.nextSession,
                 isExpanded:
                     viewModel.activeSection == DashboardSection.NextSession,
-                onTap: () =>
-                    viewModel.setActiveSection(DashboardSection.NextSession),
+                onTap: () => viewModel.setActiveSection(
+                  DashboardSection.NextSession,
+                ),
               )
             ]),
           ),

@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:lfti/helpers/app_styles.dart' as appStyles;
 import 'package:lfti/helpers/app_styles.dart';
 
-class ButtonTile extends StatelessWidget {
+class ExpandableDetailTile extends StatelessWidget {
   final String label;
-  final Widget content;
-  final bool isActive;
-  final Widget icon;
+  final Widget expandedContent;
   final Function onTap;
+  final bool isExpanded;
+  final Widget collapsedContent;
+  final Widget icon;
 
-  ButtonTile({
-    @required this.content,
+  ExpandableDetailTile({
     this.label = '',
-    this.isActive = false,
     this.icon,
     this.onTap,
+    this.isExpanded = false,
+    @required this.collapsedContent,
+    @required this.expandedContent,
   });
 
   @override
@@ -22,12 +23,12 @@ class ButtonTile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Card(
-        shape: RoundedRectangleBorder(borderRadius: appStyles.borderRadius),
-        color: appStyles.inactiveCardColor,
+        shape: RoundedRectangleBorder(borderRadius: borderRadius),
+        color: inactiveCardColor,
         child: Padding(
           padding: cardPadding,
-          child: Container(
-            child: Row(
+          child: Column(children: [
+            Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -36,15 +37,15 @@ class ButtonTile extends StatelessWidget {
                       children: [
                         Text(
                           label,
-                          style: TextStyle(
-                              color: appStyles.currentAppThemeTextColor),
+                          style: TextStyle(color: currentAppThemeTextColor),
                           textAlign: TextAlign.start,
                         ),
-                        content,
+                        collapsedContent,
                       ]),
                   Container(child: icon),
                 ]),
-          ),
+            isExpanded ? expandedContent : Container()
+          ]),
         ),
       ),
     );

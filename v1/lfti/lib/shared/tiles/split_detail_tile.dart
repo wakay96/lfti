@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lfti/shared/tiles/button_tile.dart';
 import 'package:lfti/helpers/app_styles.dart' as appStyles;
 
-class DetailSplitTile extends StatelessWidget {
-  DetailSplitTile({
+class SplitDetailTile extends StatelessWidget {
+  SplitDetailTile({
     this.title = '',
     this.label1 = 'CURRENT',
     this.label2 = 'GOAL',

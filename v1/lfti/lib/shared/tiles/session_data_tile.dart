@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lfti/data/models/session.dart';
 import 'package:lfti/helpers/app_icon.dart';
 import 'package:lfti/helpers/app_styles.dart';
-import 'package:lfti/shared/tiles/detail_expandable_tile.dart';
+import 'package:lfti/shared/tiles/expandable_detail_tile.dart';
 import 'package:lfti/shared/text/overflowing_text.dart';
 
 class SessionDataTile extends StatelessWidget {
@@ -27,7 +27,7 @@ class SessionDataTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DetailExpandableTile(
+    return ExpandableDetailTile(
       isExpanded: isExpanded,
       onTap: onTap,
       label: 'Previous Session',
@@ -49,17 +49,6 @@ class SessionDataTile extends StatelessWidget {
       expandedContent: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          OverflowingText(
-            text: session.workout.name,
-            style: workoutMediumTextStyle,
-          ),
-          Text(
-            getFormattedArrayEnumValues(session.workout.targetBodyParts),
-            style: TextStyle(
-              color: currentAppThemeTextColor,
-              fontSize: SMALL_TEXT,
-            ),
-          ),
           SizedBox(height: 10.0),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
