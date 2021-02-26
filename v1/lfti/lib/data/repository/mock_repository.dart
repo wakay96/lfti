@@ -1,6 +1,7 @@
 import 'package:lfti/data/models/activity.dart';
 import 'package:lfti/data/models/date_time_info.dart';
 import 'package:lfti/data/models/exercise.dart';
+import 'package:lfti/data/models/rest.dart';
 import 'package:lfti/data/models/session.dart';
 import 'package:lfti/data/models/session_data.dart';
 import 'package:lfti/data/models/user_data.dart';
@@ -31,16 +32,25 @@ class MockRepository implements IRepository {
     currentWorkoutDuration: Duration(minutes: 30),
     targetWorkoutDuration: Duration(minutes: 60),
     previousSession: Session(
-      datePerformed: DateTimeInfo(DateTime(2022, 2, 21)),
-      duration: Duration(minutes: 20),
-      workout: Workout(
-          name: 'Chest Superset with Arms and Shoulders',
-          description: 'Description 1',
-          targetBodyParts: [Target.Chest, Target.Arm, Target.Shoulder],
-          id: IdGenerator.generateV4(),
-          days: [WeekdayNames.Monday],
-          activities: [..._sampleExercises]),
-    ),
+        datePerformed: DateTimeInfo(DateTime(2022, 2, 21)),
+        duration: Duration(minutes: 20),
+        workout: Workout(
+            name: 'Chest Superset with Arms and Shoulders',
+            description: 'Description 1',
+            targetBodyParts: [Target.Chest, Target.Arm, Target.Shoulder],
+            id: IdGenerator.generateV4(),
+            days: [WeekdayNames.Monday],
+            activities: [..._sampleExercises]),
+        performedExercises: [
+          Exercise(name: 'Exercise 1', setCount: 3, repCount: 10),
+          Exercise(name: 'Exercise 2', setCount: 3, repCount: 15),
+          Exercise(name: 'Exercise 3', setCount: 3, repCount: 20),
+          Exercise(name: 'Exercise 4', setCount: 3, repCount: 25)
+        ],
+        skippedExercises: [
+          Exercise(name: 'Exercise 5', setCount: 3, repCount: 10),
+          Exercise(name: 'Exercise 6', setCount: 3, repCount: 15),
+        ]),
     nextSession: Session(
       datePerformed: DateTimeInfo(DateTime(
         2022,

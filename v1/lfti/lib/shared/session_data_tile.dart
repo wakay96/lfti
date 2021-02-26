@@ -64,16 +64,13 @@ class SessionDataTile extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('DATE PERFORMED', style: labelMediumTextStyle),
-                  Text(
-                    session.datePerformed.fullDate,
-                    style: workoutMediumTextStyle,
-                  ),
-                ],
-              ),
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text('DATE PERFORMED', style: labelMediumTextStyle),
+                Text(
+                  session.datePerformed.fullDate,
+                  style: workoutMediumTextStyle,
+                ),
+              ]),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -87,13 +84,15 @@ class SessionDataTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('PERFORMED', style: labelMediumTextStyle),
-                    Text('10', style: workoutMediumTextStyle)
+                    Text('${session.performedExercises.length}',
+                        style: workoutMediumTextStyle)
                   ],
                 ),
                 SizedBox(width: 15.0),
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text('SKIPPED', style: labelMediumTextStyle),
-                  Text('5', style: workoutMediumTextStyle)
+                  Text('${session.skippedExercises.length}',
+                      style: workoutMediumTextStyle)
                 ]),
               ]),
             ],

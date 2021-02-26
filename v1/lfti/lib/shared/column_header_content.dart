@@ -20,15 +20,15 @@ class ColumnHeaderContent extends StatelessWidget {
       children: [
         Text(
           header,
-          style: appStyles.whiteBmLText,
+          style: appStyles.labelMediumTextStyle,
         ),
         Text(
           content1,
-          style: appStyles.whiteNMText,
+          style: appStyles.labelMediumTextStyle,
         ),
         Text(
           content2,
-          style: appStyles.whiteIMText,
+          style: appStyles.labelMediumTextStyle,
         ),
       ],
     );
