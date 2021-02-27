@@ -29,7 +29,6 @@ class ActivityPreviewTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget icon = getIcon(activity, skipped);
     return Card(
       color: color,
       shape: RoundedRectangleBorder(borderRadius: borderRadius),

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lfti/helpers/app_strings.dart';
 import 'package:lfti/helpers/app_styles.dart';
-import 'package:lfti/helpers/id_generator.dart';
 import 'package:lfti/providers/workout_screen_provider.dart';
-import 'package:lfti/shared/nav_bar.dart';
 import 'package:lfti/shared/tiles/button_tile.dart';
 import 'package:provider/provider.dart';
 
