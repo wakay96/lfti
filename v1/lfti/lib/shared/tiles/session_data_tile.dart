@@ -3,6 +3,7 @@ import 'package:lfti/data/models/session.dart';
 import 'package:lfti/helpers/app_icon.dart';
 import 'package:lfti/helpers/app_styles.dart';
 import 'package:lfti/helpers/string_formatter.dart';
+import 'package:lfti/screens/workout/workout_history_screen.dart';
 import 'package:lfti/shared/tiles/expandable_detail_tile.dart';
 import 'package:lfti/shared/text/overflowing_text.dart';
 
@@ -23,6 +24,7 @@ class _SessionDataTileState extends State<SessionDataTile> {
   @override
   Widget build(BuildContext context) {
     Session session = widget.session;
+
     return ExpandableDetailTile(
       isExpanded: isExpanded,
       onTap: toggleCollapseExpand,
@@ -82,7 +84,13 @@ class _SessionDataTileState extends State<SessionDataTile> {
                 Spacer(flex: 1),
                 RaisedButton(
                   color: inactiveCardColor,
-                  onPressed: () => print('pressed me'),
+                  onPressed: () {
+                    Navigator.pushNamed(context, WorkoutHistoryScreen.id,
+                        arguments: {
+                          'workout': session.workout,
+                          'skipped': session.skippedExercises
+                        });
+                  },
                   child: Text('View Workout',
                       style: buttonTextStyle.copyWith(
                         color: workoutThemeColor,

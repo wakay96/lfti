@@ -8,6 +8,7 @@ class ButtonTile extends StatelessWidget {
   final bool isActive;
   final Widget icon;
   final Function onTap;
+  final Color color;
 
   ButtonTile({
     @required this.content,
@@ -15,6 +16,7 @@ class ButtonTile extends StatelessWidget {
     this.isActive = false,
     this.icon,
     this.onTap,
+    this.color = appStyles.inactiveCardColor,
   });
 
   @override
@@ -23,7 +25,7 @@ class ButtonTile extends StatelessWidget {
       onTap: onTap,
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: appStyles.borderRadius),
-        color: appStyles.inactiveCardColor,
+        color: color,
         child: Padding(
           padding: cardPadding,
           child: Row(

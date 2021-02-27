@@ -25,4 +25,16 @@ class AppIcon {
     color: appStyles.workoutThemeColor,
     size: 35,
   );
+
+  static const skippedWorkoutIcon = FaIcon(
+    FontAwesomeIcons.running,
+    color: appStyles.skippedWorkoutColor,
+    size: 35,
+  );
+
+  static const restIcon = FaIcon(
+    FontAwesomeIcons.bed,
+    color: appStyles.restThemeColor,
+    size: 30,
+  );
 }

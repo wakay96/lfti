@@ -1,6 +1,7 @@
 import 'package:lfti/data/models/activity.dart';
 import 'package:lfti/data/models/date_time_info.dart';
 import 'package:lfti/data/models/exercise.dart';
+import 'package:lfti/data/models/rest.dart';
 import 'package:lfti/data/models/session.dart';
 import 'package:lfti/data/models/session_data.dart';
 import 'package:lfti/data/models/user_data.dart';
@@ -39,16 +40,15 @@ class MockRepository implements IRepository {
             targetBodyParts: [Target.Chest, Target.Arm, Target.Shoulder],
             id: IdGenerator.generateV4(),
             days: [WeekdayNames.Monday],
-            activities: [..._sampleExercises]),
+            activities: _sampleActivityList),
         performedExercises: [
-          Exercise(name: 'Exercise 1', setCount: 3, repCount: 10),
-          Exercise(name: 'Exercise 2', setCount: 3, repCount: 15),
-          Exercise(name: 'Exercise 3', setCount: 3, repCount: 20),
-          Exercise(name: 'Exercise 4', setCount: 3, repCount: 25)
+          _sampleActivityList[0],
+          _sampleActivityList[4],
+          _sampleActivityList[6],
         ],
         skippedExercises: [
-          Exercise(name: 'Exercise 5', setCount: 3, repCount: 10),
-          Exercise(name: 'Exercise 6', setCount: 3, repCount: 15),
+          _sampleActivityList[2],
+          _sampleActivityList[8],
         ]),
     nextSession: Session(
       datePerformed: DateTimeInfo(DateTime(
@@ -63,9 +63,21 @@ class MockRepository implements IRepository {
           targetBodyParts: [Target.Arm, Target.Core],
           id: IdGenerator.generateV4(),
           days: [WeekdayNames.Tuesday, WeekdayNames.Thursday],
-          activities: [..._sampleExercises]),
+          activities: _sampleActivityList),
     ),
   );
+
+  static List<Activity> _sampleActivityList = [
+    _sampleExercises[0],
+    Rest(30),
+    _sampleExercises[1],
+    Rest(35),
+    _sampleExercises[2],
+    Rest(40),
+    _sampleExercises[3],
+    Rest(60),
+    _sampleExercises[4],
+  ];
 
   /// Temporary Standard workouts
   /// to be requested form server
@@ -77,30 +89,6 @@ class MockRepository implements IRepository {
     Exercise(name: 'RE4', setCount: 3, repCount: 20, target: Target.Leg),
     Exercise(name: 'RE5', setCount: 3, repCount: 25, target: Target.Shoulder),
   ];
-
-  // static List<Workout> _sampleWorkouts = [
-  //   Workout(
-  //       id: IdGenerator.generateV4(),
-  //       name: 'W1',
-  //       description: 'W1 Description',
-  //       targetBodyParts: [Target.Chest],
-  //       days: [WeekdayNames.Monday],
-  //       activities: [..._sampleExercises]),
-  //   Workout(
-  //       id: IdGenerator.generateV4(),
-  //       name: 'W2',
-  //       description: 'W2 Description',
-  //       targetBodyParts: [Target.Leg],
-  //       days: [WeekdayNames.Tuesday, WeekdayNames.Wednesday],
-  //       activities: [..._sampleExercises]),
-  //   Workout(
-  //       id: IdGenerator.generateV4(),
-  //       name: 'W3',
-  //       description: 'W3 Description',
-  //       targetBodyParts: [Target.Arm],
-  //       days: [WeekdayNames.Thursday, WeekdayNames.Friday],
-  //       activities: [..._sampleExercises]),
-  // ];
 
   @override
   void addExercise(Exercise exercise) {

@@ -37,92 +37,89 @@ class _DashboardScreenState extends State<DashboardScreen> {
         Provider.of<DashboardScreenProvider>(context);
     return Scaffold(
       appBar: NavBar(DASHBOARD_SCREEN_APPBAR_TEXT).build(context),
-      body: Container(
-        color: appStyles.primaryColor,
-        padding: appStyles.primaryContainerSidePadding,
-        child: ListView(reverse: true, children: [
-          Container(
-            child: Column(children: [
-              DashboardProgressIndicator(),
-              SizedBox(height: 12.0),
+      backgroundColor: appStyles.primaryColor,
+      body: ListView(reverse: true, children: [
+        Container(
+          child: Column(children: [
+            DashboardProgressIndicator(),
+            SizedBox(height: 12.0),
+            SizedBox(height: 12.0),
 
-              /// Weight Section
-              UserDataTiles(
-                  isActive: viewModel.activeSection == DashboardSection.Weight,
-                  unit: appStrings.LB_UNIT_TEXT + 's',
-                  icons: [AppIcon.weightIcon],
-                  color: appStyles.weightThemeColor,
-                  onTap: () =>
-                      viewModel.setActiveSection(DashboardSection.Weight),
-                  labels: ['Current Weight', 'Target Weight'],
-                  contents: [
-                    '${viewModel.userData.currentWeight}',
-                    '${viewModel.userData.targetWeight}'
-                  ]),
+            /// Weight Section
+            UserDataTiles(
+                isActive: viewModel.activeSection == DashboardSection.Weight,
+                unit: appStrings.LB_UNIT_TEXT + 's',
+                icons: [AppIcon.weightIcon],
+                color: appStyles.weightThemeColor,
+                onTap: () =>
+                    viewModel.setActiveSection(DashboardSection.Weight),
+                labels: ['Current Weight', 'Target Weight'],
+                contents: [
+                  '${viewModel.userData.currentWeight}',
+                  '${viewModel.userData.targetWeight}'
+                ]),
 
-              /// Body Fat
-              UserDataTiles(
-                  isActive: viewModel.activeSection == DashboardSection.BodyFat,
-                  unit: appStrings.PERCENT_UNIT,
-                  icons: [AppIcon.bodyFatIcon],
-                  color: appStyles.bodyFatThemeColor,
-                  onTap: () =>
-                      viewModel.setActiveSection(DashboardSection.BodyFat),
-                  labels: ['Current Body Fat', 'Target Body Fat'],
-                  contents: [
-                    '${viewModel.userData.currentBodyFat}',
-                    '${viewModel.userData.targetBodyFat}'
-                  ]),
+            /// Body Fat
+            UserDataTiles(
+                isActive: viewModel.activeSection == DashboardSection.BodyFat,
+                unit: appStrings.PERCENT_UNIT,
+                icons: [AppIcon.bodyFatIcon],
+                color: appStyles.bodyFatThemeColor,
+                onTap: () =>
+                    viewModel.setActiveSection(DashboardSection.BodyFat),
+                labels: ['Current Body Fat', 'Target Body Fat'],
+                contents: [
+                  '${viewModel.userData.currentBodyFat}',
+                  '${viewModel.userData.targetBodyFat}'
+                ]),
 
-              /// Daily and Weekly Activity
-              UserDataTiles(
-                  isActive:
-                      viewModel.activeSection == DashboardSection.Activity,
-                  icons: [AppIcon.workoutIcon],
-                  unit: appStrings.MINUTE_UNIT + 's',
-                  color: appStyles.workoutThemeColor,
-                  onTap: () =>
-                      viewModel.setActiveSection(DashboardSection.Activity),
-                  labels: ['Current Mins', 'Target Mins'],
-                  contents: [
-                    '${viewModel.sessionData.currentWorkoutDuration.inMinutes}',
-                    '${viewModel.sessionData.targetWorkoutDuration.inMinutes}'
-                  ]),
+            /// Daily and Weekly Activity
+            UserDataTiles(
+                isActive: viewModel.activeSection == DashboardSection.Activity,
+                icons: [AppIcon.workoutIcon],
+                unit: appStrings.MINUTE_UNIT + 's',
+                color: appStyles.workoutThemeColor,
+                onTap: () =>
+                    viewModel.setActiveSection(DashboardSection.Activity),
+                labels: ['Current Mins', 'Target Mins'],
+                contents: [
+                  '${viewModel.sessionData.currentWorkoutDuration.inMinutes}',
+                  '${viewModel.sessionData.targetWorkoutDuration.inMinutes}'
+                ]),
 
-              /// Previous Session
-              SessionDataTile(viewModel.sessionData.previousSession),
+            /// Previous Session
+            SessionDataTile(viewModel.sessionData.previousSession),
 
-              /// Next Session
-              SessionDataTile(viewModel.sessionData.nextSession)
-            ]),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.125,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              FittedBox(
-                child: Text(
-                  viewModel.currentWeekdayText,
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.height * 0.065,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              Text(
-                viewModel.currentMonthDayText,
+            /// Next Session
+            SessionDataTile(viewModel.sessionData.nextSession)
+          ]),
+        ),
+        Container(
+          height: MediaQuery.of(context).size.height * 0.125,
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            FittedBox(
+              child: Text(
+                viewModel.currentWeekdayText,
                 textAlign: TextAlign.start,
                 style: TextStyle(
-                  fontSize: 25,
-                  color: Colors.grey,
+                  fontSize: MediaQuery.of(context).size.height * 0.065,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
                 ),
               ),
-            ]),
-          ),
-        ]),
-      ),
+            ),
+            Text(
+              viewModel.currentMonthDayText,
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                fontSize: 25,
+                color: Colors.grey,
+              ),
+            ),
+          ]),
+        ),
+      ]),
     );
   }
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lfti/helpers/app_strings.dart';
+import 'package:lfti/helpers/app_styles.dart';
+import 'package:lfti/helpers/id_generator.dart';
 import 'package:lfti/providers/workout_screen_provider.dart';
 import 'package:lfti/shared/nav_bar.dart';
+import 'package:lfti/shared/tiles/button_tile.dart';
 import 'package:provider/provider.dart';
 
 class WorkoutScreenBuilder extends StatelessWidget {
@@ -24,8 +27,26 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NavBar(WORKOUT_SCREEN_APPBAR_TEXT).build(context),
-      body: Container(),
+      appBar: AppBar(
+        backgroundColor: primaryColor,
+        shadowColor: Colors.transparent,
+        title: Container(
+          alignment: Alignment.bottomRight,
+          child: Text(
+            WORKOUT_SCREEN_APPBAR_TEXT,
+            style: appBarTitleTextStyleLight,
+          ),
+        ),
+        centerTitle: false,
+      ),
+      backgroundColor: primaryColor,
+      body: ListView(
+        children: [
+          ButtonTile(
+            content: Text('Workout 1', style: workoutMediumTextStyle),
+          ),
+        ],
+      ),
     );
   }
 }
