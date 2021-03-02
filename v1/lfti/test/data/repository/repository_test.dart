@@ -83,7 +83,6 @@ void repositoryTest() {
               name: 'Found me',
               description: '',
               activities: [],
-              days: [],
               targetBodyParts: []));
           repository.addWorkout(Workout.empty());
           var res = repository.getWorkoutById(woId);
@@ -305,21 +304,6 @@ void repositoryTest() {
             expect(res[i], update[i]);
           }
         });
-        test(' - item exists, days should be updated', () {
-          var update = [
-            WeekdayNames.Monday,
-            WeekdayNames.Tuesday,
-            WeekdayNames.Wednesday,
-            WeekdayNames.Thursday
-          ];
-          w2.days = update;
-          repository.updateWorkoutById(w2.id, w2);
-          var res = repository.getWorkoutById(w2.id).days;
-
-          for (int i = 0; i < update.length; i++) {
-            expect(res[i], update[i]);
-          }
-        });
         test(' - item does not exist, should throw exception', () {
           expect(
               () => repository.updateWorkoutById(
@@ -418,39 +402,36 @@ void repositoryTest() {
           currentWorkoutDuration: Duration(minutes: 30),
           targetWorkoutDuration: Duration(minutes: 60),
           previousSession: Session(
-            datePerformed: DateTimeInfo(DateTime(2, 21, 2022)),
+            date: DateTimeInfo(DateTime(2, 21, 2022)),
             duration: Duration(minutes: 20),
             workout: Workout(
                 name: 'W1',
                 description: 'Description 1',
                 targetBodyParts: [Target.Chest, Target.Arm, Target.Shoulder],
                 id: IdGenerator.generateV4(),
-                days: [WeekdayNames.Monday],
                 activities: []),
           ),
           nextSession: Session(
-            datePerformed: DateTimeInfo(DateTime(2, 22, 2022)),
+            date: DateTimeInfo(DateTime(2, 22, 2022)),
             duration: Duration(minutes: 20),
             workout: Workout(
                 name: 'W2',
                 description: 'Description 2',
                 targetBodyParts: [Target.Arm],
                 id: IdGenerator.generateV4(),
-                days: [WeekdayNames.Tuesday, WeekdayNames.Thursday],
                 activities: []),
           ),
         );
 
         Session newSession = Session(
           id: IdGenerator.generateV4(),
-          datePerformed: DateTimeInfo(DateTime(2, 21, 2022)),
+          date: DateTimeInfo(DateTime(2, 21, 2022)),
           duration: Duration(minutes: 20),
           workout: Workout(
               name: 'New Session',
               description: 'Session Description',
               targetBodyParts: [Target.Chest, Target.Arm],
               id: IdGenerator.generateV4(),
-              days: [WeekdayNames.Monday],
               activities: []),
         );
 

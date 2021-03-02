@@ -4,7 +4,7 @@ import 'date_time_info.dart';
 
 class Session {
   String id;
-  DateTimeInfo datePerformed;
+  DateTimeInfo date;
   Duration duration;
   Workout workout;
   List<Exercise> performedExercises;
@@ -12,7 +12,7 @@ class Session {
 
   Session({
     this.id,
-    this.datePerformed,
+    this.date,
     this.duration,
     this.workout,
     this.performedExercises = const <Exercise>[],

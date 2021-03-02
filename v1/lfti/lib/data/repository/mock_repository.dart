@@ -80,7 +80,7 @@ class MockRepository implements IRepository {
     currentWorkoutDuration: Duration(minutes: 30),
     targetWorkoutDuration: Duration(minutes: 60),
     previousSession: Session(
-        datePerformed: DateTimeInfo(DateTime(2022, 2, 21)),
+        date: DateTimeInfo(DateTime(2022, 2, 21)),
         duration: Duration(minutes: 20),
         workout: Workout(
             name: 'Chest Superset with Arms and Shoulders',
@@ -98,7 +98,7 @@ class MockRepository implements IRepository {
           _sampleActivityList[8],
         ]),
     nextSession: Session(
-      datePerformed: DateTimeInfo(DateTime(
+      date: DateTimeInfo(DateTime(
         2022,
         2,
         22,

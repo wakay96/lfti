@@ -46,7 +46,7 @@ class _SessionDataTileState extends State<SessionDataTile> {
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text('Date Performed', style: labelSmallTextStyle),
             Text(
-              session.datePerformed.fullDate,
+              session.date.fullDate,
               style: workoutMediumTextStyle,
             ),
           ]),
@@ -78,12 +78,12 @@ class _SessionDataTileState extends State<SessionDataTile> {
                 ]),
                 Spacer(flex: 1),
                 Button('View Workout', () {
-                    Navigator.pushNamed(context, WorkoutHistoryScreen.id,
-                        arguments: {
-                          'workout': session.workout,
-                          'skipped': session.skippedExercises
-                        });
-                  }),
+                  Navigator.pushNamed(context, WorkoutHistoryScreen.id,
+                      arguments: {
+                        'workout': session.workout,
+                        'skipped': session.skippedExercises
+                      });
+                }),
               ]),
         ]),
       ]),

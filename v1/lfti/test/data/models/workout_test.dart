@@ -40,7 +40,6 @@ void workoutTest() {
         workout.description = 'Description of workout';
         var clone = Workout.clone(workout);
         expect(true, clone.activities == workout.activities);
-        expect(true, clone.days == workout.days);
         expect(true, clone.targetBodyParts == workout.targetBodyParts);
         expect(true, clone.name == workout.name);
         expect(true, clone.description == workout.description);
