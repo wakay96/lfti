@@ -30,9 +30,10 @@ class UserDataTiles extends StatelessWidget {
             child: ButtonTile(
               isActive: isActive,
               onTap: onTap,
-              label: labels[0],
+              icon: icons == null ? null : icons[0],
+              label: labels[0] == null ? '' : labels[0],
               content: RowText(
-                content: contents[0],
+                content: contents[0] == null ? '-' : contents[0],
                 subContent: unit,
                 color: color,
               ),
@@ -43,9 +44,9 @@ class UserDataTiles extends StatelessWidget {
               isActive: isActive,
               onTap: onTap,
               icon: icons == null ? null : icons[0],
-              label: labels[1],
+              label: labels[1] == null ? '' : labels[1],
               content: RowText(
-                content: contents[1],
+                content: contents[1] == null ? '-' : contents[1],
                 subContent: unit,
                 color: color,
               ),
