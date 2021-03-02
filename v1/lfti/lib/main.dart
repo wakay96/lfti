@@ -14,7 +14,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'lfti',
-      initialRoute: DashboardScreen.id,
+      initialRoute: WorkoutScreen.id,
       routes: {
         DashboardScreen.id: (context) => DashboardScreenBuilder(),
         WorkoutScreen.id: (context) => WorkoutScreenBuilder(),

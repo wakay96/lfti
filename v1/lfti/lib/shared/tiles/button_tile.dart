@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lfti/helpers/app_styles.dart' as appStyles;
 import 'package:lfti/helpers/app_styles.dart';
 
 class ButtonTile extends StatelessWidget {
@@ -16,7 +15,7 @@ class ButtonTile extends StatelessWidget {
     this.isActive = false,
     this.icon,
     this.onTap,
-    this.color = appStyles.inactiveCardColor,
+    this.color = inactiveCardColor,
   });
 
   @override
@@ -24,7 +23,7 @@ class ButtonTile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Card(
-        shape: RoundedRectangleBorder(borderRadius: appStyles.borderRadius),
+        shape: RoundedRectangleBorder(borderRadius: buttonBorderRadius),
         color: color,
         child: Padding(
           padding: cardPadding,
@@ -35,12 +34,12 @@ class ButtonTile extends StatelessWidget {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text(
                     label,
-                    style: TextStyle(color: appStyles.currentAppThemeTextColor),
+                    style: TextStyle(color: currentAppThemeTextColor),
                     textAlign: TextAlign.start,
                   ),
                   content,
                 ]),
-                Container(child: icon),
+                icon,
               ]),
         ),
       ),
