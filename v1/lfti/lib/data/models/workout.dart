@@ -8,7 +8,6 @@ import 'package:lfti/helpers/id_generator.dart';
 class Workout {
   String id;
   List<Activity> activities;
-  List<String> days;
   List<String> targetBodyParts;
   String name;
   String description;
@@ -17,7 +16,6 @@ class Workout {
   Workout({
     @required this.id,
     @required this.activities,
-    @required this.days,
     @required this.targetBodyParts,
     @required this.name,
     @required this.description,
@@ -28,7 +26,6 @@ class Workout {
   Workout.empty() {
     id = IdGenerator.generateV4();
     activities = [];
-    days = [];
     targetBodyParts = [];
     name = DEFAULT_WORKOUT_NAME;
     description = DEFAULT_WORKOUT_DESC;
@@ -38,7 +35,6 @@ class Workout {
   Workout.clone(Workout workout) {
     id = IdGenerator.generateV4();
     activities = workout.activities;
-    days = workout.days;
     targetBodyParts = workout.targetBodyParts;
     name = workout.name;
     description = workout.description;

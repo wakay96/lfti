@@ -12,8 +12,56 @@ import 'package:lfti/helpers/app_strings.dart';
 import 'package:lfti/helpers/id_generator.dart';
 
 class MockRepository implements IRepository {
-  List<Workout> _userWorkouts = [];
-  List<Exercise> _userExercises = [];
+  List<Workout> _userWorkouts = [
+    Workout(
+        name: 'Chest Superset',
+        description: 'Description 1',
+        targetBodyParts: [Target.Chest],
+        id: IdGenerator.generateV4(),
+        activities: [..._sampleActivityList, ..._sampleActivityList]),
+    Workout(
+        name: 'Chest Workout',
+        description: 'Description 2',
+        targetBodyParts: [Target.Chest],
+        id: IdGenerator.generateV4(),
+        activities: _sampleActivityList),
+    Workout(
+        name: 'Chest Superset with Arms and Shoulders',
+        description: 'Description 3',
+        targetBodyParts: [Target.Chest, Target.Arm, Target.Shoulder],
+        id: IdGenerator.generateV4(),
+        activities: _sampleActivityList),
+    Workout(
+        name: 'Leg Superset with Shoulders',
+        description: 'Description 4',
+        targetBodyParts: [Target.Leg, Target.Shoulder],
+        id: IdGenerator.generateV4(),
+        activities: _sampleActivityList),
+    Workout(
+        name: 'Chest Superset with Arms , Core and Shoulders',
+        description: 'Description 5',
+        targetBodyParts: [
+          Target.Chest,
+          Target.Arm,
+          Target.Shoulder,
+          Target.Core
+        ],
+        id: IdGenerator.generateV4(),
+        activities: _sampleActivityList),
+  ];
+
+  List<Exercise> _userExercises = [
+    Exercise(name: 'E1', setCount: 3, repCount: 10, target: Target.Chest),
+    Exercise(name: 'E2', setCount: 3, repCount: 12, target: Target.Back),
+    Exercise(name: 'E3', setCount: 3, repCount: 15, target: Target.Arm),
+    Exercise(name: 'E4', setCount: 3, repCount: 20, target: Target.Leg),
+    Exercise(name: 'E5', setCount: 3, repCount: 25, target: Target.Shoulder),
+    Exercise(name: 'E6', setCount: 3, repCount: 10, target: Target.Chest),
+    Exercise(name: 'E7', setCount: 3, repCount: 12, target: Target.Back),
+    Exercise(name: 'E8', setCount: 3, repCount: 15, target: Target.Arm),
+    Exercise(name: 'E9', setCount: 3, repCount: 20, target: Target.Leg),
+    Exercise(name: 'E10', setCount: 3, repCount: 25, target: Target.Shoulder)
+  ];
 
   static UserData _userData = UserData(
     currentWeight: 153.5,
@@ -39,7 +87,6 @@ class MockRepository implements IRepository {
             description: 'Description 1',
             targetBodyParts: [Target.Chest, Target.Arm, Target.Shoulder],
             id: IdGenerator.generateV4(),
-            days: [WeekdayNames.Monday],
             activities: _sampleActivityList),
         performedExercises: [
           _sampleActivityList[0],
@@ -62,7 +109,6 @@ class MockRepository implements IRepository {
           description: 'Description 2',
           targetBodyParts: [Target.Arm, Target.Core],
           id: IdGenerator.generateV4(),
-          days: [WeekdayNames.Tuesday, WeekdayNames.Thursday],
           activities: _sampleActivityList),
     ),
   );
@@ -214,12 +260,12 @@ class MockRepository implements IRepository {
     try {
       int index = _userWorkouts.indexOf(getWorkoutById(id));
       _userWorkouts[index] = Workout(
-          id: id,
-          name: update.name,
-          description: update.description,
-          activities: update.activities,
-          targetBodyParts: update.targetBodyParts,
-          days: update.days);
+        id: id,
+        name: update.name,
+        description: update.description,
+        activities: update.activities,
+        targetBodyParts: update.targetBodyParts,
+      );
     } catch (e) {
       throw e;
     }
