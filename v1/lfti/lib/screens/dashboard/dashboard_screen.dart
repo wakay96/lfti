@@ -42,8 +42,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         Container(
           child: Column(children: [
             DashboardProgressIndicator(),
-            SizedBox(height: 12.0),
-            SizedBox(height: 12.0),
+            SizedBox(height: 24.0),
 
             /// Weight Section
             UserDataTiles(
