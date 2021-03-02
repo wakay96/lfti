@@ -1,27 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:lfti/helpers/app_styles.dart';
 
-class ExpandableDetailTile extends StatelessWidget {
+class ExpandableDetailTile extends StatefulWidget {
   final String label;
   final Widget expandedContent;
-  final Function onTap;
-  final bool isExpanded;
   final Widget collapsedContent;
   final Widget icon;
 
   ExpandableDetailTile({
     this.label = '',
     this.icon,
-    this.onTap,
-    this.isExpanded = false,
     @required this.collapsedContent,
     @required this.expandedContent,
   });
 
   @override
+  _ExpandableDetailTileState createState() => _ExpandableDetailTileState();
+}
+
+class _ExpandableDetailTileState extends State<ExpandableDetailTile> {
+  bool isExpanded = false;
+
+  void toggleCollapseExpand() => setState(() => isExpanded = !isExpanded);
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: toggleCollapseExpand,
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: borderRadius),
         color: inactiveCardColor,
@@ -36,15 +41,15 @@ class ExpandableDetailTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          label,
+                          widget.label,
                           style: TextStyle(color: currentAppThemeTextColor),
                           textAlign: TextAlign.start,
                         ),
-                        collapsedContent,
+                        widget.collapsedContent,
                       ]),
-                  Container(child: icon),
+                  Container(child: widget.icon),
                 ]),
-            isExpanded ? expandedContent : Container()
+            isExpanded ? widget.expandedContent : Container()
           ]),
         ),
       ),

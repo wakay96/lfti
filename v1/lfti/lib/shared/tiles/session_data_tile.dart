@@ -17,17 +17,11 @@ class SessionDataTile extends StatefulWidget {
 }
 
 class _SessionDataTileState extends State<SessionDataTile> {
-  bool isExpanded = false;
-
-  void toggleCollapseExpand() => setState(() => isExpanded = !isExpanded);
-
   @override
   Widget build(BuildContext context) {
     Session session = widget.session;
 
     return ExpandableDetailTile(
-      isExpanded: isExpanded,
-      onTap: toggleCollapseExpand,
       label: 'Previous Session',
       icon: AppIcon.workoutIcon,
       collapsedContent:
