@@ -10,7 +10,7 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
+    return FlatButton(
       color: color,
       onPressed: _onTap,
       child: Text(

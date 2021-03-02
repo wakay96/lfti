@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lfti/data/models/activity.dart';
 import 'package:lfti/data/models/exercise.dart';
+import 'package:lfti/data/models/rest.dart';
 import 'package:lfti/data/models/workout.dart';
 import 'package:lfti/helpers/app_strings.dart';
 import 'package:lfti/helpers/app_styles.dart';
@@ -27,6 +28,14 @@ class WorkoutScreen extends StatefulWidget {
 }
 
 class _WorkoutScreenState extends State<WorkoutScreen> {
+  void onReorder(int prev, int next, WorkoutScreenProvider viewModel) {
+    setState(() {
+      var temp = viewModel.workouts[prev];
+      viewModel.workouts[prev] = viewModel.workouts[next];
+      viewModel.workouts[next] = temp;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     WorkoutScreenProvider viewModel =
@@ -47,11 +56,9 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
       backgroundColor: primaryColor,
       body: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: ListView.builder(
-          itemCount: viewModel.workouts.length,
-          itemBuilder: (context, index) {
-            return WorkoutContent(viewModel.workouts[index]);
-          },
+        child: ListView(
+          children:
+              viewModel.workouts.map((item) => WorkoutContent(item)).toList(),
         ),
       ),
     );
@@ -61,24 +68,36 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
 class WorkoutContent extends StatelessWidget {
   final Workout workout;
   WorkoutContent(this.workout);
-
   @override
   Widget build(BuildContext context) {
     return Card(
       color: inactiveCardColor,
       shape: RoundedRectangleBorder(borderRadius: borderRadius),
-      child: Padding(
+      child: Container(
         padding: cardPadding,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                OverflowingText(
-                  text: '${workout.name}',
-                  style: mediumTextStyle.copyWith(fontWeight: FontWeight.bold),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OverflowingText(
+                        text: '${workout.name}',
+                        style: mediumTextStyle.copyWith(
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Button(
+                      'edit',
+                      () {
+                        print('${workout.name} edit was pressed');
+                      },
+                      color: Colors.transparent,
+                    ),
+                  ],
                 ),
                 Text(
                   '${workout.description}',
@@ -91,48 +110,62 @@ class WorkoutContent extends StatelessWidget {
               ],
             ),
             Divider(),
-            Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Exercises', style: smallTextStyle),
-                      Column(
-                        children: getExerciseWidgets(workout.activities),
-                      )
-                    ],
+            Table(
+              columnWidths: {0: FractionColumnWidth(0.5)},
+              children: [
+                TableRow(children: [
+                  Text(
+                    'Name',
+                    style: smallTextStyle.copyWith(fontWeight: FontWeight.bold),
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Button('edit', () {
-                        print('${workout.name} edit was pressed');
-                      }),
-                      Button('start', () {
-                        print('${workout.name} start was pressed');
-                      })
-                    ],
-                  )
+                  Text(
+                    'Rep Count',
+                    style: smallTextStyle.copyWith(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    'Set Count',
+                    style: smallTextStyle.copyWith(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
                 ]),
+                ...workout.activities.map((item) => buildRow(item))
+              ],
+            )
           ],
         ),
       ),
     );
   }
+}
 
-  List<Widget> getExerciseWidgets(List<Activity> activities) {
-    var list = <Widget>[];
-    activities.forEach((item) {
-      if (item is Exercise) {
-        list.add(Text(
-          item.name,
-          style: smallTextStyle.copyWith(fontWeight: FontWeight.bold),
-        ));
-      }
-    });
-    return list;
+TableRow buildRow(Activity act) {
+  if (act is Exercise) {
+    return TableRow(children: [
+      Text(
+        act.name,
+        style: smallTextStyle,
+      ),
+      Text(
+        '${act.repCount}',
+        style: smallTextStyle,
+        textAlign: TextAlign.center,
+      ),
+      Text(
+        '${act.setCount}',
+        style: smallTextStyle,
+        textAlign: TextAlign.center,
+      ),
+    ]);
+  } else {
+    var rest = act as Rest;
+    return TableRow(children: [
+      Text(
+        rest.name,
+        style: smallTextStyle.copyWith(color: tertiaryColor),
+      ),
+      SizedBox(),
+      SizedBox(),
+    ]);
   }
 }
