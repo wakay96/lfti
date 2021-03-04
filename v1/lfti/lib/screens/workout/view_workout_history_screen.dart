@@ -5,14 +5,15 @@ import 'package:lfti/helpers/app_strings.dart';
 import 'package:lfti/helpers/app_styles.dart';
 import 'package:lfti/shared/tiles/activity_preview_tile.dart';
 
-class WorkoutHistoryScreen extends StatefulWidget {
+class ViewWorkoutHistoryScreen extends StatefulWidget {
   static const String id = 'WorkoutHistoryScreen';
 
   @override
-  _WorkoutHistoryScreenState createState() => _WorkoutHistoryScreenState();
+  _ViewWorkoutHistoryScreenState createState() =>
+      _ViewWorkoutHistoryScreenState();
 }
 
-class _WorkoutHistoryScreenState extends State<WorkoutHistoryScreen> {
+class _ViewWorkoutHistoryScreenState extends State<ViewWorkoutHistoryScreen> {
   @override
   Widget build(BuildContext context) {
     final Map data = ModalRoute.of(context).settings.arguments;

@@ -3,10 +3,10 @@ import 'package:lfti/helpers/app_icon.dart';
 import 'package:lfti/helpers/app_strings.dart';
 import 'package:lfti/helpers/app_styles.dart';
 import 'package:lfti/screens/dashboard/dashboard_screen.dart';
-import 'package:lfti/screens/workout/workout_view_screen.dart';
+import 'package:lfti/screens/workout/workout_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  static const String id = "HomeScreen";
+  static const String id = 'HomeScreen';
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -14,21 +14,21 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentPageIndex;
+  List<Widget> _pages;
 
   @override
   void initState() {
     _currentPageIndex = 0;
+    _pages = <Widget>[
+      DashboardScreenBuilder(),
+      WorkoutScreenBuilder(),
+    ];
     super.initState();
   }
 
   void setPage(int index) {
     setState(() => _currentPageIndex = index);
   }
-
-  List<Widget> _pages = [
-    DashboardScreenBuilder(),
-    WorkoutViewScreenBuilder(),
-  ];
 
   @override
   Widget build(BuildContext context) {

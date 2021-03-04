@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lfti/screens/dashboard/dashboard_screen.dart';
 import 'package:lfti/screens/home/home_screen.dart';
-import 'package:lfti/screens/workout/workout_history_screen.dart';
-import 'package:lfti/screens/workout/workout_view_screen.dart';
+import 'package:lfti/screens/workout/view_workout_history_screen.dart';
+import 'package:lfti/screens/workout/workout_screen.dart';
 import 'package:lfti/services/app_manager.dart';
 
 void main() {
@@ -19,8 +19,8 @@ class App extends StatelessWidget {
       routes: {
         HomeScreen.id: (context) => HomeScreen(),
         DashboardScreen.id: (context) => DashboardScreenBuilder(),
-        WorkoutViewScreen.id: (context) => WorkoutViewScreenBuilder(),
-        WorkoutHistoryScreen.id: (context) => WorkoutHistoryScreen(),
+        WorkoutScreen.id: (context) => WorkoutScreenBuilder(),
+        ViewWorkoutHistoryScreen.id: (context) => ViewWorkoutHistoryScreen(),
       },
     );
   }

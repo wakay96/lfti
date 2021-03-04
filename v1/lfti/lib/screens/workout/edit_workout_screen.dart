@@ -4,12 +4,12 @@ import 'package:lfti/helpers/app_styles.dart';
 import 'package:lfti/helpers/id_generator.dart';
 import 'package:lfti/shared/tiles/button_tile.dart';
 
-class WorkoutEditScreen extends StatefulWidget {
+class EditWorkoutScreen extends StatefulWidget {
   @override
-  _WorkoutEditScreenState createState() => _WorkoutEditScreenState();
+  _EditWorkoutScreenState createState() => _EditWorkoutScreenState();
 }
 
-class _WorkoutEditScreenState extends State<WorkoutEditScreen> {
+class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

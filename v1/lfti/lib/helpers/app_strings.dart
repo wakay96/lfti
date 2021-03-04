@@ -1,18 +1,8 @@
-const String LB_UNIT_TEXT = 'lb';
-const String KILOGRAM_UNIT_TEXT = 'kg';
-const String PERCENT_UNIT = '%';
-const String CURRENT_LABEL = 'CURRENT';
-const String GOAL_LABEL = 'GOAL';
-const String REST_ACTIVITY_NAME = 'Rest';
-const String REST_ACTIVITY_DESC = '';
-const String DEFAULT_WORKOUT_NAME = 'unnamed';
-const String DEFAULT_WORKOUT_DESC = '';
-const String DEFAULT_EXERCISE_NAME = 'unnamed';
-const String DEFAULT_EXERCISE_DESC = '';
-const String DAY_UNIT = 'day';
-const String MINUTE_UNIT = 'min';
-const String HOUR_UNIT = 'hour';
-const String SESSION_TEXT = 'session';
+/// App Screen Ids
+const String dashboardScreenId = "DashboardScreen";
+const String homeScreenId = "HomeScreen";
+const String workoutScreenId = "WorkoutScreen";
+const String viewWorkoutHistoryScreenId = 'ViewWorkoutHistoryScreen';
 
 /// App Messages
 const String GOAL_MET_MESSAGE = 'Goal Met!';
@@ -53,3 +43,19 @@ class WorkoutType {
   static const TwoMuscleGroup = 'TwoMuscleGroup';
   static const SingleMuscleFocus = 'SingleMuscleFocus';
 }
+
+const String LB_UNIT_TEXT = 'lb';
+const String KILOGRAM_UNIT_TEXT = 'kg';
+const String PERCENT_UNIT = '%';
+const String CURRENT_LABEL = 'CURRENT';
+const String GOAL_LABEL = 'GOAL';
+const String REST_ACTIVITY_NAME = 'Rest';
+const String REST_ACTIVITY_DESC = '';
+const String DEFAULT_WORKOUT_NAME = 'unnamed';
+const String DEFAULT_WORKOUT_DESC = '';
+const String DEFAULT_EXERCISE_NAME = 'unnamed';
+const String DEFAULT_EXERCISE_DESC = '';
+const String DAY_UNIT = 'day';
+const String MINUTE_UNIT = 'min';
+const String HOUR_UNIT = 'hour';
+const String SESSION_TEXT = 'session';

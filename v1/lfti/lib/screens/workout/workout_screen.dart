@@ -11,23 +11,23 @@ import 'package:lfti/shared/buttons/button.dart';
 import 'package:lfti/shared/text/overflowing_text.dart';
 import 'package:provider/provider.dart';
 
-class WorkoutViewScreenBuilder extends StatelessWidget {
+class WorkoutScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<WorkoutScreenProvider>(
       create: (BuildContext context) => WorkoutScreenProvider(),
-      child: WorkoutViewScreen(),
+      child: WorkoutScreen(),
     );
   }
 }
 
-class WorkoutViewScreen extends StatefulWidget {
-  static const String id = "WorkoutViewScreen";
+class WorkoutScreen extends StatefulWidget {
+  static const String id = 'WorkoutScreen';
   @override
-  _WorkoutViewScreenState createState() => _WorkoutViewScreenState();
+  _WorkoutScreenState createState() => _WorkoutScreenState();
 }
 
-class _WorkoutViewScreenState extends State<WorkoutViewScreen> {
+class _WorkoutScreenState extends State<WorkoutScreen> {
   @override
   Widget build(BuildContext context) {
     WorkoutScreenProvider viewModel =

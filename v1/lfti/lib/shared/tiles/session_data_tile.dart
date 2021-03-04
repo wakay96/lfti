@@ -3,7 +3,7 @@ import 'package:lfti/data/models/session.dart';
 import 'package:lfti/helpers/app_icon.dart';
 import 'package:lfti/helpers/app_styles.dart';
 import 'package:lfti/helpers/string_formatter.dart';
-import 'package:lfti/screens/workout/workout_history_screen.dart';
+import 'package:lfti/screens/workout/view_workout_history_screen.dart';
 import 'package:lfti/shared/buttons/button.dart';
 import 'package:lfti/shared/tiles/expandable_detail_tile.dart';
 import 'package:lfti/shared/text/overflowing_text.dart';
@@ -78,7 +78,7 @@ class _SessionDataTileState extends State<SessionDataTile> {
                 ]),
                 Spacer(flex: 1),
                 Button('View Workout', () {
-                  Navigator.pushNamed(context, WorkoutHistoryScreen.id,
+                  Navigator.pushNamed(context, ViewWorkoutHistoryScreen.id,
                       arguments: {
                         'workout': session.workout,
                         'skipped': session.skippedExercises
