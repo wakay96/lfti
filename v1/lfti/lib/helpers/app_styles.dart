@@ -8,11 +8,11 @@ const Color dangerColor = Color(0xFFD7263D);
 
 // used
 const Color weightThemeColor = Color(0xFF68C5DB);
-const Color bodyFatThemeColor = Color(0xFFFF0021);
+const Color bodyFatThemeColor = Color(0xFFFFE200);
 const Color workoutThemeColor = Color(0xFF00FF14);
 const Color exerciseThemeColor = workoutThemeColor;
 const Color restThemeColor = weightThemeColor;
-const Color prevWorkoutThemeColor = Color(0xFFFFE200);
+const Color timeThemeColor = Color(0xFFFF586A);
 const Color skippedWorkoutColor = primaryColor;
 
 const Color primaryColor = Color(0xFF02182b);
@@ -33,7 +33,7 @@ const double LARGE_TEXT = 35;
 const double XLARGE_TEXT = 50;
 
 const Color lightThemeTextColor = Color(0xFF363636);
-const Color darkThemeTextColor = Colors.white;
+const Color darkThemeTextColor = Color(0xFFFAFAFA);
 const Color currentAppThemeTextColor = darkThemeTextColor;
 
 // Button Styles

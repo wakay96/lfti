@@ -39,7 +39,7 @@ class ButtonTile extends StatelessWidget {
                   ),
                   content,
                 ]),
-                icon,
+                icon == null ? Container() : icon,
               ]),
         ),
       ),

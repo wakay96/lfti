@@ -30,7 +30,6 @@ class UserDataTiles extends StatelessWidget {
             child: ButtonTile(
               isActive: isActive,
               onTap: onTap,
-              icon: icons == null ? null : icons[0],
               label: labels[0] == null ? '' : labels[0],
               content: RowText(
                 content: contents[0] == null ? '-' : contents[0],

@@ -37,4 +37,10 @@ class AppIcon {
     color: appStyles.restThemeColor,
     size: 30,
   );
+
+  static const timeIcon = FaIcon(
+    FontAwesomeIcons.solidClock,
+    color: appStyles.timeThemeColor,
+    size: 30,
+  );
 }
