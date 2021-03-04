@@ -3,7 +3,6 @@ import 'package:lfti/data/models/activity.dart';
 import 'package:lfti/data/models/exercise.dart';
 import 'package:lfti/data/models/rest.dart';
 import 'package:lfti/data/models/workout.dart';
-import 'package:lfti/helpers/app_strings.dart';
 import 'package:lfti/helpers/app_styles.dart';
 import 'package:lfti/helpers/string_formatter.dart';
 import 'package:lfti/providers/workout_screen_provider.dart';
@@ -23,6 +22,7 @@ class WorkoutScreenBuilder extends StatelessWidget {
 
 class WorkoutScreen extends StatefulWidget {
   static const String id = 'WorkoutScreen';
+  final String appBarTitle = "workouts";
   @override
   _WorkoutScreenState createState() => _WorkoutScreenState();
 }
@@ -39,7 +39,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
         title: Container(
           alignment: Alignment.bottomRight,
           child: Text(
-            WORKOUT_SCREEN_APPBAR_TEXT,
+            widget.appBarTitle,
             style: appBarTitleTextStyleLight,
           ),
         ),

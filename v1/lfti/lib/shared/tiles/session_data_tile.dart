@@ -24,7 +24,7 @@ class _SessionDataTileState extends State<SessionDataTile> {
 
     return ExpandableDetailTile(
       label: 'Previous Session',
-      icon: AppIcon.workoutIcon,
+      icon: AppIcon.activeWorkout,
       collapsedContent:
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         OverflowingText(

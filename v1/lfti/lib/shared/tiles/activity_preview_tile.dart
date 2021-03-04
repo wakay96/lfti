@@ -17,9 +17,9 @@ class ActivityPreviewTile extends StatelessWidget {
   Widget getIcon(Activity activity, bool skipped) {
     Widget icon;
     if (activity is Exercise) {
-      icon = skipped ? AppIcon.skippedWorkoutIcon : AppIcon.workoutIcon;
+      icon = skipped ? AppIcon.skippedWorkout : AppIcon.activeWorkout;
     } else {
-      icon = AppIcon.restIcon;
+      icon = AppIcon.rest;
     }
     return Container(
       padding: EdgeInsets.all(10.0),
