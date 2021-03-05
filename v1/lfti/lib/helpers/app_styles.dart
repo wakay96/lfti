@@ -94,8 +94,18 @@ const TextStyle buttonTextStyle = TextStyle(
 );
 
 const TextStyle labelSmallTextStyle = TextStyle(
-  color: currentAppThemeTextColor,
+  color: tertiaryColor,
   fontSize: SMALL_TEXT,
+);
+
+const TextStyle labelMediumTextStyle = TextStyle(
+  color: tertiaryColor,
+  fontSize: MEDIUM_TEXT,
+);
+
+const TextStyle uneditableMediumTextStyle = TextStyle(
+  color: currentAppThemeTextColor,
+  fontSize: MEDIUM_TEXT,
 );
 
 const TextStyle appBarTitleTextStyleLight = TextStyle(

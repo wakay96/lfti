@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:lfti/data/models/workout.dart';
 import 'package:lfti/helpers/app_styles.dart';
-import 'package:lfti/helpers/id_generator.dart';
-import 'package:lfti/shared/tiles/button_tile.dart';
+import 'package:lfti/providers/edit_workout_screen_provider.dart';
+import 'package:lfti/shared/tiles/edit_activity_tile.dart';
+import 'package:provider/provider.dart';
+
+class EditWorkoutScreenBuilder extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<EditWorkoutScreenProvider>(
+      create: (BuildContext context) => EditWorkoutScreenProvider(),
+      child: EditWorkoutScreen(),
+    );
+  }
+}
 
 class EditWorkoutScreen extends StatefulWidget {
   static const String id = 'EditWorkoutScreen';
@@ -13,8 +25,9 @@ class EditWorkoutScreen extends StatefulWidget {
 class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
   @override
   Widget build(BuildContext context) {
+    final Map data = ModalRoute.of(context).settings.arguments;
+    Workout _workout = data['workout'] as Workout;
     return Scaffold(
-      backgroundColor: primaryColor,
       appBar: AppBar(
         backgroundColor: primaryColor,
         shadowColor: Colors.transparent,
@@ -27,43 +40,19 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
         ),
         centerTitle: false,
       ),
-      body: ReorderableListView(
-        onReorder: (from, to) {
-          print('from:$from to:$to');
+      backgroundColor: primaryColor,
+      body: ListView.builder(
+        itemCount: _workout.activities.length,
+        itemBuilder: (context, index) {
+          var activity = _workout.activities[index];
+          return Container(
+            key: Key(index.toString()),
+            child: EditActivityTile(
+              activity,
+              color: inactiveCardColor,
+            ),
+          );
         },
-        header: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text('Workout name', style: workoutMediumTextStyle),
-            Text('Workout name', style: workoutMediumTextStyle),
-            Text('Workout name', style: workoutMediumTextStyle),
-            Text('Workout name', style: workoutMediumTextStyle),
-          ],
-        ),
-        children: [
-          Container(
-            color: Colors.transparent,
-            height: 75,
-            key: Key(IdGenerator.generateV4()),
-            child: ButtonTile(
-              content: Text('Workout 1', style: workoutMediumTextStyle),
-            ),
-          ),
-          Container(
-            height: 75,
-            key: Key(IdGenerator.generateV4()),
-            child: ButtonTile(
-              content: Text('Workout 2', style: workoutMediumTextStyle),
-            ),
-          ),
-          Container(
-            height: 75,
-            key: Key(IdGenerator.generateV4()),
-            child: ButtonTile(
-              content: Text('Workout 3', style: workoutMediumTextStyle),
-            ),
-          ),
-        ],
       ),
     );
   }

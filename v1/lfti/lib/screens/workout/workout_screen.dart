@@ -6,6 +6,7 @@ import 'package:lfti/data/models/workout.dart';
 import 'package:lfti/helpers/app_styles.dart';
 import 'package:lfti/helpers/string_formatter.dart';
 import 'package:lfti/providers/workout_screen_provider.dart';
+import 'package:lfti/screens/workout/edit_workout_screen.dart';
 import 'package:lfti/shared/buttons/button.dart';
 import 'package:lfti/shared/text/overflowing_text.dart';
 import 'package:provider/provider.dart';
@@ -60,6 +61,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
 class WorkoutContent extends StatelessWidget {
   final Workout workout;
   WorkoutContent(this.workout);
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -85,7 +87,8 @@ class WorkoutContent extends StatelessWidget {
                     Button(
                       'edit',
                       () {
-                        print('${workout.name} edit was pressed');
+                        Navigator.pushNamed(context, EditWorkoutScreen.id,
+                            arguments: {'workout': workout});
                       },
                       color: Colors.transparent,
                     ),

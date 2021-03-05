@@ -5,14 +5,13 @@ import 'package:lfti/data/models/rest.dart';
 import 'package:lfti/helpers/app_icon.dart';
 import 'package:lfti/helpers/app_styles.dart';
 import 'package:lfti/shared/text/overflowing_text.dart';
-import 'package:lfti/shared/text/row_text.dart';
 
-class ActivityPreviewTile extends StatelessWidget {
+class PreviewActivityTile extends StatelessWidget {
   final Activity activity;
   final Color color;
   final bool skipped;
 
-  ActivityPreviewTile(this.activity, {this.color, this.skipped});
+  PreviewActivityTile(this.activity, {this.color, this.skipped});
 
   Widget getIcon(Activity activity, bool skipped) {
     Widget icon;
@@ -113,12 +112,6 @@ class RestContent extends StatelessWidget {
             style: restMediumTextStyle.copyWith(
               fontWeight: FontWeight.bold,
             )),
-        Text('Time', style: labelSmallTextStyle),
-        RowText(
-          content: '${activity.duration.inSeconds.toString()}',
-          subContent: 'sec',
-          color: weightThemeColor,
-        ),
       ]),
     ]);
   }

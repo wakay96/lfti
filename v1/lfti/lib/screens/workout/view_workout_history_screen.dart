@@ -3,11 +3,11 @@ import 'package:lfti/data/models/exercise.dart';
 import 'package:lfti/data/models/workout.dart';
 import 'package:lfti/helpers/app_strings.dart';
 import 'package:lfti/helpers/app_styles.dart';
-import 'package:lfti/shared/tiles/activity_preview_tile.dart';
+import 'package:lfti/shared/tiles/preview_activity_tile.dart';
 
 class ViewWorkoutHistoryScreen extends StatefulWidget {
   static const String id = 'WorkoutHistoryScreen';
-
+  final String appBarTitle = "session";
   @override
   _ViewWorkoutHistoryScreenState createState() =>
       _ViewWorkoutHistoryScreenState();
@@ -39,7 +39,7 @@ class _ViewWorkoutHistoryScreenState extends State<ViewWorkoutHistoryScreen> {
           var activity = _workout.activities[index];
           return Container(
             key: Key(index.toString()),
-            child: ActivityPreviewTile(
+            child: PreviewActivityTile(
               activity,
               color: inactiveCardColor,
               skipped: _skippedExercises.contains(activity),
