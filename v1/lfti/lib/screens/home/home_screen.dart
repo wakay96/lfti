@@ -13,31 +13,31 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentPageIndex;
-  List<Widget> _pages;
+  List<Widget> _screens;
 
   @override
   void initState() {
     _currentPageIndex = 0;
-    _pages = <Widget>[
+    _screens = <Widget>[
       DashboardScreenBuilder(),
       WorkoutScreenBuilder(),
     ];
     super.initState();
   }
 
-  void setPage(int index) {
+  void setScreen(int index) {
     setState(() => _currentPageIndex = index);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_currentPageIndex],
+      body: _screens[_currentPageIndex],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: primaryColor,
         selectedLabelStyle: exerciseSmallTextStyle,
         currentIndex: _currentPageIndex,
-        onTap: (selected) => setPage(selected),
+        onTap: (selected) => setScreen(selected),
         items: [
           BottomNavigationBarItem(
               icon: AppIcon.inactiveDashboard,

@@ -33,19 +33,16 @@ class DashboardScreenProvider extends ChangeNotifier {
   String currentMonthDayText = '';
   String remainingHoursText = '';
   int weekSessionCount = 0;
+  bool isLoading = true;
 
-  UserData userData;
-  DashboardSection activeSection;
-  DashboardSection previousSection;
-  SessionsData sessionData;
+  UserData userData = UserData();
+  DashboardSection activeSection = DashboardSection.Day;
+  DashboardSection previousSection = DashboardSection.Day;
+  SessionsData sessionData = SessionsData();
 
   ProgressViewWidgetDataModel progressViewData = ProgressViewWidgetDataModel();
 
-  DashboardScreenProvider() {
-    initializeData();
-  }
-
-  initializeData() {
+  void initializeData() {
     _dateTimeInfo = DateTimeInfo(DateTime.now());
     currentWeekdayText = _dateTimeInfo.dayName;
     currentMonthDayText = "${_dateTimeInfo.monthName} ${_dateTimeInfo.day}";
@@ -53,13 +50,8 @@ class DashboardScreenProvider extends ChangeNotifier {
     userData = _repository.getUserData();
     sessionData = _repository.getSessionData();
 
-    activeSection = DashboardSection.Day;
-    previousSection = activeSection;
-
     weekSessionCount = getWeekSessionCount();
-
     selectDaySection();
-    notifyListeners();
   }
 
   int calcRemainingHrsOfTheDay() => 24 - _dateTimeInfo.militaryHours;
@@ -83,6 +75,11 @@ class DashboardScreenProvider extends ChangeNotifier {
     } else {
       return unit;
     }
+  }
+
+  void toggleLoadingIndicator() {
+    isLoading = !isLoading;
+    notifyListeners();
   }
 
   void selectDaySection() {

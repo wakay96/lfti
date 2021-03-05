@@ -15,7 +15,7 @@ abstract class IRepository {
   Workout getWorkoutById(String uuid);
   List<Exercise> getAllExercises();
   List<Exercise> getUserExercises();
-  Exercise getExerciseById(String uuid);
+  Exercise getExerciseById(String id);
   UserData getUserData();
   UserInfo getUserInfo();
   SessionsData getSessionData();

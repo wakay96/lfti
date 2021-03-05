@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lfti/data/models/workout.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:lfti/helpers/app_styles.dart';
 import 'package:lfti/providers/edit_workout_screen_provider.dart';
 import 'package:lfti/shared/tiles/edit_activity_tile.dart';
@@ -24,13 +24,23 @@ class EditWorkoutScreen extends StatefulWidget {
 
 class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
   @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      final viewModel =
+          Provider.of<EditWorkoutScreenProvider>(context, listen: false);
+      final Map data = ModalRoute.of(context).settings.arguments;
+      viewModel.initializeData(data['workout'].id);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final Map data = ModalRoute.of(context).settings.arguments;
-    Workout _workout = data['workout'] as Workout;
+    EditWorkoutScreenProvider viewModel =
+        Provider.of<EditWorkoutScreenProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
-        shadowColor: Colors.transparent,
         title: Container(
           alignment: Alignment.bottomRight,
           child: Text(
@@ -42,9 +52,9 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
       ),
       backgroundColor: primaryColor,
       body: ListView.builder(
-        itemCount: _workout.activities.length,
+        itemCount: viewModel.workout.activities.length,
         itemBuilder: (context, index) {
-          var activity = _workout.activities[index];
+          var activity = viewModel.workout.activities[index];
           return Container(
             key: Key(index.toString()),
             child: EditActivityTile(
