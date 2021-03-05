@@ -5,8 +5,8 @@ import 'package:lfti/helpers/app_styles.dart';
 
 class EditRestContent extends StatefulWidget {
   final Rest activity;
-  final bool isEnabled;
-  EditRestContent(this.activity, {this.isEnabled = true});
+  final bool isEditable;
+  EditRestContent(this.activity, {this.isEditable = true});
 
   @override
   _EditRestContentState createState() => _EditRestContentState();
@@ -38,16 +38,16 @@ class _EditRestContentState extends State<EditRestContent> {
                 alignLabelWithHint: true,
                 isCollapsed: true,
                 fillColor: Colors.grey,
-                border: widget.isEnabled ? null : InputBorder.none,
+                border: widget.isEditable ? null : InputBorder.none,
                 contentPadding:
                     EdgeInsets.symmetric(horizontal: 0, vertical: 0),
               ),
               cursorColor: tertiaryColor,
               controller: controller,
-              style: widget.isEnabled
+              style: widget.isEditable
                   ? workoutMediumTextStyle
                   : uneditableMediumTextStyle,
-              enabled: widget.isEnabled,
+              enabled: widget.isEditable,
             ),
           ),
           Expanded(
