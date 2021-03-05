@@ -77,13 +77,17 @@ class _SessionDataTileState extends State<SessionDataTile> {
                       style: workoutMediumTextStyle)
                 ]),
                 Spacer(flex: 1),
-                Button('View Workout', () {
-                  Navigator.pushNamed(context, ViewWorkoutHistoryScreen.id,
-                      arguments: {
-                        'workout': session.workout,
-                        'skipped': session.skippedExercises
-                      });
-                }),
+                Button(
+                  'View Workout',
+                  () {
+                    Navigator.pushNamed(context, ViewWorkoutHistoryScreen.id,
+                        arguments: {
+                          'workout': session.workout,
+                          'skipped': session.skippedExercises
+                        });
+                  },
+                  color: Colors.transparent,
+                ),
               ]),
         ]),
       ]),
