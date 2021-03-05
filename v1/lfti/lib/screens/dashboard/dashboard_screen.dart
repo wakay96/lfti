@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:lfti/helpers/app_styles.dart';
 import 'package:lfti/providers/dashboard_screen_provider.dart';
 import 'package:provider/provider.dart';
@@ -36,17 +35,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      final viewModel =
-          Provider.of<DashboardScreenProvider>(context, listen: false);
-      viewModel.initializeData();
-    });
+    Provider.of<DashboardScreenProvider>(context, listen: false)
+        .initializeData();
   }
 
   @override
   Widget build(BuildContext context) {
-    DashboardScreenProvider viewModel =
-        Provider.of<DashboardScreenProvider>(context);
+    final viewModel = Provider.of<DashboardScreenProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,

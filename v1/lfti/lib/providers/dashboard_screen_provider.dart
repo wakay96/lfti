@@ -29,15 +29,15 @@ class DashboardScreenProvider extends ChangeNotifier {
   DateTimeInfo _dateTimeInfo;
 
   /// Screen Data
+  bool isLoading = true;
   String currentWeekdayText = '';
   String currentMonthDayText = '';
   String remainingHoursText = '';
   int weekSessionCount = 0;
-  bool isLoading = true;
 
-  UserData userData = UserData();
   DashboardSection activeSection = DashboardSection.Day;
   DashboardSection previousSection = DashboardSection.Day;
+  UserData userData = UserData();
   SessionsData sessionData = SessionsData();
 
   ProgressViewWidgetDataModel progressViewData = ProgressViewWidgetDataModel();

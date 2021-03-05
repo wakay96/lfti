@@ -27,17 +27,15 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
   void initState() {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      final viewModel =
-          Provider.of<EditWorkoutScreenProvider>(context, listen: false);
       final Map data = ModalRoute.of(context).settings.arguments;
-      viewModel.initializeData(data['workout'].id);
+      Provider.of<EditWorkoutScreenProvider>(context, listen: false)
+          .initializeData(data['workout'].id);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    EditWorkoutScreenProvider viewModel =
-        Provider.of<EditWorkoutScreenProvider>(context);
+    final viewModel = Provider.of<EditWorkoutScreenProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
@@ -51,19 +49,21 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
         centerTitle: false,
       ),
       backgroundColor: primaryColor,
-      body: ListView.builder(
-        itemCount: viewModel.workout.activities.length,
-        itemBuilder: (context, index) {
-          var activity = viewModel.workout.activities[index];
-          return Container(
-            key: Key(index.toString()),
-            child: EditActivityTile(
-              activity,
-              color: inactiveCardColor,
-            ),
-          );
-        },
-      ),
+      body: viewModel.workout != null
+          ? ListView.builder(
+              itemCount: viewModel.workout.activities.length,
+              itemBuilder: (context, index) {
+                var activity = viewModel.workout.activities[index];
+                return Container(
+                  key: Key(index.toString()),
+                  child: EditActivityTile(
+                    activity,
+                    color: inactiveCardColor,
+                  ),
+                );
+              },
+            )
+          : Container(),
     );
   }
 }

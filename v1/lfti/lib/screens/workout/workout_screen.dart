@@ -21,14 +21,9 @@ class WorkoutScreenBuilder extends StatelessWidget {
   }
 }
 
-class WorkoutScreen extends StatefulWidget {
+class WorkoutScreen extends StatelessWidget {
   static const String id = 'WorkoutScreen';
   final String appBarTitle = "workouts";
-  @override
-  _WorkoutScreenState createState() => _WorkoutScreenState();
-}
-
-class _WorkoutScreenState extends State<WorkoutScreen> {
   @override
   Widget build(BuildContext context) {
     WorkoutScreenProvider viewModel =
@@ -40,7 +35,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
         title: Container(
           alignment: Alignment.bottomRight,
           child: Text(
-            widget.appBarTitle,
+            appBarTitle,
             style: appBarTitleTextStyleLight,
           ),
         ),
@@ -159,8 +154,8 @@ TableRow buildRow(Activity act) {
         rest.name,
         style: smallTextStyle.copyWith(color: tertiaryColor),
       ),
-      SizedBox(),
-      SizedBox(),
+      Container(),
+      Container(),
     ]);
   }
 }
