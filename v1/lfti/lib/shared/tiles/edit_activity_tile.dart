@@ -27,39 +27,37 @@ class EditActivityTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: primaryContainerSidePadding,
-      child: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
-        },
-        child: Card(
-          color: color,
-          shape: RoundedRectangleBorder(borderRadius: borderRadius),
-          child: Padding(
-              padding: cardPadding,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: Column(
-                      children: [
-                        activity is Exercise
-                            ? EditExerciseContent(
-                                activity,
-                                isNameEditable: false,
-                                isTargetEditable: false,
-                              )
-                            : EditRestContent(activity)
-                      ],
-                    ),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(new FocusNode());
+      },
+      child: Card(
+        margin: cardHorizontalSpacing,
+        color: color,
+        shape: RoundedRectangleBorder(borderRadius: borderRadius),
+        child: Padding(
+            padding: cardPadding,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: Column(
+                    children: [
+                      activity is Exercise
+                          ? EditExerciseContent(
+                              activity,
+                              isNameEditable: false,
+                              isTargetEditable: false,
+                            )
+                          : EditRestContent(activity)
+                    ],
                   ),
-                  getIcon(activity)
-                ],
-              )),
-        ),
+                ),
+                getIcon(activity)
+              ],
+            )),
       ),
     );
   }

@@ -22,9 +22,10 @@ const Color inactiveCardColor = Color(0xFF053055);
 
 // Padding
 const EdgeInsets primaryContainerPadding = EdgeInsets.all(20.0);
-const EdgeInsets cardPadding = EdgeInsets.all(10.0);
+const EdgeInsets cardPadding = EdgeInsets.all(15.0);
 const EdgeInsets primaryContainerSidePadding =
-    EdgeInsets.only(left: 10.0, right: 10.0);
+    EdgeInsets.only(left: 20.0, right: 20.0);
+const EdgeInsets cardHorizontalSpacing = EdgeInsets.only(bottom: 2.5, top: 2.5);
 
 // FONT SIZE
 const double SMALL_TEXT = 12;

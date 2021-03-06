@@ -23,13 +23,22 @@ class EditWorkoutScreen extends StatefulWidget {
 }
 
 class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
+  TextEditingController nameTextController;
+  TextEditingController descriptionTextController;
+
   @override
   void initState() {
     super.initState();
+
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       final Map data = ModalRoute.of(context).settings.arguments;
-      Provider.of<EditWorkoutScreenProvider>(context, listen: false)
-          .initializeData(data['workout'].id);
+      final viewModel =
+          Provider.of<EditWorkoutScreenProvider>(context, listen: false);
+      viewModel.initializeData(data['workout'].id);
+
+      nameTextController = TextEditingController(text: viewModel.workout.name);
+      descriptionTextController =
+          TextEditingController(text: viewModel.workout.description);
     });
   }
 
@@ -37,33 +46,74 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
   Widget build(BuildContext context) {
     final viewModel = Provider.of<EditWorkoutScreenProvider>(context);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: primaryColor,
-        title: Container(
-          alignment: Alignment.bottomRight,
-          child: Text(
-            widget.appBarTitle,
-            style: appBarTitleTextStyleLight,
+        appBar: AppBar(
+          backgroundColor: primaryColor,
+          title: Container(
+            alignment: Alignment.bottomRight,
+            child: Text(
+              widget.appBarTitle,
+              style: appBarTitleTextStyleLight,
+            ),
           ),
+          centerTitle: false,
         ),
-        centerTitle: false,
-      ),
-      backgroundColor: primaryColor,
-      body: viewModel.workout != null
-          ? ListView.builder(
-              itemCount: viewModel.workout.activities.length,
-              itemBuilder: (context, index) {
-                var activity = viewModel.workout.activities[index];
-                return Container(
-                  key: Key(index.toString()),
-                  child: EditActivityTile(
-                    activity,
-                    color: inactiveCardColor,
-                  ),
-                );
-              },
-            )
-          : Container(),
+        backgroundColor: primaryColor,
+        body: viewModel.workout != null
+            ? Padding(
+                padding: primaryContainerSidePadding,
+                child: ReorderableListView.builder(
+                    header: Card(
+                      margin: cardHorizontalSpacing,
+                      color: inactiveCardColor,
+                      shape: RoundedRectangleBorder(borderRadius: borderRadius),
+                      child: Padding(
+                        padding: cardPadding,
+                        child: Column(children: [
+                          _renderTextFieldInputWithLabel(
+                              context, nameTextController, 'Name'),
+                          _renderTextFieldInputWithLabel(
+                              context, descriptionTextController, 'Description')
+                        ]),
+                      ),
+                    ),
+                    onReorder: viewModel.onReorder,
+                    itemCount: viewModel.workout.activities.length,
+                    itemBuilder: (context, index) {
+                      var activity = viewModel.workout.activities[index];
+                      return Container(
+                        key: Key(index.toString()),
+                        child: EditActivityTile(
+                          activity,
+                          color: inactiveCardColor,
+                        ),
+                      );
+                    }))
+            : Container());
+  }
+
+  Widget _renderTextFieldInputWithLabel(
+      BuildContext context, TextEditingController controller, String label,
+      {bool enabled = true}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('$label', style: labelSmallTextStyle),
+        TextField(
+          minLines: 1,
+          maxLines: 3,
+          decoration: InputDecoration(
+            hintText: controller.text,
+            hintStyle: labelMediumTextStyle,
+            alignLabelWithHint: true,
+            fillColor: Colors.grey,
+            border: enabled ? null : InputBorder.none,
+          ),
+          cursorColor: tertiaryColor,
+          controller: controller,
+          style: enabled ? workoutMediumTextStyle : uneditableMediumTextStyle,
+          enabled: enabled,
+        ),
+      ],
     );
   }
 }
