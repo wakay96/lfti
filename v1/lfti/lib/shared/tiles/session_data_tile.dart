@@ -35,7 +35,7 @@ class _SessionDataTileState extends State<SessionDataTile> {
           ListToString(session.workout.targetBodyParts).parse(),
           style: TextStyle(
             color: currentAppThemeTextColor,
-            fontSize: SMALL_TEXT,
+            fontSize: BODY_TEXT,
           ),
         ),
       ]),

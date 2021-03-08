@@ -28,10 +28,12 @@ const EdgeInsets primaryContainerSidePadding =
 const EdgeInsets cardHorizontalSpacing = EdgeInsets.only(bottom: 2.5, top: 2.5);
 
 // FONT SIZE
-const double SMALL_TEXT = 12;
-const double MEDIUM_TEXT = 20;
-const double LARGE_TEXT = 35;
-const double XLARGE_TEXT = 50;
+const double XS_TEXT = 12;
+const double BODY_TEXT = 16;
+const double DETAILS = 14;
+const double SUBTITLE = 18;
+const double TITLE = 24;
+const double MAIN_TITLE = 42;
 
 const Color lightThemeTextColor = Color(0xFF363636);
 const Color darkThemeTextColor = Color(0xFFFAFAFA);
@@ -46,67 +48,67 @@ const Color currentActiveButtonColor = buttonDarkThemeActiveColor;
 // TextStyles
 const TextStyle smallTextStyle = TextStyle(
   color: currentAppThemeTextColor,
-  fontSize: SMALL_TEXT,
+  fontSize: BODY_TEXT,
 );
 
 const TextStyle mediumTextStyle = TextStyle(
   color: currentAppThemeTextColor,
-  fontSize: MEDIUM_TEXT,
+  fontSize: DETAILS,
 );
 
 const TextStyle largeTextStyle = TextStyle(
   color: currentAppThemeTextColor,
-  fontSize: LARGE_TEXT,
+  fontSize: TITLE,
 );
 
 const TextStyle workoutMediumTextStyle = TextStyle(
   color: workoutThemeColor,
-  fontSize: MEDIUM_TEXT,
+  fontSize: DETAILS,
 );
 
 const TextStyle exerciseLargeTextStyle = TextStyle(
   color: exerciseThemeColor,
-  fontSize: LARGE_TEXT,
+  fontSize: TITLE,
 );
 
 const TextStyle exerciseMediumTextStyle = TextStyle(
   color: exerciseThemeColor,
-  fontSize: MEDIUM_TEXT,
+  fontSize: DETAILS,
 );
 
 const TextStyle exerciseSmallTextStyle = TextStyle(
   color: exerciseThemeColor,
-  fontSize: SMALL_TEXT,
+  fontSize: BODY_TEXT,
 );
 
 const TextStyle restMediumTextStyle = TextStyle(
   color: restThemeColor,
-  fontSize: MEDIUM_TEXT,
+  fontSize: DETAILS,
 );
 
 const TextStyle activitySmallTextStyle = TextStyle(
   color: exerciseThemeColor,
-  fontSize: SMALL_TEXT,
+  fontSize: BODY_TEXT,
 );
 
 const TextStyle buttonTextStyle = TextStyle(
   color: currentAppThemeTextColor,
-  fontSize: SMALL_TEXT,
+  fontSize: BODY_TEXT,
 );
 
 const TextStyle labelSmallTextStyle = TextStyle(
   color: tertiaryColor,
-  fontSize: SMALL_TEXT,
+  fontSize: BODY_TEXT,
 );
 
 const TextStyle labelMediumTextStyle = TextStyle(
   color: tertiaryColor,
-  fontSize: MEDIUM_TEXT,
+  fontSize: DETAILS,
 );
 
 const TextStyle uneditableMediumTextStyle = TextStyle(
   color: currentAppThemeTextColor,
-  fontSize: MEDIUM_TEXT,
+  fontSize: DETAILS,
 );
 
 const TextStyle appBarTitleTextStyleLight = TextStyle(
