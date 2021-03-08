@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lfti/helpers/app_styles.dart';
 import 'package:lfti/providers/edit_workout_screen_provider.dart';
+import 'package:lfti/screens/workout/workout_screen.dart';
 import 'package:lfti/shared/tiles/edit_activity_tile.dart';
 import 'package:provider/provider.dart';
 
@@ -23,23 +24,15 @@ class EditWorkoutScreen extends StatefulWidget {
 }
 
 class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
-  TextEditingController nameTextController;
-  TextEditingController descriptionTextController;
-
   @override
   void initState() {
-    super.initState();
-
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       final Map data = ModalRoute.of(context).settings.arguments;
       final viewModel =
           Provider.of<EditWorkoutScreenProvider>(context, listen: false);
       viewModel.initializeData(data['workout'].id);
-
-      nameTextController = TextEditingController(text: viewModel.workout.name);
-      descriptionTextController =
-          TextEditingController(text: viewModel.workout.description);
     });
+    super.initState();
   }
 
   @override
@@ -50,70 +43,91 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
           backgroundColor: primaryColor,
           title: Container(
             alignment: Alignment.bottomRight,
-            child: Text(
-              widget.appBarTitle,
-              style: appBarTitleTextStyleLight,
+            child: InkWell(
+              onTap: () {
+                viewModel.onSubmit();
+                Navigator.pushNamed(context, WorkoutScreen.id);
+              },
+              child: Text(
+                'save changes',
+                style: appBarTitleTextStyleLight,
+              ),
             ),
           ),
           centerTitle: false,
         ),
         backgroundColor: primaryColor,
         body: viewModel.workout != null
-            ? Padding(
-                padding: primaryContainerSidePadding,
-                child: ReorderableListView.builder(
+            ? Theme(
+                data: ThemeData(canvasColor: Colors.transparent),
+                child: Padding(
+                  padding: primaryContainerSidePadding,
+                  child: ReorderableListView.builder(
+                    onReorder: viewModel.onReorder,
+                    itemCount: viewModel.workout.activities.length,
                     header: Card(
                       margin: cardHorizontalSpacing,
                       color: inactiveCardColor,
                       shape: RoundedRectangleBorder(borderRadius: borderRadius),
                       child: Padding(
-                        padding: cardPadding,
+                        padding: cardPadding.copyWith(right: 50),
                         child: Column(children: [
-                          _renderTextFieldInputWithLabel(
-                              context, nameTextController, 'Name'),
-                          _renderTextFieldInputWithLabel(
-                              context, descriptionTextController, 'Description')
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Name', style: labelSmallTextStyle),
+                              TextField(
+                                  onChanged: (update) =>
+                                      viewModel.onUpdateName(update),
+                                  minLines: 1,
+                                  maxLines: 3,
+                                  decoration: InputDecoration(
+                                    hintText: viewModel.nameTextController.text,
+                                    hintStyle: labelMediumTextStyle,
+                                    alignLabelWithHint: true,
+                                    fillColor: Colors.grey,
+                                  ),
+                                  cursorColor: tertiaryColor,
+                                  controller: viewModel.nameTextController,
+                                  style: workoutMediumTextStyle),
+                              SizedBox(height: 10.0),
+                              Text('Description', style: labelSmallTextStyle),
+                              TextField(
+                                  onChanged: (update) =>
+                                      viewModel.onUpdateDescription(update),
+                                  minLines: 1,
+                                  maxLines: 3,
+                                  decoration: InputDecoration(
+                                    hintText: viewModel
+                                        .descriptionTextController.text,
+                                    hintStyle: labelMediumTextStyle,
+                                    alignLabelWithHint: true,
+                                    fillColor: Colors.grey,
+                                  ),
+                                  cursorColor: tertiaryColor,
+                                  controller:
+                                      viewModel.descriptionTextController,
+                                  style: workoutMediumTextStyle),
+                            ],
+                          ),
+                          SizedBox(height: 15.0),
                         ]),
                       ),
                     ),
-                    onReorder: viewModel.onReorder,
-                    itemCount: viewModel.workout.activities.length,
                     itemBuilder: (context, index) {
                       var activity = viewModel.workout.activities[index];
                       return Container(
                         key: Key(index.toString()),
                         child: EditActivityTile(
                           activity,
+                          (update) => viewModel.onUpdateActivity(update),
                           color: inactiveCardColor,
                         ),
                       );
-                    }))
+                    },
+                  ),
+                ),
+              )
             : Container());
-  }
-
-  Widget _renderTextFieldInputWithLabel(
-      BuildContext context, TextEditingController controller, String label,
-      {bool enabled = true}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('$label', style: labelSmallTextStyle),
-        TextField(
-          minLines: 1,
-          maxLines: 3,
-          decoration: InputDecoration(
-            hintText: controller.text,
-            hintStyle: labelMediumTextStyle,
-            alignLabelWithHint: true,
-            fillColor: Colors.grey,
-            border: enabled ? null : InputBorder.none,
-          ),
-          cursorColor: tertiaryColor,
-          controller: controller,
-          style: enabled ? workoutMediumTextStyle : uneditableMediumTextStyle,
-          enabled: enabled,
-        ),
-      ],
-    );
   }
 }

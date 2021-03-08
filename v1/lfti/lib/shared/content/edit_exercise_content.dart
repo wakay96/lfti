@@ -11,12 +11,15 @@ class EditExerciseContent extends StatefulWidget {
   final bool isTargetEditable;
   final bool isSetsEditable;
   final bool isRepsEditable;
+  final Function onChanged;
+
   EditExerciseContent(this.activity,
       {this.icon,
       this.isNameEditable = true,
       this.isTargetEditable = true,
       this.isSetsEditable = true,
-      this.isRepsEditable = true});
+      this.isRepsEditable = true,
+      this.onChanged});
 
   @override
   _EditExerciseContentState createState() => _EditExerciseContentState();
@@ -41,9 +44,13 @@ class _EditExerciseContentState extends State<EditExerciseContent> {
       'name': widget.isNameEditable,
       'sets': widget.isSetsEditable,
       'reps': widget.isRepsEditable,
-      'target': widget.isNameEditable,
+      'target': widget.isNameEditable
     };
     super.initState();
+  }
+
+  void confirmChange() {
+    widget.onChanged(activity);
   }
 
   @override
@@ -63,9 +70,16 @@ class _EditExerciseContentState extends State<EditExerciseContent> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Sets', style: labelSmallTextStyle),
-                    _renderTextFieldInput(setsTextController, context,
-                        keyboardType: TextInputType.number,
-                        enabled: editable['sets'])
+                    _renderTextFieldInput(
+                      setsTextController,
+                      context,
+                      keyboardType: TextInputType.number,
+                      enabled: editable['sets'],
+                      onChanged: (val) {
+                        activity.setCount = int.tryParse(val);
+                        confirmChange();
+                      },
+                    )
                   ],
                 ),
               ),
@@ -78,7 +92,10 @@ class _EditExerciseContentState extends State<EditExerciseContent> {
                     Text('Reps', style: labelSmallTextStyle),
                     _renderTextFieldInput(repsTextController, context,
                         keyboardType: TextInputType.number,
-                        enabled: editable['reps'])
+                        enabled: editable['reps'], onChanged: (val) {
+                      activity.repCount = int.tryParse(val);
+                      confirmChange();
+                    })
                   ],
                 ),
               ),
@@ -89,9 +106,20 @@ class _EditExerciseContentState extends State<EditExerciseContent> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Target', style: labelSmallTextStyle),
-                    _renderTextFieldInput(
-                        TextEditingController(text: activity.target), context,
-                        enabled: editable['target'])
+                    editable['target']
+                        ? InkWell(
+                            child: Text(activity.target),
+                            onTap: () => showTargetPicker(context),
+                          )
+                        : _renderTextFieldInput(
+                            TextEditingController(text: activity.target),
+                            context,
+                            enabled: editable['target'],
+                            onChanged: (val) {
+                              activity.target = val;
+                              confirmChange();
+                            },
+                          )
                   ],
                 ),
               ),
@@ -140,8 +168,11 @@ List<Widget> _buildPickerItems(List items) {
 
 Widget _renderTextFieldInput(
     TextEditingController controller, BuildContext context,
-    {TextInputType keyboardType = TextInputType.text, bool enabled = true}) {
+    {TextInputType keyboardType = TextInputType.text,
+    bool enabled = true,
+    Function onChanged}) {
   return TextField(
+    onChanged: (val) => onChanged(val),
     keyboardType: keyboardType,
     decoration: InputDecoration(
       hintText: controller.text,

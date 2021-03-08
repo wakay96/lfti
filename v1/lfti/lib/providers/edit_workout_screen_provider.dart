@@ -8,16 +8,21 @@ class EditWorkoutScreenProvider extends ChangeNotifier {
   final IRepository _repository = GetIt.I<IRepository>();
   String _workoutId;
   Workout workout;
+  TextEditingController nameTextController;
+  TextEditingController descriptionTextController;
 
   void initializeData(String id) {
     _workoutId = id;
     workout = _repository.getWorkoutById(_workoutId);
+
+    nameTextController = TextEditingController(text: workout.name);
+    descriptionTextController =
+        TextEditingController(text: workout.description);
     notifyListeners();
   }
 
   void onReorder(int oldIndex, int newIndex) {
     if (oldIndex < newIndex) {
-      // removing the item at oldIndex will shorten the list by 1.
       newIndex -= 1;
     }
     final Activity element = workout.activities.removeAt(oldIndex);
@@ -25,5 +30,29 @@ class EditWorkoutScreenProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onSubmit() {}
+  void onUpdateActivity(Activity update) {
+    try {
+      Activity activity =
+          workout.activities.firstWhere((element) => element.id == update.id);
+      int index = workout.activities.indexOf(activity);
+      workout.activities[index] = update;
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void onUpdateName(String update) {
+    workout.name = update;
+    notifyListeners();
+  }
+
+  void onUpdateDescription(String update) {
+    workout.description = update;
+    notifyListeners();
+  }
+
+  void onSubmit() {
+    _repository.updateWorkoutById(_workoutId, workout);
+  }
 }

@@ -10,8 +10,10 @@ import '../content/edit_exercise_content.dart';
 class EditActivityTile extends StatelessWidget {
   final Activity activity;
   final Color color;
+  final Function onChanged;
 
-  EditActivityTile(this.activity, {this.color});
+  EditActivityTile(this.activity, this.onChanged, {this.color});
+
   Widget getIcon(Activity activity) {
     Widget icon;
     if (activity is Exercise) {
@@ -50,6 +52,7 @@ class EditActivityTile extends StatelessWidget {
                               activity,
                               isNameEditable: false,
                               isTargetEditable: false,
+                              onChanged: onChanged,
                             )
                           : EditRestContent(activity)
                     ],
