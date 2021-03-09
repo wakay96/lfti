@@ -17,11 +17,11 @@ class RowText extends StatelessWidget {
       text: TextSpan(children: [
         TextSpan(
           text: content,
-          style: TextStyle(fontSize: appStyles.DETAILS, color: color),
+          style: TextStyle(fontSize: appStyles.BODY_TEXT, color: color),
         ),
         TextSpan(text: ' '),
         TextSpan(
-          text: subContent.toUpperCase(),
+          text: subContent,
           style: TextStyle(fontSize: appStyles.BODY_TEXT, color: color),
         ),
       ]),

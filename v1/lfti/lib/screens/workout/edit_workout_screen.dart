@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lfti/helpers/app_styles.dart';
 import 'package:lfti/providers/edit_workout_screen_provider.dart';
 import 'package:lfti/screens/workout/workout_screen.dart';
@@ -41,20 +42,20 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: primaryColor,
-          title: Container(
-            alignment: Alignment.bottomRight,
-            child: InkWell(
-              onTap: () {
+          actions: [
+            IconButton(
+              iconSize: 30,
+              padding: primaryContainerPadding,
+              tooltip: 'Save',
+              color: secondaryColor,
+              icon: Icon(FontAwesomeIcons.save),
+              onPressed: () {
                 viewModel.onSubmit();
-                Navigator.pushNamed(context, WorkoutScreen.id);
+                Navigator.pushNamedAndRemoveUntil(
+                    context, WorkoutScreen.id, (route) => false);
               },
-              child: Text(
-                'save changes',
-                style: appBarTitleTextStyleLight,
-              ),
-            ),
-          ),
-          centerTitle: false,
+            )
+          ],
         ),
         backgroundColor: primaryColor,
         body: viewModel.workout != null

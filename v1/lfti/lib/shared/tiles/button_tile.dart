@@ -34,7 +34,7 @@ class ButtonTile extends StatelessWidget {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text(
                     label,
-                    style: TextStyle(color: currentAppThemeTextColor),
+                    style: labelSmallTextStyle,
                     textAlign: TextAlign.start,
                   ),
                   content,

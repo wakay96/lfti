@@ -46,14 +46,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
       appBar: AppBar(
         backgroundColor: primaryColor,
         shadowColor: Colors.transparent,
-        title: Container(
-          alignment: Alignment.bottomRight,
-          child: Text(
-            widget.appBarTitle,
-            style: appBarTitleTextStyleLight,
-          ),
+        title: Text(
+          widget.appBarTitle,
+          style: largeTextStyle.copyWith(fontWeight: FontWeight.w900),
         ),
-        centerTitle: false,
       ),
       backgroundColor: primaryColor,
       body: Padding(

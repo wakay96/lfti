@@ -16,21 +16,21 @@ const Color timeThemeColor = Color(0xFFFF586A);
 const Color skippedWorkoutColor = primaryColor;
 
 const Color primaryColor = Color(0xFF02182b);
-const Color tertiaryColor = Colors.grey;
+const Color tertiaryColor = Colors.blueGrey;
 const Color secondaryColor = Color(0xFF0197F6);
 const Color inactiveCardColor = Color(0xFF053055);
 
 // Padding
 const EdgeInsets primaryContainerPadding = EdgeInsets.all(20.0);
-const EdgeInsets cardPadding = EdgeInsets.all(15.0);
+const EdgeInsets cardPadding = EdgeInsets.all(12.0);
 const EdgeInsets primaryContainerSidePadding =
     EdgeInsets.only(left: 20.0, right: 20.0);
 const EdgeInsets cardHorizontalSpacing = EdgeInsets.only(bottom: 2.5, top: 2.5);
 
 // FONT SIZE
 const double XS_TEXT = 12;
-const double BODY_TEXT = 16;
 const double DETAILS = 14;
+const double BODY_TEXT = 16;
 const double SUBTITLE = 18;
 const double TITLE = 24;
 const double MAIN_TITLE = 42;
@@ -63,7 +63,7 @@ const TextStyle largeTextStyle = TextStyle(
 
 const TextStyle workoutMediumTextStyle = TextStyle(
   color: workoutThemeColor,
-  fontSize: DETAILS,
+  fontSize: BODY_TEXT,
 );
 
 const TextStyle exerciseLargeTextStyle = TextStyle(
@@ -73,12 +73,12 @@ const TextStyle exerciseLargeTextStyle = TextStyle(
 
 const TextStyle exerciseMediumTextStyle = TextStyle(
   color: exerciseThemeColor,
-  fontSize: DETAILS,
+  fontSize: BODY_TEXT,
 );
 
 const TextStyle exerciseSmallTextStyle = TextStyle(
   color: exerciseThemeColor,
-  fontSize: BODY_TEXT,
+  fontSize: DETAILS,
 );
 
 const TextStyle restMediumTextStyle = TextStyle(
@@ -97,18 +97,18 @@ const TextStyle buttonTextStyle = TextStyle(
 );
 
 const TextStyle labelSmallTextStyle = TextStyle(
-  color: tertiaryColor,
-  fontSize: BODY_TEXT,
+  color: currentAppThemeTextColor,
+  fontSize: XS_TEXT,
 );
 
 const TextStyle labelMediumTextStyle = TextStyle(
-  color: tertiaryColor,
+  color: currentAppThemeTextColor,
   fontSize: DETAILS,
 );
 
 const TextStyle uneditableMediumTextStyle = TextStyle(
   color: currentAppThemeTextColor,
-  fontSize: DETAILS,
+  fontSize: BODY_TEXT,
 );
 
 const TextStyle appBarTitleTextStyleLight = TextStyle(

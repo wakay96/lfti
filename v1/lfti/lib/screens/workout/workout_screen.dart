@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lfti/data/models/activity.dart';
 import 'package:lfti/data/models/exercise.dart';
 import 'package:lfti/data/models/rest.dart';
@@ -6,8 +7,8 @@ import 'package:lfti/data/models/workout.dart';
 import 'package:lfti/helpers/app_styles.dart';
 import 'package:lfti/helpers/string_formatter.dart';
 import 'package:lfti/providers/workout_screen_provider.dart';
+import 'package:lfti/screens/home/home_screen.dart';
 import 'package:lfti/screens/workout/edit_workout_screen.dart';
-import 'package:lfti/shared/buttons/button.dart';
 import 'package:lfti/shared/text/overflowing_text.dart';
 import 'package:provider/provider.dart';
 
@@ -30,16 +31,18 @@ class WorkoutScreen extends StatelessWidget {
         Provider.of<WorkoutScreenProvider>(context);
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(FontAwesomeIcons.home),
+          onPressed: () => Navigator.pushNamedAndRemoveUntil(
+              context, HomeScreen.id, (route) => false),
+        ),
         backgroundColor: primaryColor,
         shadowColor: Colors.transparent,
-        title: Container(
-          alignment: Alignment.bottomRight,
-          child: Text(
-            appBarTitle,
-            style: appBarTitleTextStyleLight,
-          ),
+        title: Text(
+          appBarTitle,
+          style: largeTextStyle.copyWith(fontWeight: FontWeight.w900),
         ),
-        centerTitle: false,
+        centerTitle: true,
       ),
       backgroundColor: primaryColor,
       body: Padding(
@@ -75,17 +78,17 @@ class WorkoutContent extends StatelessWidget {
                     Expanded(
                       child: OverflowingText(
                         text: '${workout.name}',
-                        style: mediumTextStyle.copyWith(
+                        style: largeTextStyle.copyWith(
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Button(
-                      'edit',
-                      () {
+                    IconButton(
+                      icon: Icon(FontAwesomeIcons.edit),
+                      onPressed: () {
                         Navigator.pushNamed(context, EditWorkoutScreen.id,
                             arguments: {'workout': workout});
                       },
-                      color: Colors.transparent,
+                      color: secondaryColor,
                     ),
                   ],
                 ),
@@ -109,12 +112,12 @@ class WorkoutContent extends StatelessWidget {
                     style: smallTextStyle.copyWith(fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    'Rep Count',
+                    'Sets',
                     style: smallTextStyle.copyWith(fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    'Set Count',
+                    'Reps',
                     style: smallTextStyle.copyWith(fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
@@ -137,12 +140,12 @@ TableRow buildRow(Activity act) {
         style: smallTextStyle,
       ),
       Text(
-        '${act.repCount}',
+        '${act.setCount}',
         style: smallTextStyle,
         textAlign: TextAlign.center,
       ),
       Text(
-        '${act.setCount}',
+        '${act.repCount}',
         style: smallTextStyle,
         textAlign: TextAlign.center,
       ),

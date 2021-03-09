@@ -33,10 +33,7 @@ class _SessionDataTileState extends State<SessionDataTile> {
         ),
         Text(
           ListToString(session.workout.targetBodyParts).parse(),
-          style: TextStyle(
-            color: currentAppThemeTextColor,
-            fontSize: BODY_TEXT,
-          ),
+          style: exerciseSmallTextStyle,
         ),
       ]),
       expandedContent:
@@ -50,6 +47,7 @@ class _SessionDataTileState extends State<SessionDataTile> {
               style: workoutMediumTextStyle,
             ),
           ]),
+          SizedBox(height: 12.0),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -70,7 +68,7 @@ class _SessionDataTileState extends State<SessionDataTile> {
                         style: workoutMediumTextStyle)
                   ],
                 ),
-                SizedBox(width: 15.0),
+                SizedBox(width: 12.0),
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text('Skipped', style: labelSmallTextStyle),
                   Text('${session.skippedExercises.length}',

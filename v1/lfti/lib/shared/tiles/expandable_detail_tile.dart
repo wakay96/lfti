@@ -42,7 +42,7 @@ class _ExpandableDetailTileState extends State<ExpandableDetailTile> {
                       children: [
                         Text(
                           widget.label,
-                          style: TextStyle(color: currentAppThemeTextColor),
+                          style: labelSmallTextStyle,
                           textAlign: TextAlign.start,
                         ),
                         widget.collapsedContent,
