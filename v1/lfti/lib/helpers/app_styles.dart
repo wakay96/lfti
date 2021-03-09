@@ -16,8 +16,8 @@ const Color timeThemeColor = Color(0xFFFF586A);
 const Color skippedWorkoutColor = primaryColor;
 
 const Color primaryColor = Color(0xFF02182b);
-const Color tertiaryColor = Colors.blueGrey;
 const Color secondaryColor = Color(0xFF0197F6);
+const Color tertiaryColor = Color(0xAFFAFAFA);
 const Color inactiveCardColor = Color(0xFF053055);
 
 // Padding
@@ -97,7 +97,7 @@ const TextStyle buttonTextStyle = TextStyle(
 );
 
 const TextStyle labelSmallTextStyle = TextStyle(
-  color: currentAppThemeTextColor,
+  color: tertiaryColor,
   fontSize: XS_TEXT,
 );
 
@@ -107,9 +107,9 @@ const TextStyle labelMediumTextStyle = TextStyle(
 );
 
 const TextStyle uneditableMediumTextStyle = TextStyle(
-  color: currentAppThemeTextColor,
-  fontSize: BODY_TEXT,
-);
+    color: currentAppThemeTextColor,
+    fontSize: BODY_TEXT,
+    fontWeight: FontWeight.bold);
 
 const TextStyle appBarTitleTextStyleLight = TextStyle(
   color: Colors.white,

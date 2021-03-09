@@ -51,7 +51,7 @@ class EditActivityTile extends StatelessWidget {
                           ? EditExerciseContent(
                               activity,
                               isNameEditable: false,
-                              isTargetEditable: false,
+                              isTargetEditable: true,
                               onChanged: onChanged,
                             )
                           : EditRestContent(activity)

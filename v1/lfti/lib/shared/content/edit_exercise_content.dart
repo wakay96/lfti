@@ -29,22 +29,34 @@ class _EditExerciseContentState extends State<EditExerciseContent> {
   TextEditingController repsTextController;
   TextEditingController setsTextController;
   TextEditingController nameTextController;
+  FixedExtentScrollController targetSelectionController;
   Map<String, bool> editable;
   Exercise activity;
 
+  final targetItems = [
+    Target.Chest,
+    Target.Leg,
+    Target.Shoulder,
+    Target.Back,
+    Target.Arm,
+    Target.Core
+  ];
+
   @override
   void initState() {
-    repsTextController =
-        TextEditingController(text: widget.activity.repCount.toString());
-    setsTextController =
-        TextEditingController(text: widget.activity.setCount.toString());
-    nameTextController = TextEditingController(text: widget.activity.name);
     activity = widget.activity;
+    repsTextController =
+        TextEditingController(text: activity.repCount.toString());
+    setsTextController =
+        TextEditingController(text: activity.setCount.toString());
+    nameTextController = TextEditingController(text: activity.name);
+    targetSelectionController = FixedExtentScrollController(
+        initialItem: targetItems.indexOf(activity.target));
     editable = {
       'name': widget.isNameEditable,
       'sets': widget.isSetsEditable,
       'reps': widget.isRepsEditable,
-      'target': widget.isNameEditable
+      'target': widget.isTargetEditable
     };
     super.initState();
   }
@@ -106,19 +118,46 @@ class _EditExerciseContentState extends State<EditExerciseContent> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Target', style: labelSmallTextStyle),
+                    SizedBox(height: 4.0),
                     editable['target']
                         ? InkWell(
-                            child: Text(activity.target),
-                            onTap: () => showTargetPicker(context),
-                          )
-                        : _renderTextFieldInput(
-                            TextEditingController(text: activity.target),
-                            context,
-                            enabled: editable['target'],
-                            onChanged: (val) {
-                              activity.target = val;
+                            child: Text(
+                              activity.target,
+                              style: workoutMediumTextStyle,
+                            ),
+                            onTap: () async {
+                              await showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) {
+                                    return Container(
+                                      height: MediaQuery.of(context)
+                                              .copyWith()
+                                              .size
+                                              .height /
+                                          3,
+                                      child: CupertinoPicker(
+                                        backgroundColor: primaryColor,
+                                        onSelectedItemChanged: (index) {
+                                          activity.target = targetItems[index];
+                                        },
+                                        squeeze: 1,
+                                        diameterRatio: 1,
+                                        magnification: 1.5,
+                                        itemExtent: 20,
+                                        children:
+                                            _buildPickerItems(targetItems),
+                                        scrollController:
+                                            targetSelectionController,
+                                      ),
+                                    );
+                                  });
                               confirmChange();
                             },
+                          )
+                        : Text(
+                            '${activity.target}',
+                            style: mediumTextStyle.copyWith(
+                                fontWeight: FontWeight.bold),
                           )
                   ],
                 ),
@@ -129,35 +168,6 @@ class _EditExerciseContentState extends State<EditExerciseContent> {
       ),
     );
   }
-}
-
-void showTargetPicker(BuildContext context) {
-  FixedExtentScrollController targetSelectionController;
-  showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return Container(
-          height: MediaQuery.of(context).copyWith().size.height / 3,
-          child: CupertinoPicker(
-            backgroundColor: primaryColor,
-            onSelectedItemChanged: (val) {
-              print(val);
-            },
-            diameterRatio: 1,
-            magnification: 1.2,
-            itemExtent: 25,
-            children: _buildPickerItems([
-              Target.Chest,
-              Target.Leg,
-              Target.Shoulder,
-              Target.Back,
-              Target.Arm,
-              Target.Core
-            ]),
-            scrollController: targetSelectionController,
-          ),
-        );
-      });
 }
 
 List<Widget> _buildPickerItems(List items) {
@@ -178,10 +188,10 @@ Widget _renderTextFieldInput(
       hintText: controller.text,
       hintStyle: labelMediumTextStyle,
       alignLabelWithHint: true,
-      isCollapsed: true,
       fillColor: Colors.grey,
       border: enabled ? null : InputBorder.none,
-      contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      isCollapsed: true,
+      contentPadding: EdgeInsets.symmetric(vertical: 4),
     ),
     cursorColor: tertiaryColor,
     controller: controller,

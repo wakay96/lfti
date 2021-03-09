@@ -25,7 +25,7 @@ class _EditRestContentState extends State<EditRestContent> {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text('Rest', style: labelSmallTextStyle),
+      Text('Rest', style: uneditableMediumTextStyle),
       Row(
         children: [
           Expanded(
@@ -36,11 +36,10 @@ class _EditRestContentState extends State<EditRestContent> {
                 hintText: controller.text,
                 hintStyle: labelMediumTextStyle,
                 alignLabelWithHint: true,
-                isCollapsed: true,
                 fillColor: Colors.grey,
                 border: widget.isEditable ? null : InputBorder.none,
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                isCollapsed: true,
+                contentPadding: EdgeInsets.symmetric(vertical: 4),
               ),
               cursorColor: tertiaryColor,
               controller: controller,
