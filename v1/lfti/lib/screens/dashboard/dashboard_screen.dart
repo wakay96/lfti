@@ -73,6 +73,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     '${viewModel.userData.currentWeight}',
                     '${viewModel.userData.targetWeight}'
                   ]),
+              SizedBox(height: 8.0),
 
               /// Body Fat
               UserDataTiles(
@@ -87,6 +88,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     '${viewModel.userData.currentBodyFat}',
                     '${viewModel.userData.targetBodyFat}'
                   ]),
+              SizedBox(height: 8.0),
 
               /// Daily and Weekly Activity
               UserDataTiles(
@@ -102,9 +104,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     '${viewModel.sessionData.currentWorkoutDuration.inMinutes}',
                     '${viewModel.sessionData.targetWorkoutDuration.inMinutes}'
                   ]),
+              SizedBox(height: 8.0),
 
               /// Previous Session
               SessionDataTile(viewModel.sessionData.previousSession),
+              SizedBox(height: 8.0),
 
               /// Next Session
               SessionDataTile(viewModel.sessionData.nextSession)

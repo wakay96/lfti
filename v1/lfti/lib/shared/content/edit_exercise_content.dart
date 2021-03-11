@@ -4,6 +4,8 @@ import 'package:lfti/data/models/exercise.dart';
 import 'package:lfti/helpers/app_strings.dart';
 import 'package:lfti/helpers/app_styles.dart';
 
+import '../../helpers/app_styles.dart';
+
 class EditExerciseContent extends StatefulWidget {
   final Exercise activity;
   final Widget icon;
@@ -72,7 +74,9 @@ class _EditExerciseContentState extends State<EditExerciseContent> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _renderTextFieldInput(nameTextController, context,
-              keyboardType: TextInputType.text, enabled: editable['name']),
+              keyboardType: TextInputType.text,
+              enabled: editable['name'],
+              label: 'Name'),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -81,10 +85,10 @@ class _EditExerciseContentState extends State<EditExerciseContent> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Sets', style: labelSmallTextStyle),
                     _renderTextFieldInput(
                       setsTextController,
                       context,
+                      label: 'Sets',
                       keyboardType: TextInputType.number,
                       enabled: editable['sets'],
                       onChanged: (val) {
@@ -101,8 +105,8 @@ class _EditExerciseContentState extends State<EditExerciseContent> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Reps', style: labelSmallTextStyle),
                     _renderTextFieldInput(repsTextController, context,
+                        label: 'Reps',
                         keyboardType: TextInputType.number,
                         enabled: editable['reps'], onChanged: (val) {
                       activity.repCount = int.tryParse(val);
@@ -180,18 +184,16 @@ Widget _renderTextFieldInput(
     TextEditingController controller, BuildContext context,
     {TextInputType keyboardType = TextInputType.text,
     bool enabled = true,
-    Function onChanged}) {
+    Function onChanged,
+    String label}) {
   return TextField(
     onChanged: (val) => onChanged(val),
     keyboardType: keyboardType,
     decoration: InputDecoration(
-      hintText: controller.text,
-      hintStyle: labelMediumTextStyle,
-      alignLabelWithHint: true,
+      labelStyle: labelSmallTextStyle,
+      labelText: label,
       fillColor: Colors.grey,
       border: enabled ? null : InputBorder.none,
-      isCollapsed: true,
-      contentPadding: EdgeInsets.symmetric(vertical: 4),
     ),
     cursorColor: tertiaryColor,
     controller: controller,

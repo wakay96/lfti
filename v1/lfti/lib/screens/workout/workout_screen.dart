@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lfti/data/models/activity.dart';
 import 'package:lfti/data/models/exercise.dart';
@@ -7,7 +8,6 @@ import 'package:lfti/data/models/workout.dart';
 import 'package:lfti/helpers/app_styles.dart';
 import 'package:lfti/helpers/string_formatter.dart';
 import 'package:lfti/providers/workout_screen_provider.dart';
-import 'package:lfti/screens/home/home_screen.dart';
 import 'package:lfti/screens/workout/edit_workout_screen.dart';
 import 'package:lfti/shared/text/overflowing_text.dart';
 import 'package:provider/provider.dart';
@@ -22,24 +22,54 @@ class WorkoutScreenBuilder extends StatelessWidget {
   }
 }
 
-class WorkoutScreen extends StatelessWidget {
+class WorkoutScreen extends StatefulWidget {
   static const String id = 'WorkoutScreen';
   final String appBarTitle = "workouts";
+  @override
+  _WorkoutScreenState createState() => _WorkoutScreenState();
+}
+
+class _WorkoutScreenState extends State<WorkoutScreen> {
+  @override
+  void initState() {
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      WorkoutScreenProvider viewModel =
+          Provider.of<WorkoutScreenProvider>(context, listen: false);
+      viewModel.initializeData();
+    });
+    super.initState();
+  }
+
+  void onEditWorkout(BuildContext context, String workoutId) async {
+    await Navigator.pushNamed(context, EditWorkoutScreen.id,
+        arguments: {'id': workoutId});
+    WorkoutScreenProvider viewModel =
+        Provider.of<WorkoutScreenProvider>(context, listen: false);
+    viewModel.initializeData();
+  }
+
   @override
   Widget build(BuildContext context) {
     WorkoutScreenProvider viewModel =
         Provider.of<WorkoutScreenProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(FontAwesomeIcons.home),
-          onPressed: () => Navigator.pushNamedAndRemoveUntil(
-              context, HomeScreen.id, (route) => false),
-        ),
+        actions: [
+          IconButton(
+              iconSize: 20,
+              padding: primaryContainerPadding,
+              tooltip: 'Add Workout',
+              color: secondaryColor,
+              icon: Icon(FontAwesomeIcons.plus),
+              onPressed: () {
+                ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                Navigator.pop(context);
+              })
+        ],
         backgroundColor: primaryColor,
         shadowColor: Colors.transparent,
         title: Text(
-          appBarTitle,
+          widget.appBarTitle,
           style: largeTextStyle.copyWith(fontWeight: FontWeight.w900),
         ),
         centerTitle: true,
@@ -48,8 +78,9 @@ class WorkoutScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: ListView(
-          children:
-              viewModel.workouts.map((item) => WorkoutContent(item)).toList(),
+          children: viewModel.workouts
+              .map((item) => WorkoutContent(item, onEditWorkout))
+              .toList(),
         ),
       ),
     );
@@ -58,8 +89,8 @@ class WorkoutScreen extends StatelessWidget {
 
 class WorkoutContent extends StatelessWidget {
   final Workout workout;
-  WorkoutContent(this.workout);
-
+  final Function onEditWorkout;
+  WorkoutContent(this.workout, this.onEditWorkout);
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -84,10 +115,7 @@ class WorkoutContent extends StatelessWidget {
                     ),
                     IconButton(
                       icon: Icon(FontAwesomeIcons.edit),
-                      onPressed: () {
-                        Navigator.pushNamed(context, EditWorkoutScreen.id,
-                            arguments: {'workout': workout});
-                      },
+                      onPressed: () => onEditWorkout(context, workout.id),
                       color: secondaryColor,
                     ),
                   ],

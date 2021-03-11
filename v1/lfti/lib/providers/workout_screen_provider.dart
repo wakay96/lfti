@@ -4,13 +4,13 @@ import 'package:lfti/data/models/workout.dart';
 import 'package:lfti/data/repository/i_repository.dart';
 
 class WorkoutScreenProvider extends ChangeNotifier {
-  IRepository _repository;
+  IRepository _repository = GetIt.I<IRepository>();
+  List<Workout> _workouts = [];
 
-  WorkoutScreenProvider() {
-    _repository = GetIt.I<IRepository>();
-  }
+  List<Workout> get workouts => _workouts;
 
-  List<Workout> get workouts {
-    return _repository.getAllWorkouts();
+  void initializeData() {
+    _workouts = _repository.getAllWorkouts();
+    notifyListeners();
   }
 }

@@ -18,7 +18,7 @@ class MockRepository implements IRepository {
         description: 'Description 1',
         targetBodyParts: [Target.Chest],
         id: IdGenerator.generateV4(),
-        activities: [..._sampleActivityList, ..._sampleActivityList]),
+        activities: [..._sampleActivityList]),
     Workout(
         name: 'Chest Workout',
         description: 'Description 2',
@@ -51,16 +51,66 @@ class MockRepository implements IRepository {
   ];
 
   List<Exercise> _userExercises = [
-    Exercise(name: 'E1', setCount: 3, repCount: 10, target: Target.Chest),
-    Exercise(name: 'E2', setCount: 3, repCount: 12, target: Target.Back),
-    Exercise(name: 'E3', setCount: 3, repCount: 15, target: Target.Arm),
-    Exercise(name: 'E4', setCount: 3, repCount: 20, target: Target.Leg),
-    Exercise(name: 'E5', setCount: 3, repCount: 25, target: Target.Shoulder),
-    Exercise(name: 'E6', setCount: 3, repCount: 10, target: Target.Chest),
-    Exercise(name: 'E7', setCount: 3, repCount: 12, target: Target.Back),
-    Exercise(name: 'E8', setCount: 3, repCount: 15, target: Target.Arm),
-    Exercise(name: 'E9', setCount: 3, repCount: 20, target: Target.Leg),
-    Exercise(name: 'E10', setCount: 3, repCount: 25, target: Target.Shoulder)
+    Exercise(
+        id: IdGenerator.generateV4(),
+        name: 'E1',
+        setCount: 3,
+        repCount: 10,
+        target: Target.Chest),
+    Exercise(
+        id: IdGenerator.generateV4(),
+        name: 'E2',
+        setCount: 3,
+        repCount: 12,
+        target: Target.Back),
+    Exercise(
+        id: IdGenerator.generateV4(),
+        name: 'E3',
+        setCount: 3,
+        repCount: 15,
+        target: Target.Arm),
+    Exercise(
+        id: IdGenerator.generateV4(),
+        name: 'E4',
+        setCount: 3,
+        repCount: 20,
+        target: Target.Leg),
+    Exercise(
+        id: IdGenerator.generateV4(),
+        name: 'E5',
+        setCount: 3,
+        repCount: 25,
+        target: Target.Shoulder),
+    Exercise(
+        id: IdGenerator.generateV4(),
+        name: 'E6',
+        setCount: 3,
+        repCount: 10,
+        target: Target.Chest),
+    Exercise(
+        id: IdGenerator.generateV4(),
+        name: 'E7',
+        setCount: 3,
+        repCount: 12,
+        target: Target.Back),
+    Exercise(
+        id: IdGenerator.generateV4(),
+        name: 'E8',
+        setCount: 3,
+        repCount: 15,
+        target: Target.Arm),
+    Exercise(
+        id: IdGenerator.generateV4(),
+        name: 'E9',
+        setCount: 3,
+        repCount: 20,
+        target: Target.Leg),
+    Exercise(
+        id: IdGenerator.generateV4(),
+        name: 'E10',
+        setCount: 3,
+        repCount: 25,
+        target: Target.Shoulder)
   ];
 
   static UserData _userData = UserData(
@@ -115,13 +165,13 @@ class MockRepository implements IRepository {
 
   static List<Activity> _sampleActivityList = [
     _sampleExercises[0],
-    Rest(30),
+    Rest(30, id: IdGenerator.generateV4()),
     _sampleExercises[1],
-    Rest(35),
+    Rest(35, id: IdGenerator.generateV4()),
     _sampleExercises[2],
-    Rest(40),
+    Rest(40, id: IdGenerator.generateV4()),
     _sampleExercises[3],
-    Rest(60),
+    Rest(60, id: IdGenerator.generateV4()),
     _sampleExercises[4],
   ];
 
@@ -129,11 +179,42 @@ class MockRepository implements IRepository {
   /// to be requested form server
   /// once upon startup
   static List<Activity> _sampleExercises = [
-    Exercise(name: 'RE1', setCount: 3, repCount: 10, target: Target.Chest),
-    Exercise(name: 'RE2', setCount: 3, repCount: 12, target: Target.Back),
-    Exercise(name: 'RE3', setCount: 3, repCount: 15, target: Target.Arm),
-    Exercise(name: 'RE4', setCount: 3, repCount: 20, target: Target.Leg),
-    Exercise(name: 'RE5', setCount: 3, repCount: 25, target: Target.Shoulder),
+    Exercise(
+        id: IdGenerator.generateV4(),
+        name: 'Supermans',
+        setCount: 3,
+        repCount: 10,
+        target: Target.Back),
+    Exercise(
+        id: IdGenerator.generateV4(),
+        name: 'Push-up',
+        setCount: 3,
+        repCount: 12,
+        target: Target.Chest),
+    Exercise(
+        id: IdGenerator.generateV4(),
+        name: 'Contralateral Limb Raises',
+        setCount: 3,
+        repCount: 15,
+        target: Target.Leg),
+    Exercise(
+        id: IdGenerator.generateV4(),
+        name: 'Bent Knee Push-up',
+        setCount: 3,
+        repCount: 20,
+        target: Target.Chest),
+    Exercise(
+        id: IdGenerator.generateV4(),
+        name: 'Downward-facing Dog',
+        setCount: 3,
+        repCount: 25,
+        target: Target.Core),
+    Exercise(
+        id: IdGenerator.generateV4(),
+        name: ' Push-up with Single-leg Raise',
+        setCount: 3,
+        repCount: 25,
+        target: Target.Leg),
   ];
 
   @override

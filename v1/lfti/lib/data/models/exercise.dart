@@ -9,7 +9,7 @@ class Exercise extends Activity {
   int repCount;
 
   Exercise({
-    String id,
+    @required String id,
     String name,
     String description,
     this.target,

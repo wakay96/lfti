@@ -38,6 +38,7 @@ class UserDataTiles extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(width: 8.0),
           Expanded(
             child: ButtonTile(
               isActive: isActive,

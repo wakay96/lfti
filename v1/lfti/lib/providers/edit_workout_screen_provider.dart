@@ -52,6 +52,17 @@ class EditWorkoutScreenProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteActivity(String id) {
+    var act = workout.activities.firstWhere((element) => element.id == id);
+    workout.activities.removeAt(workout.activities.indexOf(act));
+    notifyListeners();
+  }
+
+  void undoDelete(int index, Activity act) {
+    workout.activities.insert(index, act);
+    notifyListeners();
+  }
+
   void onSubmit() {
     _repository.updateWorkoutById(_workoutId, workout);
   }

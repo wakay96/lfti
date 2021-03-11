@@ -29,11 +29,30 @@ void repositoryTest() {
       repository = getIt<IRepository>();
       repository.clearUserExerciseBank();
       repository.clearUserWorkoutBank();
-      e0 =
-          Exercise(name: 'E0', setCount: 3, repCount: 10, target: Target.Chest);
-      e3 = Exercise(name: 'E3', setCount: 3, repCount: 12, target: Target.Back);
-      e2 = Exercise(name: 'E2', setCount: 3, repCount: 15, target: Target.Arm);
-      e1 = Exercise(name: 'E1', setCount: 3, repCount: 20, target: Target.Leg);
+      e0 = Exercise(
+          id: IdGenerator.generateV4(),
+          name: 'E0',
+          setCount: 3,
+          repCount: 10,
+          target: Target.Chest);
+      e3 = Exercise(
+          id: IdGenerator.generateV4(),
+          name: 'E3',
+          setCount: 3,
+          repCount: 12,
+          target: Target.Back);
+      e2 = Exercise(
+          id: IdGenerator.generateV4(),
+          name: 'E2',
+          setCount: 3,
+          repCount: 15,
+          target: Target.Arm);
+      e1 = Exercise(
+          id: IdGenerator.generateV4(),
+          name: 'E1',
+          setCount: 3,
+          repCount: 20,
+          target: Target.Leg);
     });
 
     group('ADD', () {
@@ -226,6 +245,7 @@ void repositoryTest() {
           repository.updateExerciseById(
               e2.id,
               Exercise(
+                  id: IdGenerator.generateV4(),
                   setCount: 1,
                   repCount: 1,
                   name: "test",

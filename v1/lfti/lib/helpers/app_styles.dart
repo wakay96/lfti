@@ -24,8 +24,8 @@ const Color inactiveCardColor = Color(0xFF053055);
 const EdgeInsets primaryContainerPadding = EdgeInsets.all(20.0);
 const EdgeInsets cardPadding = EdgeInsets.all(12.0);
 const EdgeInsets primaryContainerSidePadding =
-    EdgeInsets.only(left: 20.0, right: 20.0);
-const EdgeInsets cardHorizontalSpacing = EdgeInsets.only(bottom: 2.5, top: 2.5);
+    EdgeInsets.only(left: 15.0, right: 15.0);
+const EdgeInsets cardHorizontalSpacing = EdgeInsets.only(bottom: 5, top: 5);
 
 // FONT SIZE
 const double XS_TEXT = 12;
@@ -48,12 +48,12 @@ const Color currentActiveButtonColor = buttonDarkThemeActiveColor;
 // TextStyles
 const TextStyle smallTextStyle = TextStyle(
   color: currentAppThemeTextColor,
-  fontSize: BODY_TEXT,
+  fontSize: DETAILS,
 );
 
 const TextStyle mediumTextStyle = TextStyle(
   color: currentAppThemeTextColor,
-  fontSize: DETAILS,
+  fontSize: BODY_TEXT,
 );
 
 const TextStyle largeTextStyle = TextStyle(
@@ -126,3 +126,8 @@ final inactiveBorder = Border.all(
 
 final borderRadius = BorderRadius.circular(8.0);
 final buttonBorderRadius = BorderRadius.circular(6.0);
+
+/// snackbar
+final snackBarShape = RoundedRectangleBorder(
+  borderRadius: BorderRadius.all(Radius.circular(10)),
+);
