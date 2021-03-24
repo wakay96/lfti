@@ -6,6 +6,7 @@ import 'package:lfti/helpers/app_styles.dart';
 import 'package:lfti/providers/session/create_session_screen_provider.dart';
 import 'package:lfti/screens/session/session_screen.dart';
 import 'package:lfti/screens/workout/edit_workout_screen.dart';
+import 'package:lfti/shared/text/day_picker.dart';
 import 'package:provider/provider.dart';
 
 class CreateSessionScreenBuilder extends StatelessWidget {
@@ -46,9 +47,9 @@ class _CreateSessionScreenState extends State<CreateSessionScreen> {
       ),
       body: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: _buildWeekdayPicker(),
+          WeekdayPicker(
+            selections: model.selectedDays,
+            onSelect: model.toggleDay,
           ),
           Container(
             height: MediaQuery.of(context).size.height * 0.8,
@@ -87,9 +88,7 @@ class _CreateSessionScreenState extends State<CreateSessionScreen> {
                         var updatedWorkout =
                             await Navigator.of(context).pushNamed(
                           EditWorkoutScreen.id,
-                          arguments: {
-                            'data': model.workouts[index],
-                          },
+                          arguments: {'data': model.workouts[index]},
                         ) as Workout;
                         model.updateEditedWorkout(index, updatedWorkout);
                         // model.setSelectedWorkout(updatedWorkout);
@@ -135,40 +134,6 @@ class _CreateSessionScreenState extends State<CreateSessionScreen> {
         color: Theme.of(context).primaryColor,
       ),
     );
-  }
-
-  List<Widget> _buildWeekdayPicker() {
-    final model = Provider.of<CreateSessionScreenProvider>(context);
-    List<Widget> widgets = [];
-    for (int i = 0; i < model.selectedDays.length; i++) {
-      widgets.add(
-        Expanded(
-          flex: 1,
-          child: AnimatedContainer(
-            decoration: BoxDecoration(
-              border: Border.all(),
-              color: model.selectedDays[i]
-                  ? Theme.of(context).primaryColor
-                  : Theme.of(context).cardColor,
-            ),
-            duration: Duration(milliseconds: 200),
-            child: TextButton(
-              onPressed: () {
-                model.toggleDay(i);
-              },
-              child: Text(model.dayNames[i].substring(0, 1),
-                  style: model.selectedDays[i]
-                      ? TextStyle(
-                          color: dangerColor,
-                          fontWeight: FontWeight.bold,
-                        )
-                      : Theme.of(context).textTheme.bodyText1),
-            ),
-          ),
-        ),
-      );
-    }
-    return widgets;
   }
 
   Future<void> _showConfirmationDialog(
