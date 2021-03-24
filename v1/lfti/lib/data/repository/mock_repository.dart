@@ -1,221 +1,33 @@
 import 'package:lfti/data/models/activity.dart';
-import 'package:lfti/data/models/date_time_info.dart';
 import 'package:lfti/data/models/exercise.dart';
-import 'package:lfti/data/models/rest.dart';
 import 'package:lfti/data/models/session.dart';
-import 'package:lfti/data/models/session_data.dart';
-import 'package:lfti/data/models/user_data.dart';
-import 'package:lfti/data/models/user_info.dart';
+import 'package:lfti/data/models/user.dart';
 import 'package:lfti/data/models/workout.dart';
+import 'package:lfti/data/repository/data.dart';
 import 'package:lfti/data/repository/i_repository.dart';
 import 'package:lfti/helpers/app_strings.dart';
-import 'package:lfti/helpers/id_generator.dart';
 
 class MockRepository implements IRepository {
-  List<Workout> _userWorkouts = [
-    Workout(
-        name: 'Chest Superset',
-        description: 'Description 1',
-        targetBodyParts: [Target.Chest],
-        id: IdGenerator.generateV4(),
-        activities: [..._sampleActivityList]),
-    Workout(
-        name: 'Chest Workout',
-        description: 'Description 2',
-        targetBodyParts: [Target.Chest],
-        id: IdGenerator.generateV4(),
-        activities: _sampleActivityList),
-    Workout(
-        name: 'Chest Superset with Arms and Shoulders',
-        description: 'Description 3',
-        targetBodyParts: [Target.Chest, Target.Arm, Target.Shoulder],
-        id: IdGenerator.generateV4(),
-        activities: _sampleActivityList),
-    Workout(
-        name: 'Leg Superset with Shoulders',
-        description: 'Description 4',
-        targetBodyParts: [Target.Leg, Target.Shoulder],
-        id: IdGenerator.generateV4(),
-        activities: _sampleActivityList),
-    Workout(
-        name: 'Chest Superset with Arms , Core and Shoulders',
-        description: 'Description 5',
-        targetBodyParts: [
-          Target.Chest,
-          Target.Arm,
-          Target.Shoulder,
-          Target.Core
-        ],
-        id: IdGenerator.generateV4(),
-        activities: _sampleActivityList),
-  ];
+  final data = SampleData();
+  late List<Activity> _userExercises;
+  late List<Workout> _userWorkouts;
+  late List<Session> _userSessions;
+  late User _user;
 
-  List<Exercise> _userExercises = [
-    Exercise(
-        id: IdGenerator.generateV4(),
-        name: 'E1',
-        setCount: 3,
-        repCount: 10,
-        target: Target.Chest),
-    Exercise(
-        id: IdGenerator.generateV4(),
-        name: 'E2',
-        setCount: 3,
-        repCount: 12,
-        target: Target.Back),
-    Exercise(
-        id: IdGenerator.generateV4(),
-        name: 'E3',
-        setCount: 3,
-        repCount: 15,
-        target: Target.Arm),
-    Exercise(
-        id: IdGenerator.generateV4(),
-        name: 'E4',
-        setCount: 3,
-        repCount: 20,
-        target: Target.Leg),
-    Exercise(
-        id: IdGenerator.generateV4(),
-        name: 'E5',
-        setCount: 3,
-        repCount: 25,
-        target: Target.Shoulder),
-    Exercise(
-        id: IdGenerator.generateV4(),
-        name: 'E6',
-        setCount: 3,
-        repCount: 10,
-        target: Target.Chest),
-    Exercise(
-        id: IdGenerator.generateV4(),
-        name: 'E7',
-        setCount: 3,
-        repCount: 12,
-        target: Target.Back),
-    Exercise(
-        id: IdGenerator.generateV4(),
-        name: 'E8',
-        setCount: 3,
-        repCount: 15,
-        target: Target.Arm),
-    Exercise(
-        id: IdGenerator.generateV4(),
-        name: 'E9',
-        setCount: 3,
-        repCount: 20,
-        target: Target.Leg),
-    Exercise(
-        id: IdGenerator.generateV4(),
-        name: 'E10',
-        setCount: 3,
-        repCount: 25,
-        target: Target.Shoulder)
-  ];
+  MockRepository() {
+    _userExercises = [
+      ...data.coreExercises,
+      ...data.armExercises,
+      ...data.backExercises,
+      ...data.chestExercises,
+      ...data.legExercises,
+      ...data.shoulderExercises
+    ];
 
-  static UserData _userData = UserData(
-    currentWeight: 153.5,
-    targetWeight: 180.0,
-    currentBodyFat: 21.2,
-    targetBodyFat: 16,
-    height: 67,
-  );
-  static UserInfo _userInfo = UserInfo(
-      id: IdGenerator.generateV4(),
-      firstName: 'Richmond',
-      lastName: 'Escalona',
-      email: 'iam@johnescalona.com');
-  static SessionsData _sessionData = SessionsData(
-    daysWorkedOutThisWeek: [false, false, true, false, true, false, false],
-    currentWorkoutDuration: Duration(minutes: 30),
-    targetWorkoutDuration: Duration(minutes: 60),
-    previousSession: Session(
-        date: DateTimeInfo(DateTime(2022, 2, 21)),
-        duration: Duration(minutes: 20),
-        workout: Workout(
-            name: 'Chest Superset with Arms and Shoulders',
-            description: 'Description 1',
-            targetBodyParts: [Target.Chest, Target.Arm, Target.Shoulder],
-            id: IdGenerator.generateV4(),
-            activities: _sampleActivityList),
-        performedExercises: [
-          _sampleActivityList[0],
-          _sampleActivityList[4],
-          _sampleActivityList[6],
-        ],
-        skippedExercises: [
-          _sampleActivityList[2],
-          _sampleActivityList[8],
-        ]),
-    nextSession: Session(
-      date: DateTimeInfo(DateTime(
-        2022,
-        2,
-        22,
-      )),
-      duration: Duration(minutes: 35),
-      workout: Workout(
-          name: 'Arm Day with Core',
-          description: 'Description 2',
-          targetBodyParts: [Target.Arm, Target.Core],
-          id: IdGenerator.generateV4(),
-          activities: _sampleActivityList),
-    ),
-  );
-
-  static List<Activity> _sampleActivityList = [
-    _sampleExercises[0],
-    Rest(30, id: IdGenerator.generateV4()),
-    _sampleExercises[1],
-    Rest(35, id: IdGenerator.generateV4()),
-    _sampleExercises[2],
-    Rest(40, id: IdGenerator.generateV4()),
-    _sampleExercises[3],
-    Rest(60, id: IdGenerator.generateV4()),
-    _sampleExercises[4],
-  ];
-
-  /// Temporary Standard workouts
-  /// to be requested form server
-  /// once upon startup
-  static List<Activity> _sampleExercises = [
-    Exercise(
-        id: IdGenerator.generateV4(),
-        name: 'Supermans',
-        setCount: 3,
-        repCount: 10,
-        target: Target.Back),
-    Exercise(
-        id: IdGenerator.generateV4(),
-        name: 'Push-up',
-        setCount: 3,
-        repCount: 12,
-        target: Target.Chest),
-    Exercise(
-        id: IdGenerator.generateV4(),
-        name: 'Contralateral Limb Raises',
-        setCount: 3,
-        repCount: 15,
-        target: Target.Leg),
-    Exercise(
-        id: IdGenerator.generateV4(),
-        name: 'Bent Knee Push-up',
-        setCount: 3,
-        repCount: 20,
-        target: Target.Chest),
-    Exercise(
-        id: IdGenerator.generateV4(),
-        name: 'Downward-facing Dog',
-        setCount: 3,
-        repCount: 25,
-        target: Target.Core),
-    Exercise(
-        id: IdGenerator.generateV4(),
-        name: ' Push-up with Single-leg Raise',
-        setCount: 3,
-        repCount: 25,
-        target: Target.Leg),
-  ];
+    _userWorkouts = data.workouts;
+    _userSessions = data.sessions;
+    _user = data.user;
+  }
 
   @override
   void addExercise(Exercise exercise) {
@@ -228,28 +40,20 @@ class MockRepository implements IRepository {
   }
 
   @override
-  UserData getUserData() {
-    return _userData;
-  }
-
-  @override
-  UserInfo getUserInfo() {
-    return _userInfo;
+  User getUser() {
+    return _user;
   }
 
   /// Returns all available exercises
   /// only use for search functionality
   /// when adding activities for a workout
   @override
-  List<Exercise> getAllExercises() {
-    return [
-      ..._sampleExercises,
-      ..._userExercises,
-    ];
+  List<Activity> getAllActivities() {
+    return _userExercises;
   }
 
   @override
-  List<Exercise> getUserExercises() {
+  List<Activity> getUserActivities() {
     return _userExercises;
   }
 
@@ -271,20 +75,15 @@ class MockRepository implements IRepository {
 
   @override
   Exercise getExerciseById(String id) {
-    var allExercises = getUserExercises();
+    var allExercises = getUserActivities();
     if (allExercises.isEmpty) {
       throw Exception(EMPTY_LIST_ERROR);
     } else {
       return allExercises.firstWhere(
         (item) => (item.id == id),
         orElse: () => throw Exception(ITEM_NOT_FOUND_ERROR),
-      );
+      ) as Exercise;
     }
-  }
-
-  @override
-  SessionsData getSessionData() {
-    return _sessionData;
   }
 
   @override
@@ -353,12 +152,24 @@ class MockRepository implements IRepository {
   }
 
   @override
-  void updateUserData(UserData update) {
-    _userData = update;
+  void updateUser(User update) {
+    _user = update;
   }
 
   @override
-  void updateSessionData(SessionsData update) {
-    _sessionData = update;
+  List<Session> getAllSessions() {
+    return _userSessions;
+  }
+
+  @override
+  Session getSessionById(String id) {
+    return _userSessions.firstWhere((item) => item.id == id,
+        orElse: () => throw Exception(ITEM_NOT_FOUND_ERROR));
+  }
+
+  @override
+  void addSession(Session session) {
+    print('session added ${session.workout.name}');
+    _userSessions.add(session);
   }
 }

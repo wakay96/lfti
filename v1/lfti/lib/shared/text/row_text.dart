@@ -6,7 +6,7 @@ class RowText extends StatelessWidget {
   final String subContent;
   final Color color;
   RowText({
-    this.content,
+    required this.content,
     this.subContent = '',
     this.color = appStyles.currentAppThemeTextColor,
   });

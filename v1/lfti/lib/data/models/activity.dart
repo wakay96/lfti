@@ -1,13 +1,11 @@
-import 'package:lfti/helpers/app_strings.dart';
-
-abstract class Activity {
+class Activity {
   String id;
   String name;
-  String description;
+  String? description;
 
   Activity({
-    this.id,
-    this.name = DEFAULT_EXERCISE_NAME,
-    this.description = DEFAULT_EXERCISE_DESC,
+    required this.id,
+    required this.name,
+    this.description,
   });
 }

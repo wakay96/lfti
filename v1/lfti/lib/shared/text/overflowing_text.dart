@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lfti/helpers/app_styles.dart';
 
 class OverflowingText extends StatelessWidget {
-  OverflowingText({this.text, this.style});
+  OverflowingText({required this.text, this.style = smallTextStyle});
 
   final String text;
   final TextStyle style;

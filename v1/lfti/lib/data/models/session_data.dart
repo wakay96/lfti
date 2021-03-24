@@ -2,10 +2,10 @@ import 'package:lfti/data/models/session.dart';
 
 class SessionsData {
   List<bool> daysWorkedOutThisWeek;
-  Duration currentWorkoutDuration;
-  Duration targetWorkoutDuration;
-  Session previousSession;
-  Session nextSession;
+  Duration? currentWorkoutDuration;
+  Duration? targetWorkoutDuration;
+  Session? previousSession;
+  Session? nextSession;
 
   SessionsData({
     this.daysWorkedOutThisWeek = const [

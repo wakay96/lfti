@@ -1,21 +1,22 @@
-import 'package:lfti/data/models/exercise.dart';
 import 'package:lfti/data/models/workout.dart';
-import 'date_time_info.dart';
+import 'activity.dart';
 
 class Session {
   String id;
-  DateTimeInfo date;
-  Duration duration;
+  List<String> schedule;
   Workout workout;
-  List<Exercise> performedExercises;
-  List<Exercise> skippedExercises;
+
+  /// Contains data for previous Session
+  Duration? duration;
+  List<Activity>? performedExercises;
+  List<Activity>? skippedExercises;
 
   Session({
-    this.id,
-    this.date,
+    required this.id,
+    required this.schedule,
     this.duration,
-    this.workout,
-    this.performedExercises = const <Exercise>[],
-    this.skippedExercises = const <Exercise>[],
+    required this.workout,
+    this.performedExercises,
+    this.skippedExercises,
   });
 }

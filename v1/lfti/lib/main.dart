@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lfti/screens/dashboard/dashboard_screen.dart';
-import 'package:lfti/screens/home/home_screen.dart';
+import 'package:lfti/screens/session/create_session_screen.dart';
+import 'package:lfti/screens/workout/create_workout_screen.dart';
+import 'package:lfti/screens/session/edit_session_screen.dart';
+import 'package:lfti/screens/session/session_screen.dart';
 import 'package:lfti/screens/workout/edit_workout_screen.dart';
-import 'package:lfti/screens/workout/view_workout_history_screen.dart';
-import 'package:lfti/screens/workout/workout_screen.dart';
 import 'package:lfti/services/app_manager.dart';
 
 void main() {
@@ -15,14 +15,15 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData.dark(),
       title: 'lfti',
-      initialRoute: HomeScreen.id,
+      initialRoute: SessionScreen.id,
       routes: {
-        HomeScreen.id: (context) => HomeScreen(),
-        DashboardScreen.id: (context) => DashboardScreenBuilder(),
-        WorkoutScreen.id: (context) => WorkoutScreenBuilder(),
-        EditWorkoutScreen.id: (context) => EditWorkoutScreenBuilder(),
-        ViewWorkoutHistoryScreen.id: (context) => ViewWorkoutHistoryScreen(),
+        SessionScreen.id: (context) => SessionScreenBuilder(),
+        EditSessionScreen.id: (context) => EditSessionScreenBuilder(),
+        CreateWorkoutScreen.id: (context) => CreateWorkoutScreenBuilder(),
+        CreateSessionScreen.id: (context) => CreateSessionScreenBuilder(),
+        EditWorkoutScreen.id: (context) => EditWorkoutScreenBuilder()
       },
     );
   }

@@ -3,13 +3,8 @@ import 'package:lfti/data/models/date_time_info.dart';
 
 void dateTimeInfoTest() {
   group('DateTimeInfo Class', () {
-    /// set up
-    DateTimeInfo dti;
-    setUp(() {
-      dti = DateTimeInfo(DateTime.now());
-    });
-
     group('dayName ', () {
+      DateTimeInfo dti = DateTimeInfo(DateTime.now());
       test(" - result should be a valid weekday name", () {
         /// execute
         String res = dti.dayName;
@@ -34,6 +29,7 @@ void dateTimeInfoTest() {
       });
     });
     group('monthName', () {
+      DateTimeInfo dti = DateTimeInfo(DateTime.now());
       test(' - should return valid month', () {
         /// execute
         String res = dti.monthName;
@@ -65,6 +61,7 @@ void dateTimeInfoTest() {
     });
 
     group('year', () {
+      DateTimeInfo dti = DateTimeInfo(DateTime.now());
       test(' - should return valid year of > 4 length', () {
         /// execute
         String year = dti.year;
@@ -86,6 +83,7 @@ void dateTimeInfoTest() {
     });
 
     group('day', () {
+      DateTimeInfo dti = DateTimeInfo(DateTime.now());
       test(' - should return valid day > 0 && <= 31', () {
         /// execute
         int d = int.parse(dti.day);

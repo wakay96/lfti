@@ -9,7 +9,7 @@ const Color dangerColor = Color(0xFFD7263D);
 // used
 const Color weightThemeColor = Color(0xFF68C5DB);
 const Color bodyFatThemeColor = Color(0xFFFFE200);
-const Color workoutThemeColor = Color(0xFF00FF14);
+const Color workoutThemeColor = dangerColor;
 const Color exerciseThemeColor = workoutThemeColor;
 const Color restThemeColor = weightThemeColor;
 const Color timeThemeColor = Color(0xFFFF586A);
