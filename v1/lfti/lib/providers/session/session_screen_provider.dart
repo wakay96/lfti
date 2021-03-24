@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lfti/data/models/session.dart';
 import 'package:lfti/providers/screen_provider.dart';
-import 'package:lfti/screens/session/create_session_screen.dart';
 
 class SessionScreenProvider extends ScreenProvider {
   bool editMode = false;
@@ -13,26 +12,29 @@ class SessionScreenProvider extends ScreenProvider {
     this.sessions = repo.getAllSessions();
   }
 
-  void enableEditMode() {
-    editMode = true;
-    toggleSelectedSession(null);
+  void toggleEditMode() {
+    editMode = !editMode;
     notifyListeners();
   }
 
   void saveChanges() {
-    editMode = false;
-    selectedSession = null;
+    print('Save Changes');
     notifyListeners();
   }
 
-  void toggleSelectedSession(String? id) {
-    Session? session;
+  void toggleSelectedSession(String id) {
+    Session session;
     try {
       session = sessions.firstWhere((item) => item.id == id);
       selectedSession = session;
     } catch (e) {
       selectedSession = null;
     }
+    notifyListeners();
+  }
+
+  void resetSelectedSession() {
+    selectedSession = null;
     notifyListeners();
   }
 
@@ -51,9 +53,5 @@ class SessionScreenProvider extends ScreenProvider {
 
   void startSession(BuildContext context) {
     print('start session');
-  }
-
-  void createSession(BuildContext context) {
-    Navigator.pushNamed(context, CreateSessionScreen.id);
   }
 }

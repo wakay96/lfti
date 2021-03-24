@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lfti/helpers/app_styles.dart';
 import 'package:lfti/helpers/string_formatter.dart';
 import 'package:lfti/providers/session/session_screen_provider.dart';
+import 'package:lfti/screens/session/create_session_screen.dart';
 import 'package:lfti/screens/session/edit_session_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -37,39 +38,36 @@ class _SessionScreenState extends State<SessionScreen> {
     final model = Provider.of<SessionScreenProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      floatingActionButton: getFloatingActionButton(),
+      floatingActionButton: _getFloatingActionButton(),
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(title: Text(SessionScreen.title), actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: IconButton(
-                onPressed:
-                    model.editMode ? model.saveChanges : model.enableEditMode,
-                icon: model.editMode
-                    ? Icon(FontAwesomeIcons.save)
-                    : Icon(FontAwesomeIcons.edit),
-              ),
-            ),
-          ]),
-          SliverList(delegate: buildSessionTiles(model)),
+          SliverAppBar(
+            title: Text(SessionScreen.title),
+          ),
+          SliverList(
+            delegate: _buildSessionTiles(model),
+          ),
         ],
       ),
     );
   }
 
-  FloatingActionButton getFloatingActionButton() {
+  FloatingActionButton _getFloatingActionButton() {
     final model = Provider.of<SessionScreenProvider>(context);
-    late IconData iconData;
-    late Function handler;
-    late Color color;
+    IconData iconData;
+    Function handler;
+    Color color;
 
-    if (model.editMode) {
-      handler = (context) => model.createSession(context);
+    if (model.selectedSession == null) {
+      handler = (context) {
+        Navigator.pushNamed(
+          context,
+          CreateSessionScreen.id,
+        );
+      };
       iconData = FontAwesomeIcons.plus;
       color = dangerColor;
     } else {
-      iconData = FontAwesomeIcons.play;
       if (model.selectedSession == null) {
         handler = (_) => print('Select workout first');
         color = Theme.of(context).disabledColor;
@@ -77,7 +75,9 @@ class _SessionScreenState extends State<SessionScreen> {
         handler = (context) => model.startSession(context);
         color = dangerColor;
       }
+      iconData = FontAwesomeIcons.play;
     }
+
     return FloatingActionButton(
       backgroundColor: color,
       onPressed: () => handler(context),
@@ -88,48 +88,50 @@ class _SessionScreenState extends State<SessionScreen> {
     );
   }
 
-  SliverChildBuilderDelegate buildSessionTiles(SessionScreenProvider model) {
+  SliverChildBuilderDelegate _buildSessionTiles(SessionScreenProvider model) {
     return SliverChildBuilderDelegate(
-      (context, index) {
-        final session = model.sessions[index];
-        return Container(
-          decoration: BoxDecoration(
-            color: model.isSelectedSession(session.id)
-                ? Theme.of(context).primaryColor
-                : Theme.of(context).cardColor,
-            border: Border(
-              bottom: BorderSide(),
-            ),
-          ),
-          child: ListTile(
-            onTap: model.editMode
-                ? () {
-                    Navigator.pushNamed(
-                      context,
-                      EditSessionScreen.id,
-                      arguments: {'id': session.id},
-                    );
-                  }
-                : () {
-                    model.isSelectedSession(session.id)
-                        ? model.toggleSelectedSession(null)
-                        : model.toggleSelectedSession(session.id);
-                  },
-            leading: Icon(
-              FontAwesomeIcons.dumbbell,
-              color: model.selectedSession != null &&
-                      model.selectedSession!.id == session.id
-                  ? workoutThemeColor
-                  : Theme.of(context).primaryColor,
-            ),
-            title: Text(session.workout.name),
-            subtitle: Text(ListToString(session.schedule).parse()),
-            trailing:
-                model.editMode ? Icon(FontAwesomeIcons.angleRight) : SizedBox(),
-          ),
-        );
-      },
+      (context, index) => _getSessionTile(model, index),
       childCount: model.sessions.length,
+    );
+  }
+
+  Widget _getSessionTile(SessionScreenProvider model, int index) {
+    final session = model.sessions[index];
+    final bool isSelected = model.isSelectedSession(session.id);
+
+    return AnimatedContainer(
+      decoration: BoxDecoration(
+        color: isSelected
+            ? Theme.of(context).primaryColor
+            : Theme.of(context).cardColor,
+        border: Border.all(),
+      ),
+      child: ListTile(
+        title: Text(session.workout.name),
+        subtitle: Text(ListToString(session.schedule).parse()),
+        leading: Icon(
+          FontAwesomeIcons.dumbbell,
+          color:
+              isSelected ? workoutThemeColor : Theme.of(context).primaryColor,
+        ),
+        onTap: () {
+          isSelected
+              ? model.resetSelectedSession()
+              : model.toggleSelectedSession(session.id);
+          model.toggleEditMode();
+        },
+        trailing: IconButton(
+          onPressed: () {
+            Navigator.pushNamed(
+              context,
+              EditSessionScreen.id,
+              arguments: {'id': session.id},
+            );
+          },
+          icon: Icon(FontAwesomeIcons.angleRight),
+        ),
+      ),
+      duration: Duration(milliseconds: 200),
     );
   }
 }
