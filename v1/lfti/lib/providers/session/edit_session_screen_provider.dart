@@ -8,6 +8,8 @@ class EditSessionScreenProvider extends ScreenProvider {
   String schedule = '';
   String? name;
   String? description;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
   bool editMode = false;
 
   @override
@@ -19,18 +21,38 @@ class EditSessionScreenProvider extends ScreenProvider {
       schedule = ListToString(session.schedule).parse();
       description = session.workout.description;
       activities = session.workout.activities;
+      nameController = TextEditingController(text: name);
+      descriptionController = TextEditingController(text: description);
     } else {
       throw Exception('No session with ${args!['id']} found.');
     }
-  }
-
-  void saveChanges() {
-    editMode = false;
     notifyListeners();
   }
 
-  void enableEditMode() {
-    editMode = true;
+  void save() {
+    toggleEditMode();
+    notifyListeners();
+  }
+
+  void toggleEditMode() {
+    editMode = !editMode;
+    notifyListeners();
+  }
+
+  void onReorder(int oldIndex, int newIndex) {
+    if (oldIndex < newIndex) newIndex -= 1;
+    final Activity element = activities.removeAt(oldIndex);
+    activities.insert(newIndex, element);
+    notifyListeners();
+  }
+
+  void updateName(String val) {
+    name = val;
+    notifyListeners();
+  }
+
+  void updateDescription(String val) {
+    description = val;
     notifyListeners();
   }
 }
