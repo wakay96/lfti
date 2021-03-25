@@ -1,30 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:lfti/helpers/app_styles.dart' as appStyles;
 
-class RowContent extends StatelessWidget {
-  RowContent({
-    this.content,
-    this.subContent = '',
-  });
-
+class RowText extends StatelessWidget {
   final String content;
   final String subContent;
+  final Color color;
+  RowText({
+    required this.content,
+    this.subContent = '',
+    this.color = appStyles.currentAppThemeTextColor,
+  });
 
   @override
   Widget build(BuildContext context) {
     return RichText(
-      textAlign: TextAlign.center,
       text: TextSpan(children: [
         TextSpan(
           text: content,
-          style: appStyles.whiteBLText,
+          style: TextStyle(fontSize: appStyles.BODY_TEXT, color: color),
         ),
-        TextSpan(
-          text: ' ',
-        ),
+        TextSpan(text: ' '),
         TextSpan(
           text: subContent,
-          style: appStyles.whiteNMText,
+          style: TextStyle(fontSize: appStyles.BODY_TEXT, color: color),
         ),
       ]),
     );

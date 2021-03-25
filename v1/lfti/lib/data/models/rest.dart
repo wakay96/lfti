@@ -1,12 +1,9 @@
-import 'package:lfti/helpers/app_strings.dart';
-
 import 'activity.dart';
 
 class Rest extends Activity {
-  int _seconds;
+  String id;
   Duration duration;
-  Rest(this._seconds)
-      : super(name: REST_ACTIVITY_NAME, description: REST_ACTIVITY_DESC) {
-    duration = Duration(seconds: _seconds);
-  }
+
+  Rest(this.id, this.duration)
+      : super(name: 'Rest', description: '${duration.inSeconds}s Rest', id: id);
 }

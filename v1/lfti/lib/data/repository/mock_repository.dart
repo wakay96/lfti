@@ -1,54 +1,33 @@
-import 'dart:io';
-
 import 'package:lfti/data/models/activity.dart';
 import 'package:lfti/data/models/exercise.dart';
-import 'package:lfti/data/models/user_data.dart';
+import 'package:lfti/data/models/session.dart';
+import 'package:lfti/data/models/user.dart';
 import 'package:lfti/data/models/workout.dart';
+import 'package:lfti/data/repository/data.dart';
 import 'package:lfti/data/repository/i_repository.dart';
-import 'package:lfti/helpers/app_enums.dart';
 import 'package:lfti/helpers/app_strings.dart';
-import 'package:lfti/helpers/id_generator.dart';
-import 'package:uuid/uuid.dart';
 
 class MockRepository implements IRepository {
-  List<Workout> _userWorkouts = [];
-  List<Exercise> _userExercises = [];
-  UserData _userData = UserData(
-      currentWeight: 153.5,
-      targetWeight: 180.0,
-      currentBodyFat: 21.2,
-      targetBodyFat: 16,
-      height: 67,
-      targetDailyActivity: Duration(minutes: 60),
-      currentDailyActivity: Duration(minutes: 35),
-      weeklyActivityHistory: [false, false, true, false, true, false, false],
-      targetSessionCount: 5);
+  final data = SampleData();
+  late List<Activity> _userExercises;
+  late List<Workout> _userWorkouts;
+  late List<Session> _userSessions;
+  late User _user;
 
-  /// Temporary Standard workouts
-  /// to be requested form server
-  /// once upon startup
-  static List<Activity> _sampleExercises = [
-    Exercise(name: 'RE1', setCount: 3, repCount: 10, target: Target.Chest),
-    Exercise(name: 'RE2', setCount: 3, repCount: 12, target: Target.Back),
-    Exercise(name: 'RE3', setCount: 3, repCount: 15, target: Target.Arm),
-    Exercise(name: 'RE4', setCount: 3, repCount: 20, target: Target.Leg),
-    Exercise(name: 'RE5', setCount: 3, repCount: 25, target: Target.Shoulder),
-  ];
+  MockRepository() {
+    _userExercises = [
+      ...data.coreExercises,
+      ...data.armExercises,
+      ...data.backExercises,
+      ...data.chestExercises,
+      ...data.legExercises,
+      ...data.shoulderExercises
+    ];
 
-  List<Workout> _sampleWorkouts = [
-    Workout(
-        id: IdGenerator.generateV4(),
-        days: [WeekdayNames.Monday],
-        activities: [..._sampleExercises]),
-    Workout(
-        id: IdGenerator.generateV4(),
-        days: [WeekdayNames.Tuesday, WeekdayNames.Wednesday],
-        activities: [..._sampleExercises]),
-    Workout(
-        id: IdGenerator.generateV4(),
-        days: [WeekdayNames.Thursday, WeekdayNames.Friday],
-        activities: [..._sampleExercises]),
-  ];
+    _userWorkouts = data.workouts;
+    _userSessions = data.sessions;
+    _user = data.user;
+  }
 
   @override
   void addExercise(Exercise exercise) {
@@ -60,25 +39,21 @@ class MockRepository implements IRepository {
     _userWorkouts.add(workout);
   }
 
+  @override
+  User getUser() {
+    return _user;
+  }
+
   /// Returns all available exercises
   /// only use for search functionality
   /// when adding activities for a workout
-
   @override
-  UserData getUserData() {
-    return _userData;
+  List<Activity> getAllActivities() {
+    return _userExercises;
   }
 
   @override
-  List<Exercise> getAllExercises() {
-    return [
-      ..._sampleExercises,
-      ..._userExercises,
-    ];
-  }
-
-  @override
-  List<Exercise> getUserExercises() {
+  List<Activity> getUserActivities() {
     return _userExercises;
   }
 
@@ -100,14 +75,14 @@ class MockRepository implements IRepository {
 
   @override
   Exercise getExerciseById(String id) {
-    var allExercises = getUserExercises();
+    var allExercises = getUserActivities();
     if (allExercises.isEmpty) {
       throw Exception(EMPTY_LIST_ERROR);
     } else {
       return allExercises.firstWhere(
         (item) => (item.id == id),
         orElse: () => throw Exception(ITEM_NOT_FOUND_ERROR),
-      );
+      ) as Exercise;
     }
   }
 
@@ -165,18 +140,36 @@ class MockRepository implements IRepository {
     try {
       int index = _userWorkouts.indexOf(getWorkoutById(id));
       _userWorkouts[index] = Workout(
-          id: id,
-          name: update.name,
-          description: update.description,
-          activities: update.activities,
-          targetBodyParts: update.targetBodyParts,
-          days: update.days);
+        id: id,
+        name: update.name,
+        description: update.description,
+        activities: update.activities,
+        targetBodyParts: update.targetBodyParts,
+      );
     } catch (e) {
       throw e;
     }
   }
 
-  void updateUserData(UserData update) {
-    _userData = update;
+  @override
+  void updateUser(User update) {
+    _user = update;
+  }
+
+  @override
+  List<Session> getAllSessions() {
+    return _userSessions;
+  }
+
+  @override
+  Session getSessionById(String id) {
+    return _userSessions.firstWhere((item) => item.id == id,
+        orElse: () => throw Exception(ITEM_NOT_FOUND_ERROR));
+  }
+
+  @override
+  void addSession(Session session) {
+    print('session added ${session.workout.name}');
+    _userSessions.add(session);
   }
 }

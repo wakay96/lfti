@@ -1,82 +1,118 @@
 import 'package:flutter/material.dart';
 
-/// Colors
+// Colors
 const Color inactiveBackgroundColor = Colors.transparent;
 const Color primaryInactiveColor = Color(0xFF448FA3);
 const Color primaryActiveColor = Color(0xFF0197F6);
-const Color tertiaryColor = Colors.grey;
-const Color primaryColor = Color(0xFF02182b);
 const Color dangerColor = Color(0xFFD7263D);
 
-/// Padding
-const EdgeInsets primaryContainerPadding = EdgeInsets.all(20.0);
-const EdgeInsets primaryContainerSidePadding =
-    EdgeInsets.only(left: 20.0, right: 20.0);
+// used
+const Color weightThemeColor = Color(0xFF68C5DB);
+const Color bodyFatThemeColor = Color(0xFFFFE200);
+const Color workoutThemeColor = dangerColor;
+const Color exerciseThemeColor = workoutThemeColor;
+const Color restThemeColor = weightThemeColor;
+const Color timeThemeColor = Color(0xFFFF586A);
+const Color skippedWorkoutColor = primaryColor;
 
-/// TextStyles
+const Color primaryColor = Color(0xFF02182b);
+const Color secondaryColor = Color(0xFF0197F6);
+const Color tertiaryColor = Color(0xAFFAFAFA);
+const Color inactiveCardColor = Color(0xFF053055);
+
+// Padding
+const EdgeInsets primaryContainerPadding = EdgeInsets.all(20.0);
+const EdgeInsets cardPadding = EdgeInsets.all(12.0);
+const EdgeInsets primaryContainerSidePadding =
+    EdgeInsets.only(left: 15.0, right: 15.0);
+const EdgeInsets cardHorizontalSpacing = EdgeInsets.only(bottom: 5, top: 5);
+
+// FONT SIZE
+const double XS_TEXT = 12;
+const double DETAILS = 14;
+const double BODY_TEXT = 16;
+const double SUBTITLE = 18;
+const double TITLE = 24;
+const double MAIN_TITLE = 42;
+
+const Color lightThemeTextColor = Color(0xFF363636);
+const Color darkThemeTextColor = Color(0xFFFAFAFA);
+const Color currentAppThemeTextColor = darkThemeTextColor;
+
+// Button Styles
+const TextStyle currentButtonTextTheme = smallTextStyle;
+const Color buttonDarkThemeActiveColor = secondaryColor;
+const Color buttonLightThemeActiveColor = primaryColor;
+const Color currentActiveButtonColor = buttonDarkThemeActiveColor;
+
+// TextStyles
+const TextStyle smallTextStyle = TextStyle(
+  color: currentAppThemeTextColor,
+  fontSize: DETAILS,
+);
+
+const TextStyle mediumTextStyle = TextStyle(
+  color: currentAppThemeTextColor,
+  fontSize: BODY_TEXT,
+);
+
+const TextStyle largeTextStyle = TextStyle(
+  color: currentAppThemeTextColor,
+  fontSize: TITLE,
+);
+
+const TextStyle workoutMediumTextStyle = TextStyle(
+  color: workoutThemeColor,
+  fontSize: BODY_TEXT,
+);
+
+const TextStyle exerciseLargeTextStyle = TextStyle(
+  color: exerciseThemeColor,
+  fontSize: TITLE,
+);
+
+const TextStyle exerciseMediumTextStyle = TextStyle(
+  color: exerciseThemeColor,
+  fontSize: BODY_TEXT,
+);
+
+const TextStyle exerciseSmallTextStyle = TextStyle(
+  color: exerciseThemeColor,
+  fontSize: DETAILS,
+);
+
+const TextStyle restMediumTextStyle = TextStyle(
+  color: restThemeColor,
+  fontSize: DETAILS,
+);
+
+const TextStyle activitySmallTextStyle = TextStyle(
+  color: exerciseThemeColor,
+  fontSize: BODY_TEXT,
+);
+
+const TextStyle buttonTextStyle = TextStyle(
+  color: currentAppThemeTextColor,
+  fontSize: BODY_TEXT,
+);
+
+const TextStyle labelSmallTextStyle = TextStyle(
+  color: tertiaryColor,
+  fontSize: XS_TEXT,
+);
+
+const TextStyle labelMediumTextStyle = TextStyle(
+  color: currentAppThemeTextColor,
+  fontSize: DETAILS,
+);
+
+const TextStyle uneditableMediumTextStyle = TextStyle(
+    color: currentAppThemeTextColor,
+    fontSize: BODY_TEXT,
+    fontWeight: FontWeight.bold);
+
 const TextStyle appBarTitleTextStyleLight = TextStyle(
   color: Colors.white,
-);
-
-const TextStyle whiteBLText = TextStyle(
-  color: Colors.white,
-  fontSize: 25,
-  fontWeight: FontWeight.bold,
-);
-
-const TextStyle whiteBmLText = TextStyle(
-  color: Colors.white,
-  fontSize: 15,
-  fontWeight: FontWeight.bold,
-);
-
-const TextStyle whiteNMText = TextStyle(
-  color: Colors.white,
-  fontSize: 12,
-);
-
-const TextStyle whiteIMText = TextStyle(
-  color: Colors.white,
-  fontSize: 12,
-  fontStyle: FontStyle.italic,
-);
-
-const TextStyle whiteLabelText = TextStyle(
-  color: Colors.white,
-  fontSize: 10,
-);
-
-const TextStyle grayLabelText = TextStyle(
-  color: tertiaryColor,
-  fontSize: 10,
-);
-
-/// dark text
-const TextStyle darkLabelText = TextStyle(
-  color: primaryColor,
-  fontSize: 10,
-);
-const TextStyle blackBLText = TextStyle(
-  color: Colors.black,
-  fontSize: 25,
-  fontWeight: FontWeight.bold,
-);
-
-const TextStyle blackBmLText = TextStyle(
-  color: Colors.black,
-  fontSize: 15,
-  fontWeight: FontWeight.bold,
-);
-
-const TextStyle blackNMText = TextStyle(
-  color: Colors.black,
-  fontSize: 12,
-);
-
-const TextStyle blackIMText = TextStyle(
-  color: Colors.black,
-  fontSize: 12,
-  fontStyle: FontStyle.italic,
 );
 
 /// decorations
@@ -86,4 +122,12 @@ final activeBorder = Border.all(
 
 final inactiveBorder = Border.all(
   color: primaryInactiveColor,
+);
+
+final borderRadius = BorderRadius.circular(8.0);
+final buttonBorderRadius = BorderRadius.circular(6.0);
+
+/// snackbar
+final snackBarShape = RoundedRectangleBorder(
+  borderRadius: BorderRadius.all(Radius.circular(10)),
 );

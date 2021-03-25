@@ -1,5 +1,7 @@
+import 'package:lfti/data/models/activity.dart';
 import 'package:lfti/data/models/exercise.dart';
-import 'package:lfti/data/models/user_data.dart';
+import 'package:lfti/data/models/session.dart';
+import 'package:lfti/data/models/user.dart';
 import 'package:lfti/data/models/workout.dart';
 
 abstract class IRepository {
@@ -9,12 +11,17 @@ abstract class IRepository {
   /// Add exercise to Exercise Bank
   void addExercise(Exercise exercise);
 
+  /// Add session to Session Bank
+  void addSession(Session session);
+
   List<Workout> getAllWorkouts();
   Workout getWorkoutById(String uuid);
-  List<Exercise> getAllExercises();
-  List<Exercise> getUserExercises();
-  Exercise getExerciseById(String uuid);
-  UserData getUserData();
+  List<Activity> getAllActivities();
+  List<Activity> getUserActivities();
+  Exercise getExerciseById(String id);
+  User getUser();
+  List<Session> getAllSessions();
+  Session? getSessionById(String id);
 
   void clearUserExerciseBank();
   bool deleteExerciseById(String uuid);
@@ -23,5 +30,5 @@ abstract class IRepository {
 
   void updateExerciseById(String id, Exercise update);
   void updateWorkoutById(String id, Workout update);
-  void updateUserData(UserData userData);
+  void updateUser(User user);
 }
