@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:lfti/screens/session/session_screen.dart';
+import 'package:lfti/shared/picker/weekday_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lfti/data/models/exercise.dart';
 import 'package:lfti/helpers/app_icon.dart';
 import 'package:lfti/providers/session/edit_session_screen_provider.dart';
-import 'package:provider/provider.dart';
 
 class EditSessionScreenBuilder extends StatelessWidget {
   @override
@@ -40,32 +42,72 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
         Provider.of<EditSessionScreenProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(EditSessionScreen.title),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: model.editMode
-                ? IconButton(
-                    onPressed: () {
-                      model.save();
-                      model.toggleEditMode();
-                    },
-                    icon: Icon(FontAwesomeIcons.save),
-                  )
-                : IconButton(
-                    onPressed: model.toggleEditMode,
-                    icon: Icon(FontAwesomeIcons.edit),
-                  ),
+          title: Text(EditSessionScreen.title),
+          leading: IconButton(
+              icon: AppIcon.backArrow,
+              onPressed: () {
+                model.editMode
+                    ? _showConfirmationDialog(model)
+                    : Navigator.pop(context);
+              }),
+          actions: _getAppBarAction(model)),
+      body: CustomScrollView(slivers: [
+        _getDayPicker(model),
+        _getHeaderWidget(model),
+        _getActivityWidgets(model),
+      ]),
+    );
+  }
+
+  void _showConfirmationDialog(EditSessionScreenProvider model) {
+    showDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Discard changes?'),
+            content: Text('Unsaved changes will be discarded.'),
+            actions: [
+              ElevatedButton(
+                onPressed: () => Navigator.pushNamed(context, SessionScreen.id),
+                child: Text('Discard'),
+              ),
+            ],
+          );
+        });
+  }
+
+  Widget _getDayPicker(EditSessionScreenProvider model) {
+    return SliverList(
+      delegate: SliverChildListDelegate(
+        [
+          WeekdayPicker(
+            onSelect: model.editMode ? model.toggleDay : (_) {},
+            selections: model.scheduleSelection,
           )
         ],
       ),
-      body: CustomScrollView(
-        slivers: [
-          _getHeaderWidget(model),
-          _getActivityWidgets(context, model),
-        ],
-      ),
     );
+  }
+
+  List<Widget> _getAppBarAction(EditSessionScreenProvider model) {
+    return <Widget>[
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: model.editMode
+            ? IconButton(
+                icon: Icon(FontAwesomeIcons.save),
+                onPressed: () {
+                  model.save();
+                  model.toggleEditMode();
+                },
+              )
+            : IconButton(
+                onPressed: model.toggleEditMode,
+                icon: Icon(FontAwesomeIcons.edit),
+              ),
+      )
+    ];
   }
 
   Widget _getHeaderWidget(EditSessionScreenProvider model) {
@@ -105,8 +147,7 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
     );
   }
 
-  Widget _getActivityWidgets(
-      BuildContext context, EditSessionScreenProvider model) {
+  Widget _getActivityWidgets(EditSessionScreenProvider model) {
     return model.editMode
         ? SliverReorderableList(
             itemBuilder: (context, index) {

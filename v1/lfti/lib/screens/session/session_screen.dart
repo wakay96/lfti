@@ -4,7 +4,7 @@ import 'package:lfti/helpers/app_styles.dart';
 import 'package:lfti/helpers/string_formatter.dart';
 import 'package:lfti/providers/session/session_screen_provider.dart';
 import 'package:lfti/screens/session/create_session_screen.dart';
-import 'package:lfti/screens/session/edit_session_screen.dart';
+import 'package:lfti/screens/session/edit_session_workout_screen.dart';
 import 'package:provider/provider.dart';
 
 class SessionScreenBuilder extends StatelessWidget {
@@ -107,7 +107,7 @@ class _SessionScreenState extends State<SessionScreen> {
         border: Border.all(),
       ),
       child: ListTile(
-        title: Text(session.workout.name),
+        title: Text(session.name),
         subtitle: Text(ListToString(session.schedule).parse()),
         leading: Icon(
           FontAwesomeIcons.dumbbell,
@@ -121,12 +121,13 @@ class _SessionScreenState extends State<SessionScreen> {
           model.toggleEditMode();
         },
         trailing: IconButton(
-          onPressed: () {
-            Navigator.pushNamed(
+          onPressed: () async {
+            await Navigator.pushNamed(
               context,
               EditSessionScreen.id,
               arguments: {'id': session.id},
             );
+            model.refresh();
           },
           icon: Icon(FontAwesomeIcons.angleRight),
         ),

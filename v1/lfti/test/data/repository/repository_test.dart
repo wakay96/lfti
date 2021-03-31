@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:lfti/data/models/activity.dart';
 import 'package:lfti/data/models/exercise.dart';
 import 'package:lfti/data/models/rest.dart';
+import 'package:lfti/data/models/session.dart';
 import 'package:lfti/data/models/user.dart';
 import 'package:lfti/data/models/workout.dart';
 import 'package:lfti/data/repository/data.dart';
@@ -474,6 +475,44 @@ void repositoryTest() {
           ));
           var res = repository.getUser();
           expect(res.height, 60);
+        });
+      });
+
+      group('updateSessionById', () {
+        test(' - should update session name and description', () {
+          final data = SampleData();
+          repository = getIt<IRepository>();
+          repository.resetAllData();
+          final newName = 'My new workout';
+          final newDescription = 'My new Description';
+          repository.addSession(data.sessions[0]);
+          final newSession = Session(
+            id: data.sessions[0].id,
+            schedule: [],
+            activities: [],
+            name: newName,
+            description: newDescription,
+          );
+          repository.updateSessionById(data.sessions[0].id, newSession);
+          final res = repository.getSessionById(data.sessions[0].id)!;
+          expect(res.name, newName);
+          expect(res.description, newDescription);
+        });
+        test(' - should add new activity', () {
+          final data = SampleData();
+          repository = getIt<IRepository>();
+          repository.resetAllData();
+          repository.addSession(data.sessions[0]);
+          final newSession = Session(
+            id: IdGenerator.generateV4(),
+            schedule: [],
+            activities: [data.chestExercises[0]],
+            name: '',
+            description: '',
+          );
+          repository.updateSessionById(data.sessions[0].id, newSession);
+          final res = repository.getSessionById(data.sessions[0].id)!;
+          expect(res.activities.length, 1);
         });
       });
     });

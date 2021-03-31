@@ -49,17 +49,17 @@ class MockRepository implements IRepository {
   /// when adding activities for a workout
   @override
   List<Activity> getAllActivities() {
-    return _userExercises;
+    return [..._userExercises];
   }
 
   @override
   List<Activity> getUserActivities() {
-    return _userExercises;
+    return [..._userExercises];
   }
 
   @override
   List<Workout> getAllWorkouts() {
-    return _userWorkouts;
+    return [..._userWorkouts];
   }
 
   @override
@@ -158,7 +158,7 @@ class MockRepository implements IRepository {
 
   @override
   List<Session> getAllSessions() {
-    return _userSessions;
+    return [..._userSessions];
   }
 
   @override
@@ -169,7 +169,26 @@ class MockRepository implements IRepository {
 
   @override
   void addSession(Session session) {
-    print('session added ${session.workout.name}');
     _userSessions.add(session);
+  }
+
+  @override
+  void resetAllData() {
+    _userExercises = [];
+    _userWorkouts = [];
+    _userSessions = [];
+  }
+
+  @override
+  void updateSessionById(String id, Session update) {
+    try {
+      Session session = update;
+      session.id = id;
+      int index = _userSessions.indexOf(getSessionById(id));
+      _userSessions[index] = session;
+    } catch (e) {
+      print(e);
+      throw e;
+    }
   }
 }

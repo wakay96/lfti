@@ -6,11 +6,11 @@ import 'package:lfti/helpers/id_generator.dart';
 import 'package:lfti/providers/screen_provider.dart';
 
 class EditWorkoutScreenProvider extends ScreenProvider {
+  late String id;
   String name = '';
   String description = '';
   List<Activity> activities = [];
   bool editMode = false;
-  Workout? workout;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -18,8 +18,8 @@ class EditWorkoutScreenProvider extends ScreenProvider {
   @override
   void initialize(BuildContext context) {
     super.initialize(context);
+    id = IdGenerator.generateV4();
     Workout w = args!['data'] as Workout;
-    workout = w;
     name = w.name;
     description = w.description ?? description;
     activities = w.activities;
@@ -33,8 +33,9 @@ class EditWorkoutScreenProvider extends ScreenProvider {
     notifyListeners();
   }
 
-  void saveChanges() {
-    workout = _generateWorkout();
+  void save() {
+    Workout workout = _generateWorkout();
+    repo.updateWorkoutById(id, workout);
   }
 
   Workout _generateWorkout() {

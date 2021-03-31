@@ -31,4 +31,7 @@ abstract class IRepository {
   void updateExerciseById(String id, Exercise update);
   void updateWorkoutById(String id, Workout update);
   void updateUser(User user);
+  void updateSessionById(String id, Session session);
+
+  void resetAllData();
 }

@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lfti/data/models/exercise.dart';
 import 'package:lfti/helpers/app_icon.dart';
 import 'package:lfti/helpers/app_styles.dart';
-import 'package:lfti/providers/workout/edit_workout_screen_provider.dart';
+import 'package:lfti/providers/session/edit_session_workout_screen_provider.dart';
 import 'package:provider/provider.dart';
 
 class EditWorkoutScreenBuilder extends StatelessWidget {
@@ -40,7 +40,13 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
     final model = Provider.of<EditWorkoutScreenProvider>(context);
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pop(context, model.workout);
+        if (model.editMode) {
+          //  TODO: Show dialog
+          print('Show Dialog');
+        } else {
+          Navigator.pop(context);
+        }
+
         return Future.value(true);
       },
       child: Scaffold(
@@ -50,7 +56,7 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
             child: model.editMode
                 ? IconButton(
                     onPressed: () {
-                      model.saveChanges();
+                      model.save();
                       model.toggleEditMode();
                     },
                     icon: Icon(FontAwesomeIcons.save),
@@ -79,6 +85,26 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
         ),
       ),
     );
+  }
+
+  List<Widget> _getAppBarAction(EditWorkoutScreenProvider model) {
+    return <Widget>[
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: model.editMode
+            ? IconButton(
+                icon: Icon(FontAwesomeIcons.save),
+                onPressed: () {
+                  model.save();
+                  model.toggleEditMode();
+                },
+              )
+            : IconButton(
+                onPressed: model.toggleEditMode,
+                icon: Icon(FontAwesomeIcons.edit),
+              ),
+      )
+    ];
   }
 
   Widget _getHeaderWidget(EditWorkoutScreenProvider model) {
