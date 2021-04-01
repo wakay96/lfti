@@ -29,8 +29,9 @@ class Session {
     required Workout workout,
     required this.schedule,
   }) {
+    List<Activity> act = workout.activities;
     name = workout.name;
     description = workout.description;
-    activities = workout.activities;
+    activities = act;
   }
 }

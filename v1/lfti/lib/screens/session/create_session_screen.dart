@@ -28,7 +28,7 @@ class CreateSessionScreen extends StatelessWidget {
               ),
               child: ListTile(
                 onTap: () {
-                  Navigator.pushNamed(context, EditSessionScreen.id,
+                  Navigator.pushNamed(context, EditSessionWorkoutScreen.id,
                       arguments: {'data': workout});
                 },
                 leading: Icon(FontAwesomeIcons.checkCircle),
@@ -40,7 +40,7 @@ class CreateSessionScreen extends StatelessWidget {
                 trailing: IconButton(
                   onPressed: () async {
                     Navigator.of(context).pushNamed(
-                      EditSessionScreen.id,
+                      EditSessionWorkoutScreen.id,
                       arguments: {'data': workout},
                     );
                   },

@@ -163,8 +163,9 @@ class MockRepository implements IRepository {
 
   @override
   Session getSessionById(String id) {
-    return _userSessions.firstWhere((item) => item.id == id,
+    Session session = _userSessions.firstWhere((item) => item.id == id,
         orElse: () => throw Exception(ITEM_NOT_FOUND_ERROR));
+    return session;
   }
 
   @override

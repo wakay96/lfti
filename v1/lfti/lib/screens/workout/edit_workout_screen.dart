@@ -11,7 +11,7 @@ class EditWorkoutScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => EditWorkoutScreenProvider(),
+      create: (context) => EditSessionWorkoutScreenProvider(),
       child: EditWorkoutScreen(),
     );
   }
@@ -30,14 +30,14 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
     super.initState();
     SchedulerBinding.instance!.addPostFrameCallback((_) {
       final model =
-          Provider.of<EditWorkoutScreenProvider>(context, listen: false);
+          Provider.of<EditSessionWorkoutScreenProvider>(context, listen: false);
       model.initialize(context);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<EditWorkoutScreenProvider>(context);
+    final model = Provider.of<EditSessionWorkoutScreenProvider>(context);
     return WillPopScope(
       onWillPop: () async {
         if (model.editMode) {
@@ -87,7 +87,7 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
     );
   }
 
-  Widget _getHeaderWidget(EditWorkoutScreenProvider model) {
+  Widget _getHeaderWidget(EditSessionWorkoutScreenProvider model) {
     return SliverList(
       delegate: SliverChildListDelegate([
         Card(
@@ -125,7 +125,7 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
   }
 
   Widget _getActivityWidgets(
-      BuildContext context, EditWorkoutScreenProvider model) {
+      BuildContext context, EditSessionWorkoutScreenProvider model) {
     return model.editMode
         ? SliverReorderableList(
             itemBuilder: (context, index) {

@@ -124,7 +124,7 @@ class _SessionScreenState extends State<SessionScreen> {
           onPressed: () async {
             await Navigator.pushNamed(
               context,
-              EditSessionScreen.id,
+              EditSessionWorkoutScreen.id,
               arguments: {'id': session.id},
             );
             model.refresh();

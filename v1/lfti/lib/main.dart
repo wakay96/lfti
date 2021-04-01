@@ -20,7 +20,7 @@ class App extends StatelessWidget {
       initialRoute: SessionScreen.id,
       routes: {
         SessionScreen.id: (context) => SessionScreenBuilder(),
-        EditSessionScreen.id: (context) => EditSessionScreenBuilder(),
+        EditSessionWorkoutScreen.id: (context) => EditSessionScreenBuilder(),
         CreateWorkoutScreen.id: (context) => CreateWorkoutScreenBuilder(),
         CreateSessionScreen.id: (context) => CreateSessionScreen(),
         EditWorkoutScreen.id: (context) => EditWorkoutScreenBuilder()
