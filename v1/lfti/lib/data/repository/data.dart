@@ -350,52 +350,55 @@ class SampleData {
     ///
 
     _sessions = [
-      Session(
+      Session.fromWorkout(
           id: IdGenerator.generateV4(),
           schedule: [WeekdayNames.Monday],
           workout: _workouts[0]),
-      Session(
+      Session.fromWorkout(
           id: IdGenerator.generateV4(),
           schedule: [WeekdayNames.Tuesday],
           workout: _workouts[1]),
-      Session(
+      Session.fromWorkout(
           id: IdGenerator.generateV4(),
           schedule: [WeekdayNames.Wednesday],
           workout: _workouts[2]),
-      Session(
+      Session.fromWorkout(
           id: IdGenerator.generateV4(),
           schedule: [WeekdayNames.Thursday],
           workout: _workouts[3]),
-      Session(
+      Session.fromWorkout(
           id: IdGenerator.generateV4(),
           schedule: [WeekdayNames.Friday],
           workout: _workouts[4]),
-      Session(
+      Session.fromWorkout(
           id: IdGenerator.generateV4(),
           schedule: [WeekdayNames.Saturday],
           workout: _workouts[5]),
     ];
 
     _prevSession = Session(
-        id: _sessions[0].id,
-        schedule: _sessions[0].schedule,
-        workout: _sessions[0].workout,
-        duration: Duration(minutes: 45),
-        performedExercises: [
-          _workouts[0].activities[0],
-          _workouts[0].activities[2],
-          _workouts[0].activities[4],
-          _workouts[0].activities[6],
-          _workouts[0].activities[8],
-        ],
-        skippedExercises: [
-          _workouts[0].activities[10],
-        ]);
+      id: _sessions[0].id,
+      schedule: _sessions[0].schedule,
+      name: _workouts[0].name,
+      description: _workouts[0].description,
+      duration: Duration(minutes: 45),
+      activities: _workouts[0].activities,
+      performedExercises: [
+        _workouts[0].activities[0],
+        _workouts[0].activities[2],
+        _workouts[0].activities[4],
+        _workouts[0].activities[6],
+        _workouts[0].activities[8],
+      ],
+      skippedExercises: [
+        _workouts[0].activities[10],
+      ],
+    );
 
-    _nextSession = Session(
+    _nextSession = Session.fromWorkout(
       id: _sessions[1].id,
       schedule: _sessions[1].schedule,
-      workout: _sessions[1].workout,
+      workout: _workouts[1],
     );
 
     /// Session End ///

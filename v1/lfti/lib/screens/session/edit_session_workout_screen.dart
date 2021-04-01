@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:lfti/screens/session/session_screen.dart';
+import 'package:lfti/shared/picker/weekday_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lfti/data/models/exercise.dart';
 import 'package:lfti/helpers/app_icon.dart';
 import 'package:lfti/providers/session/edit_session_screen_provider.dart';
-import 'package:provider/provider.dart';
 
 class EditSessionScreenBuilder extends StatelessWidget {
   @override
@@ -40,35 +42,105 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
         Provider.of<EditSessionScreenProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(EditSessionScreen.title),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: model.editMode
-                ? IconButton(
-                    onPressed: () {
-                      model.save();
-                      model.toggleEditMode();
-                    },
-                    icon: Icon(FontAwesomeIcons.save),
-                  )
-                : IconButton(
-                    onPressed: model.toggleEditMode,
-                    icon: Icon(FontAwesomeIcons.edit),
-                  ),
+          title: Text(EditSessionScreen.title),
+          leading: _getBackButtonActionWidget(),
+          actions: _getAppBarAction(context)),
+      body: CustomScrollView(slivers: [
+        _getDayPicker(),
+        _getHeaderWidget(),
+        _getActivityWidgets(),
+      ]),
+    );
+  }
+
+  Widget _getBackButtonActionWidget() {
+    final EditSessionScreenProvider model =
+        Provider.of<EditSessionScreenProvider>(context);
+    return IconButton(
+        icon: AppIcon.backArrow,
+        onPressed: () {
+          model.editMode
+              ? _showConfirmationDialog(
+                  title: 'Discard changes?',
+                  content: 'Unsaved changes will be discarded.',
+                  onConfirm: () {
+                    // Pop Dialog Box
+                    Navigator.pop(context);
+                    // Pop Current Screen
+                    Navigator.pop(context);
+                  })
+              : Navigator.pop(context);
+        });
+  }
+
+  void _showConfirmationDialog({
+    required String title,
+    required Function onConfirm,
+    String buttonText = 'Confirm',
+    String content = '',
+  }) {
+    showDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(title),
+            content: Text(content),
+            actions: [
+              ElevatedButton(
+                onPressed: () => onConfirm(),
+                child: Text(buttonText),
+              ),
+            ],
+          );
+        });
+  }
+
+  Widget _getDayPicker() {
+    final EditSessionScreenProvider model =
+        Provider.of<EditSessionScreenProvider>(context);
+    return SliverList(
+      delegate: SliverChildListDelegate(
+        [
+          WeekdayPicker(
+            onSelect: model.editMode ? model.toggleDay : (_) {},
+            selections: model.scheduleSelection,
           )
-        ],
-      ),
-      body: CustomScrollView(
-        slivers: [
-          _getHeaderWidget(model),
-          _getActivityWidgets(context, model),
         ],
       ),
     );
   }
 
-  Widget _getHeaderWidget(EditSessionScreenProvider model) {
+  List<Widget> _getAppBarAction(BuildContext context) {
+    final EditSessionScreenProvider model =
+        Provider.of<EditSessionScreenProvider>(context);
+    return <Widget>[
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: model.editMode
+            ? IconButton(
+                icon: Icon(FontAwesomeIcons.save),
+                onPressed: () {
+                  _showConfirmationDialog(
+                      title: 'Save Changes?',
+                      onConfirm: () {
+                        model.save();
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, SessionScreen.id, (_) => false);
+                      });
+                },
+              )
+            : IconButton(
+                onPressed: model.toggleEditMode,
+                icon: Icon(FontAwesomeIcons.edit),
+              ),
+      )
+    ];
+  }
+
+  Widget _getHeaderWidget() {
+    final EditSessionScreenProvider model =
+        Provider.of<EditSessionScreenProvider>(context);
     return SliverList(
       delegate: SliverChildListDelegate([
         Card(
@@ -105,8 +177,9 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
     );
   }
 
-  Widget _getActivityWidgets(
-      BuildContext context, EditSessionScreenProvider model) {
+  Widget _getActivityWidgets() {
+    final EditSessionScreenProvider model =
+        Provider.of<EditSessionScreenProvider>(context);
     return model.editMode
         ? SliverReorderableList(
             itemBuilder: (context, index) {

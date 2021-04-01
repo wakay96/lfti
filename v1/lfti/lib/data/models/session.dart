@@ -3,8 +3,10 @@ import 'activity.dart';
 
 class Session {
   String id;
+  late List<Activity> activities;
+  late String name;
   List<String> schedule;
-  Workout workout;
+  String? description;
 
   /// Contains data for previous Session
   Duration? duration;
@@ -14,9 +16,21 @@ class Session {
   Session({
     required this.id,
     required this.schedule,
+    required this.activities,
+    required this.name,
+    this.description,
     this.duration,
-    required this.workout,
     this.performedExercises,
     this.skippedExercises,
   });
+
+  Session.fromWorkout({
+    required this.id,
+    required Workout workout,
+    required this.schedule,
+  }) {
+    name = workout.name;
+    description = workout.description;
+    activities = workout.activities;
+  }
 }

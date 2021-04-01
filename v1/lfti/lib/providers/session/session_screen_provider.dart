@@ -54,4 +54,8 @@ class SessionScreenProvider extends ScreenProvider {
   void startSession(BuildContext context) {
     print('start session');
   }
+
+  void refresh() {
+    notifyListeners();
+  }
 }

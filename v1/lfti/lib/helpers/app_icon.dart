@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lfti/helpers/app_styles.dart' as appStyles;
 
 class AppIcon {
+  static const backArrow = FaIcon(FontAwesomeIcons.angleLeft);
   static const weight = FaIcon(
     FontAwesomeIcons.weight,
     color: appStyles.weightThemeColor,
