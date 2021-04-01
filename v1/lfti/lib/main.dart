@@ -22,7 +22,7 @@ class App extends StatelessWidget {
         SessionScreen.id: (context) => SessionScreenBuilder(),
         EditSessionScreen.id: (context) => EditSessionScreenBuilder(),
         CreateWorkoutScreen.id: (context) => CreateWorkoutScreenBuilder(),
-        CreateSessionScreen.id: (context) => CreateSessionScreenBuilder(),
+        CreateSessionScreen.id: (context) => CreateSessionScreen(),
         EditWorkoutScreen.id: (context) => EditWorkoutScreenBuilder()
       },
     );

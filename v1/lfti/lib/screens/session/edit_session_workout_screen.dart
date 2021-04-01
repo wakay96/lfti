@@ -47,10 +47,19 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
               icon: AppIcon.backArrow,
               onPressed: () {
                 model.editMode
-                    ? _showConfirmationDialog(model)
+                    ? _showConfirmationDialog(
+                        model: model,
+                        title: 'Discard changes?',
+                        content: 'Unsaved changes will be discarded.',
+                        onConfirm: () {
+                          // Pop Dialog Box
+                          Navigator.pop(context);
+                          // Pop Current Screen
+                          Navigator.pop(context);
+                        })
                     : Navigator.pop(context);
               }),
-          actions: _getAppBarAction(model)),
+          actions: _getAppBarAction(context, model)),
       body: CustomScrollView(slivers: [
         _getDayPicker(model),
         _getHeaderWidget(model),
@@ -59,18 +68,24 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
     );
   }
 
-  void _showConfirmationDialog(EditSessionScreenProvider model) {
+  void _showConfirmationDialog({
+    required EditSessionScreenProvider model,
+    required String title,
+    required Function onConfirm,
+    String buttonText = 'Confirm',
+    String content = '',
+  }) {
     showDialog(
         barrierDismissible: true,
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Discard changes?'),
-            content: Text('Unsaved changes will be discarded.'),
+            title: Text(title),
+            content: Text(content),
             actions: [
               ElevatedButton(
-                onPressed: () => Navigator.pushNamed(context, SessionScreen.id),
-                child: Text('Discard'),
+                onPressed: () => onConfirm(),
+                child: Text(buttonText),
               ),
             ],
           );
@@ -90,7 +105,8 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
     );
   }
 
-  List<Widget> _getAppBarAction(EditSessionScreenProvider model) {
+  List<Widget> _getAppBarAction(
+      BuildContext context, EditSessionScreenProvider model) {
     return <Widget>[
       Padding(
         padding: const EdgeInsets.all(8.0),
@@ -98,8 +114,14 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
             ? IconButton(
                 icon: Icon(FontAwesomeIcons.save),
                 onPressed: () {
-                  model.save();
-                  model.toggleEditMode();
+                  _showConfirmationDialog(
+                      model: model,
+                      title: 'Save Changes?',
+                      onConfirm: () {
+                        model.save();
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, SessionScreen.id, (_) => false);
+                      });
                 },
               )
             : IconButton(

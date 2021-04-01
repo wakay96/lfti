@@ -24,10 +24,8 @@ class EditSessionScreenProvider extends ScreenProvider {
     } else {
       _initializeWithData();
     }
-
     nameController = TextEditingController(text: name);
     descriptionController = TextEditingController(text: description);
-
     notifyListeners();
   }
 
@@ -77,7 +75,12 @@ class EditSessionScreenProvider extends ScreenProvider {
 
   void save() {
     Session session = _createSession();
-    repo.updateSessionById(id, session);
+    try {
+      repo.updateSessionById(id, session);
+    } catch (e) {
+      repo.addSession(session);
+      print(e);
+    }
   }
 
   void onReorder(int oldIndex, int newIndex) {

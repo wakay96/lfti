@@ -87,26 +87,6 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
     );
   }
 
-  List<Widget> _getAppBarAction(EditWorkoutScreenProvider model) {
-    return <Widget>[
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: model.editMode
-            ? IconButton(
-                icon: Icon(FontAwesomeIcons.save),
-                onPressed: () {
-                  model.save();
-                  model.toggleEditMode();
-                },
-              )
-            : IconButton(
-                onPressed: model.toggleEditMode,
-                icon: Icon(FontAwesomeIcons.edit),
-              ),
-      )
-    ];
-  }
-
   Widget _getHeaderWidget(EditWorkoutScreenProvider model) {
     return SliverList(
       delegate: SliverChildListDelegate([
