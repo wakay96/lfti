@@ -43,33 +43,37 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
     return Scaffold(
       appBar: AppBar(
           title: Text(EditSessionScreen.title),
-          leading: IconButton(
-              icon: AppIcon.backArrow,
-              onPressed: () {
-                model.editMode
-                    ? _showConfirmationDialog(
-                        model: model,
-                        title: 'Discard changes?',
-                        content: 'Unsaved changes will be discarded.',
-                        onConfirm: () {
-                          // Pop Dialog Box
-                          Navigator.pop(context);
-                          // Pop Current Screen
-                          Navigator.pop(context);
-                        })
-                    : Navigator.pop(context);
-              }),
-          actions: _getAppBarAction(context, model)),
+          leading: _getBackButtonActionWidget(),
+          actions: _getAppBarAction(context)),
       body: CustomScrollView(slivers: [
-        _getDayPicker(model),
-        _getHeaderWidget(model),
-        _getActivityWidgets(model),
+        _getDayPicker(),
+        _getHeaderWidget(),
+        _getActivityWidgets(),
       ]),
     );
   }
 
+  Widget _getBackButtonActionWidget() {
+    final EditSessionScreenProvider model =
+        Provider.of<EditSessionScreenProvider>(context);
+    return IconButton(
+        icon: AppIcon.backArrow,
+        onPressed: () {
+          model.editMode
+              ? _showConfirmationDialog(
+                  title: 'Discard changes?',
+                  content: 'Unsaved changes will be discarded.',
+                  onConfirm: () {
+                    // Pop Dialog Box
+                    Navigator.pop(context);
+                    // Pop Current Screen
+                    Navigator.pop(context);
+                  })
+              : Navigator.pop(context);
+        });
+  }
+
   void _showConfirmationDialog({
-    required EditSessionScreenProvider model,
     required String title,
     required Function onConfirm,
     String buttonText = 'Confirm',
@@ -92,7 +96,9 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
         });
   }
 
-  Widget _getDayPicker(EditSessionScreenProvider model) {
+  Widget _getDayPicker() {
+    final EditSessionScreenProvider model =
+        Provider.of<EditSessionScreenProvider>(context);
     return SliverList(
       delegate: SliverChildListDelegate(
         [
@@ -105,8 +111,9 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
     );
   }
 
-  List<Widget> _getAppBarAction(
-      BuildContext context, EditSessionScreenProvider model) {
+  List<Widget> _getAppBarAction(BuildContext context) {
+    final EditSessionScreenProvider model =
+        Provider.of<EditSessionScreenProvider>(context);
     return <Widget>[
       Padding(
         padding: const EdgeInsets.all(8.0),
@@ -115,7 +122,6 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
                 icon: Icon(FontAwesomeIcons.save),
                 onPressed: () {
                   _showConfirmationDialog(
-                      model: model,
                       title: 'Save Changes?',
                       onConfirm: () {
                         model.save();
@@ -132,7 +138,9 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
     ];
   }
 
-  Widget _getHeaderWidget(EditSessionScreenProvider model) {
+  Widget _getHeaderWidget() {
+    final EditSessionScreenProvider model =
+        Provider.of<EditSessionScreenProvider>(context);
     return SliverList(
       delegate: SliverChildListDelegate([
         Card(
@@ -169,7 +177,9 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
     );
   }
 
-  Widget _getActivityWidgets(EditSessionScreenProvider model) {
+  Widget _getActivityWidgets() {
+    final EditSessionScreenProvider model =
+        Provider.of<EditSessionScreenProvider>(context);
     return model.editMode
         ? SliverReorderableList(
             itemBuilder: (context, index) {
