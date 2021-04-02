@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lfti/helpers/app_styles.dart';
-import 'package:lfti/providers/session/edit_session_workout_screen_provider.dart';
+import 'package:lfti/providers/session/edit_session_screen_provider.dart';
 import 'package:lfti/screens/session/session_screen.dart';
 import 'package:lfti/shared/picker/weekday_picker.dart';
 import 'package:provider/provider.dart';
@@ -12,27 +12,26 @@ import 'package:lfti/helpers/app_icon.dart';
 class EditSessionScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<EditSessionWorkoutScreenProvider>(
-      create: (context) => EditSessionWorkoutScreenProvider(),
-      child: EditSessionWorkoutScreen(),
+    return ChangeNotifierProvider<EditSessionScreenProvider>(
+      create: (context) => EditSessionScreenProvider(),
+      child: EditSessionScreen(),
     );
   }
 }
 
-class EditSessionWorkoutScreen extends StatefulWidget {
+class EditSessionScreen extends StatefulWidget {
   static final String id = 'EditSessionScreen';
-  static final String title = 'edit session';
+  static final String title = 'Edit Session';
   @override
-  _EditSessionWorkoutScreenState createState() =>
-      _EditSessionWorkoutScreenState();
+  _EditSessionScreenState createState() => _EditSessionScreenState();
 }
 
-class _EditSessionWorkoutScreenState extends State<EditSessionWorkoutScreen> {
+class _EditSessionScreenState extends State<EditSessionScreen> {
   @override
   void initState() {
     SchedulerBinding.instance!.addPostFrameCallback((_) {
-      final EditSessionWorkoutScreenProvider model =
-          Provider.of<EditSessionWorkoutScreenProvider>(context, listen: false);
+      final EditSessionScreenProvider model =
+          Provider.of<EditSessionScreenProvider>(context, listen: false);
       model.initialize(context);
     });
     super.initState();
@@ -42,20 +41,54 @@ class _EditSessionWorkoutScreenState extends State<EditSessionWorkoutScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(EditSessionWorkoutScreen.title),
+          title: Text(EditSessionScreen.title),
           leading: _getBackButtonActionWidget(),
-          actions: _getAppBarAction(context)),
+          actions: _getAppBarAction()),
       body: CustomScrollView(slivers: [
         _getDayPicker(),
         _getHeaderWidget(),
         _getActivityWidgets(),
+        _getPadding()
       ]),
+      floatingActionButton: _getFloatingActionButton(),
+    );
+  }
+
+  Widget _getPadding() {
+    final EditSessionScreenProvider model =
+        Provider.of<EditSessionScreenProvider>(context);
+    return SliverPadding(
+      padding: EdgeInsets.only(bottom: model.isNewSession ? 100 : 50),
+    );
+  }
+
+  Widget _getFloatingActionButton() {
+    final EditSessionScreenProvider model =
+        Provider.of<EditSessionScreenProvider>(context);
+    return Visibility(
+      visible: model.isNewSession,
+      child: FloatingActionButton.extended(
+          backgroundColor: model.scheduleSelection.contains(true)
+              ? primaryColor
+              : Theme.of(context).disabledColor,
+          label: Text('Done'),
+          icon: AppIcon.done,
+          onPressed: () {
+            if (model.scheduleSelection.contains(true)) {
+              model.addSession();
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                SessionScreen.id,
+                (route) => false,
+              );
+            }
+          }),
     );
   }
 
   Widget _getBackButtonActionWidget() {
-    final EditSessionWorkoutScreenProvider model =
-        Provider.of<EditSessionWorkoutScreenProvider>(context);
+    final EditSessionScreenProvider model =
+        Provider.of<EditSessionScreenProvider>(context);
     return IconButton(
         icon: AppIcon.backArrow,
         onPressed: () {
@@ -73,12 +106,11 @@ class _EditSessionWorkoutScreenState extends State<EditSessionWorkoutScreen> {
         });
   }
 
-  void _showConfirmationDialog({
-    required String title,
-    required Function onConfirm,
-    String buttonText = 'Confirm',
-    String content = '',
-  }) {
+  void _showConfirmationDialog(
+      {required String title,
+      required Function onConfirm,
+      String buttonText = 'Confirm',
+      String content = ''}) {
     showDialog(
         barrierDismissible: true,
         context: context,
@@ -96,13 +128,41 @@ class _EditSessionWorkoutScreenState extends State<EditSessionWorkoutScreen> {
         });
   }
 
+  List<Widget> _getAppBarAction() {
+    final EditSessionScreenProvider model =
+        Provider.of<EditSessionScreenProvider>(context);
+    return <Widget>[
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: model.editMode
+            ? IconButton(
+                icon: Icon(
+                  FontAwesomeIcons.save,
+                  color: primaryColor,
+                ),
+                onPressed: () {
+                  model.isNewSession
+                      ? model.addSession()
+                      : model.updateSession();
+                  model.toggleEditMode();
+                },
+              )
+            : IconButton(
+                icon: Icon(FontAwesomeIcons.edit),
+                onPressed: model.toggleEditMode,
+              ),
+      )
+    ];
+  }
+
   Widget _getDayPicker() {
-    final EditSessionWorkoutScreenProvider model =
-        Provider.of<EditSessionWorkoutScreenProvider>(context);
+    final EditSessionScreenProvider model =
+        Provider.of<EditSessionScreenProvider>(context);
     return SliverList(
       delegate: SliverChildListDelegate(
         [
           WeekdayPicker(
+            isEditable: model.editMode,
             onSelect: model.editMode ? model.toggleDay : (_) {},
             selections: model.scheduleSelection,
           )
@@ -111,39 +171,15 @@ class _EditSessionWorkoutScreenState extends State<EditSessionWorkoutScreen> {
     );
   }
 
-  List<Widget> _getAppBarAction(BuildContext context) {
-    final EditSessionWorkoutScreenProvider model =
-        Provider.of<EditSessionWorkoutScreenProvider>(context);
-    return <Widget>[
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: model.editMode
-            ? IconButton(
-                icon: Icon(FontAwesomeIcons.save),
-                onPressed: () {
-                  _showConfirmationDialog(
-                      title: 'Save Changes?',
-                      onConfirm: () {
-                        model.save();
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, SessionScreen.id, (_) => false);
-                      });
-                },
-              )
-            : IconButton(
-                onPressed: model.toggleEditMode,
-                icon: Icon(FontAwesomeIcons.edit),
-              ),
-      )
-    ];
-  }
-
   Widget _getHeaderWidget() {
-    final EditSessionWorkoutScreenProvider model =
-        Provider.of<EditSessionWorkoutScreenProvider>(context);
+    final EditSessionScreenProvider model =
+        Provider.of<EditSessionScreenProvider>(context);
     return SliverList(
       delegate: SliverChildListDelegate([
         Card(
+          color: model.editMode
+              ? Theme.of(context).cardColor
+              : Theme.of(context).canvasColor,
           elevation: 8.0,
           child: Form(
             child: Padding(
@@ -178,8 +214,8 @@ class _EditSessionWorkoutScreenState extends State<EditSessionWorkoutScreen> {
   }
 
   Widget _getActivityWidgets() {
-    final EditSessionWorkoutScreenProvider model =
-        Provider.of<EditSessionWorkoutScreenProvider>(context);
+    final EditSessionScreenProvider model =
+        Provider.of<EditSessionScreenProvider>(context);
     return model.editMode
         ? SliverReorderableList(
             itemBuilder: (context, index) {
@@ -189,7 +225,6 @@ class _EditSessionWorkoutScreenState extends State<EditSessionWorkoutScreen> {
                 direction: DismissDirection.endToStart,
                 onDismissed: (direction) => model.deleteActivity(act),
                 child: Material(
-                  elevation: 8.0,
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border(
@@ -205,6 +240,9 @@ class _EditSessionWorkoutScreenState extends State<EditSessionWorkoutScreen> {
                         index: index,
                         child: Icon(FontAwesomeIcons.bars),
                       ),
+                      tileColor: model.editMode
+                          ? Theme.of(context).cardColor
+                          : Theme.of(context).canvasColor,
                     ),
                   ),
                 ),

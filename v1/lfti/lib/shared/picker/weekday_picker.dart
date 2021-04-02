@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:lfti/helpers/app_styles.dart';
 
 class WeekdayPicker extends StatelessWidget {
   final List<bool> selections;
   final Function onSelect;
+  late final bool isEditable;
 
-  WeekdayPicker({
-    required this.selections,
-    required this.onSelect,
-  });
+  WeekdayPicker(
+      {required this.selections,
+      required this.onSelect,
+      required this.isEditable});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: _getPickerOptions(context, selections, onSelect),
+      children: isEditable
+          ? _getPickerOptions(context, selections, onSelect)
+          : _getUneditableOptions(context, selections),
     );
   }
 
@@ -30,22 +32,57 @@ class WeekdayPicker extends StatelessWidget {
         Expanded(
           flex: 1,
           child: AnimatedContainer(
+            height: Theme.of(context).buttonTheme.height,
             decoration: BoxDecoration(
               border: Border.all(),
               color: selections[i]
                   ? Theme.of(context).primaryColor
                   : Theme.of(context).cardColor,
             ),
-            duration: Duration(milliseconds: 200),
-            child: TextButton(
-              onPressed: () => onTap(i),
-              child: Text(dayNames[i].substring(0, 1),
+            duration: Duration(milliseconds: 100),
+            child: InkWell(
+              onTap: () => onTap(i),
+              child: Center(
+                child: Text(
+                  dayNames[i].substring(0, 1),
                   style: selections[i]
-                      ? TextStyle(
-                          color: dangerColor,
-                          fontWeight: FontWeight.bold,
-                        )
-                      : Theme.of(context).textTheme.bodyText1),
+                      ? Theme.of(context).textTheme.bodyText1
+                      : Theme.of(context).accentTextTheme.bodyText1,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+    return widgets;
+  }
+
+  List<Widget> _getUneditableOptions(
+    BuildContext context,
+    List<bool> selections,
+  ) {
+    const List<String> dayNames = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    List<Widget> widgets = [];
+    for (int i = 0; i < selections.length; i++) {
+      widgets.add(
+        Expanded(
+          flex: 1,
+          child: Container(
+            height: Theme.of(context).buttonTheme.height,
+            decoration: BoxDecoration(
+              border: Border.all(),
+              color: selections[i]
+                  ? Theme.of(context).primaryColor
+                  : Theme.of(context).canvasColor,
+            ),
+            child: Center(
+              child: Text(
+                dayNames[i].substring(0, 1),
+                style: selections[i]
+                    ? Theme.of(context).textTheme.bodyText1
+                    : Theme.of(context).accentTextTheme.bodyText1,
+              ),
             ),
           ),
         ),

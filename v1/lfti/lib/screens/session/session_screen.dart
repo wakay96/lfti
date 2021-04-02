@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lfti/helpers/app_icon.dart';
+import 'package:lfti/screens/session/select_session_workout_screen.dart';
+import 'package:provider/provider.dart';
 import 'package:lfti/helpers/app_styles.dart';
 import 'package:lfti/helpers/string_formatter.dart';
 import 'package:lfti/providers/session/session_screen_provider.dart';
-import 'package:lfti/screens/session/create_session_screen.dart';
-import 'package:lfti/screens/session/edit_session_workout_screen.dart';
-import 'package:provider/provider.dart';
+import 'package:lfti/screens/session/edit_session_screen.dart';
 
 class SessionScreenBuilder extends StatelessWidget {
   @override
@@ -19,7 +20,7 @@ class SessionScreenBuilder extends StatelessWidget {
 
 class SessionScreen extends StatefulWidget {
   static final String id = 'SessionScreen';
-  static final String title = 'sessions';
+  static final String title = 'Sessions';
   @override
   _SessionScreenState createState() => _SessionScreenState();
 }
@@ -37,60 +38,54 @@ class _SessionScreenState extends State<SessionScreen> {
   Widget build(BuildContext context) {
     final model = Provider.of<SessionScreenProvider>(context);
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      body: CustomScrollView(slivers: [
+        SliverAppBar(title: Text(SessionScreen.title)),
+        SliverList(delegate: _buildSessionTiles(model)),
+        SliverPadding(padding: EdgeInsets.only(bottom: 100))
+      ]),
       floatingActionButton: _getFloatingActionButton(),
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            title: Text(SessionScreen.title),
-          ),
-          SliverList(
-            delegate: _buildSessionTiles(model),
-          ),
-        ],
-      ),
     );
   }
 
-  FloatingActionButton _getFloatingActionButton() {
-    final model = Provider.of<SessionScreenProvider>(context);
-    IconData iconData;
+  Widget _getFloatingActionButton() {
+    final SessionScreenProvider model =
+        Provider.of<SessionScreenProvider>(context);
+    Widget icon;
     Function handler;
     Color color;
+    String label;
 
     if (model.selectedSession == null) {
-      handler = (context) {
-        Navigator.pushNamed(
-          context,
-          CreateSessionScreen.id,
-        );
-      };
-      iconData = FontAwesomeIcons.plus;
-      color = dangerColor;
+      label = 'Create';
+      handler = (context) =>
+          Navigator.pushNamed(context, SelectSessionWorkoutScreen.id);
+      icon = AppIcon.add;
+      color = primaryColor;
     } else {
+      label = 'Do This!';
       if (model.selectedSession == null) {
         handler = (_) => print('Select workout first');
         color = Theme.of(context).disabledColor;
       } else {
         handler = (context) => model.startSession(context);
-        color = dangerColor;
+        color = primaryColor;
       }
-      iconData = FontAwesomeIcons.play;
+      icon = AppIcon.play;
     }
 
-    return FloatingActionButton(
-      backgroundColor: color,
+    return FloatingActionButton.extended(
+      label: Text(label),
+      icon: icon,
       onPressed: () => handler(context),
-      child: Icon(
-        iconData,
-        color: Theme.of(context).primaryColor,
-      ),
+      backgroundColor: color,
     );
   }
 
   SliverChildBuilderDelegate _buildSessionTiles(SessionScreenProvider model) {
     return SliverChildBuilderDelegate(
-      (context, index) => _getSessionTile(model, index),
+      (context, index) {
+        return _getSessionTile(model, index);
+      },
       childCount: model.sessions.length,
     );
   }
@@ -101,9 +96,7 @@ class _SessionScreenState extends State<SessionScreen> {
 
     return AnimatedContainer(
       decoration: BoxDecoration(
-        color: isSelected
-            ? Theme.of(context).primaryColor
-            : Theme.of(context).cardColor,
+        color: Theme.of(context).cardColor,
         border: Border.all(),
       ),
       child: ListTile(
@@ -124,7 +117,7 @@ class _SessionScreenState extends State<SessionScreen> {
           onPressed: () async {
             await Navigator.pushNamed(
               context,
-              EditSessionWorkoutScreen.id,
+              EditSessionScreen.id,
               arguments: {'id': session.id},
             );
             model.refresh();

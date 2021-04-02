@@ -6,7 +6,7 @@ import 'package:lfti/helpers/app_strings.dart';
 import 'package:lfti/helpers/id_generator.dart';
 import 'package:lfti/providers/screen_provider.dart';
 
-class EditSessionWorkoutScreenProvider extends ScreenProvider {
+class EditSessionScreenProvider extends ScreenProvider {
   late String id;
   List<Activity> activities = [];
   List<bool> scheduleSelection = [];
@@ -15,6 +15,7 @@ class EditSessionWorkoutScreenProvider extends ScreenProvider {
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   bool editMode = false;
+  late bool isNewSession;
 
   @override
   void initialize(BuildContext context) {
@@ -30,6 +31,7 @@ class EditSessionWorkoutScreenProvider extends ScreenProvider {
   }
 
   void _initializeWithId() {
+    isNewSession = false;
     id = args!['id'];
     Session session = repo.getSessionById(id)!;
     name = session.name;
@@ -39,6 +41,7 @@ class EditSessionWorkoutScreenProvider extends ScreenProvider {
   }
 
   void _initializeWithData() {
+    isNewSession = true;
     id = IdGenerator.generateV4();
     Workout workout = args!['data'] as Workout;
     scheduleSelection = [false, false, false, false, false, false, false];
@@ -73,14 +76,14 @@ class EditSessionWorkoutScreenProvider extends ScreenProvider {
     notifyListeners();
   }
 
-  void save() {
+  void updateSession() {
     Session session = _createSession();
-    try {
-      repo.updateSessionById(id, session);
-    } catch (e) {
-      repo.addSession(session);
-      print(e);
-    }
+    repo.updateSessionById(id, session);
+  }
+
+  void addSession() {
+    Session session = _createSession();
+    repo.addSession(session);
   }
 
   void onReorder(int oldIndex, int newIndex) {

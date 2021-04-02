@@ -19,7 +19,7 @@ class CreateWorkoutScreenBuilder extends StatelessWidget {
 
 class CreateWorkoutScreen extends StatefulWidget {
   static final String id = 'CreateWorkoutScreen';
-  static final String title = 'add new workout';
+  static final String title = 'Add Workout';
 
   @override
   _CreateWorkoutScreenState createState() => _CreateWorkoutScreenState();
@@ -50,7 +50,7 @@ class _CreateWorkoutScreenState extends State<CreateWorkoutScreen> {
         ),
       ]),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: dangerColor,
+        backgroundColor: primaryColor,
         onPressed: () {
           print('add exercise');
         },

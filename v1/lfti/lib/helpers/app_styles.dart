@@ -4,18 +4,16 @@ import 'package:flutter/material.dart';
 const Color inactiveBackgroundColor = Colors.transparent;
 const Color primaryInactiveColor = Color(0xFF448FA3);
 const Color primaryActiveColor = Color(0xFF0197F6);
-const Color dangerColor = Color(0xFFD7263D);
+const Color primaryColor = Color(0xFFF1F0CC);
 
 // used
 const Color weightThemeColor = Color(0xFF68C5DB);
 const Color bodyFatThemeColor = Color(0xFFFFE200);
-const Color workoutThemeColor = dangerColor;
+const Color workoutThemeColor = primaryColor;
 const Color exerciseThemeColor = workoutThemeColor;
 const Color restThemeColor = weightThemeColor;
-const Color timeThemeColor = Color(0xFFFF586A);
-const Color skippedWorkoutColor = primaryColor;
+const Color dangerColor = Colors.red;
 
-const Color primaryColor = Color(0xFF02182b);
 const Color secondaryColor = Color(0xFF0197F6);
 const Color tertiaryColor = Color(0xAFFAFAFA);
 const Color inactiveCardColor = Color(0xFF053055);
@@ -42,7 +40,6 @@ const Color currentAppThemeTextColor = darkThemeTextColor;
 // Button Styles
 const TextStyle currentButtonTextTheme = smallTextStyle;
 const Color buttonDarkThemeActiveColor = secondaryColor;
-const Color buttonLightThemeActiveColor = primaryColor;
 const Color currentActiveButtonColor = buttonDarkThemeActiveColor;
 
 // TextStyles

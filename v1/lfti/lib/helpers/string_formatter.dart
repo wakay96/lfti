@@ -1,5 +1,6 @@
 extension ListToString on List {
   String parse() {
+    if (this.length == 0) return '';
     String formattedString = '';
     this.forEach((element) {
       formattedString += (element.toString() + ', ');
