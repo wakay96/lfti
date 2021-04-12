@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lfti/helpers/app_icon.dart';
 import 'package:lfti/screens/session/select_session_workout_screen.dart';
@@ -27,11 +28,13 @@ class SessionScreen extends StatefulWidget {
 
 class _SessionScreenState extends State<SessionScreen> {
   @override
-  void didChangeDependencies() {
-    final SessionScreenProvider model =
-        Provider.of<SessionScreenProvider>(context, listen: false);
-    model.initialize(context);
-    super.didChangeDependencies();
+  void initState() {
+    SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
+      final SessionScreenProvider model =
+          Provider.of<SessionScreenProvider>(context, listen: false);
+      model.initialize(context);
+    });
+    super.initState();
   }
 
   @override
@@ -110,8 +113,7 @@ class _SessionScreenState extends State<SessionScreen> {
         onTap: () {
           isSelected
               ? model.resetSelectedSession()
-              : model.toggleSelectedSession(session.id);
-          model.toggleEditMode();
+              : model.toggleSelectedSession(session.id!);
         },
         trailing: IconButton(
           onPressed: () async {
@@ -120,7 +122,7 @@ class _SessionScreenState extends State<SessionScreen> {
               EditSessionScreen.id,
               arguments: {'id': session.id},
             );
-            model.refresh();
+            model.initialize(context);
           },
           icon: Icon(FontAwesomeIcons.angleRight),
         ),

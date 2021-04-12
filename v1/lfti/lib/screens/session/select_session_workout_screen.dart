@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lfti/data/models/workout.dart';
 import 'package:lfti/data/repository/i_repository.dart';
+import 'package:lfti/screens/session/create_session_screen.dart';
 import 'package:lfti/shared/workout_list.dart';
-import 'edit_session_screen.dart';
 
 class SelectSessionWorkoutScreen extends StatelessWidget {
-  static final String id = 'CreateSessionScreen';
-  static final String title = 'Create Session';
+  static final String id = 'SelectSessionWorkoutScreen';
+  static final String title = 'Workouts';
 
   final repo = GetIt.instance<IRepository>();
   @override
@@ -20,11 +20,8 @@ class SelectSessionWorkoutScreen extends StatelessWidget {
       body: WorkoutList(
           workouts: workouts,
           onTap: (Workout workout) {
-            Navigator.pushNamed(
-              context,
-              EditSessionScreen.id,
-              arguments: {'data': workout},
-            );
+            Navigator.pushNamed(context, CreateSessionScreen.id,
+                arguments: {'data': workout});
           }),
     );
   }

@@ -2,7 +2,7 @@ import 'package:lfti/data/models/workout.dart';
 import 'activity.dart';
 
 class Session {
-  String id;
+  String? id;
   late List<Activity> activities;
   late String name;
   List<String> schedule;
@@ -14,7 +14,7 @@ class Session {
   List<Activity>? skippedExercises;
 
   Session({
-    required this.id,
+    this.id,
     required this.schedule,
     required this.activities,
     required this.name,
@@ -25,7 +25,7 @@ class Session {
   });
 
   Session.fromWorkout({
-    required this.id,
+    this.id,
     required Workout workout,
     required this.schedule,
   }) {

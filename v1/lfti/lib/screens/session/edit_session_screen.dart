@@ -29,12 +29,12 @@ class EditSessionScreen extends StatefulWidget {
 class _EditSessionScreenState extends State<EditSessionScreen> {
   @override
   void initState() {
+    super.initState();
     SchedulerBinding.instance!.addPostFrameCallback((_) {
       final EditSessionScreenProvider model =
           Provider.of<EditSessionScreenProvider>(context, listen: false);
       model.initialize(context);
     });
-    super.initState();
   }
 
   @override
@@ -50,39 +50,12 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
         _getActivityWidgets(),
         _getPadding()
       ]),
-      floatingActionButton: _getFloatingActionButton(),
     );
   }
 
   Widget _getPadding() {
-    final EditSessionScreenProvider model =
-        Provider.of<EditSessionScreenProvider>(context);
     return SliverPadding(
-      padding: EdgeInsets.only(bottom: model.isNewSession ? 100 : 50),
-    );
-  }
-
-  Widget _getFloatingActionButton() {
-    final EditSessionScreenProvider model =
-        Provider.of<EditSessionScreenProvider>(context);
-    return Visibility(
-      visible: model.isNewSession,
-      child: FloatingActionButton.extended(
-          backgroundColor: model.scheduleSelection.contains(true)
-              ? primaryColor
-              : Theme.of(context).disabledColor,
-          label: Text('Done'),
-          icon: AppIcon.done,
-          onPressed: () {
-            if (model.scheduleSelection.contains(true)) {
-              model.addSession();
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                SessionScreen.id,
-                (route) => false,
-              );
-            }
-          }),
+      padding: EdgeInsets.only(bottom: 50),
     );
   }
 
@@ -132,26 +105,37 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
     final EditSessionScreenProvider model =
         Provider.of<EditSessionScreenProvider>(context);
     return <Widget>[
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: model.editMode
-            ? IconButton(
-                icon: Icon(
-                  FontAwesomeIcons.save,
-                  color: primaryColor,
-                ),
-                onPressed: () {
-                  model.isNewSession
-                      ? model.addSession()
-                      : model.updateSession();
-                  model.toggleEditMode();
-                },
-              )
-            : IconButton(
-                icon: Icon(FontAwesomeIcons.edit),
-                onPressed: model.toggleEditMode,
-              ),
-      )
+      model.editMode
+          ? IconButton(
+              icon: AppIcon.save,
+              onPressed: () {
+                model.save();
+                model.toggleEditMode();
+              })
+          : PopupMenuButton<String>(onSelected: (value) {
+              if (value == 'Edit') {
+                model.toggleEditMode();
+                return;
+              }
+
+              if (value == 'Delete') {
+                model.deleteSession();
+                _showConfirmationDialog(
+                  title: 'Confirm Delete',
+                  content: 'Are you sure you want to delete this Session?',
+                  onConfirm: () => Navigator.pushNamedAndRemoveUntil(
+                      context, SessionScreen.id, (_) => false),
+                );
+                return;
+              }
+            }, itemBuilder: (BuildContext context) {
+              return ['Edit', 'Delete'].map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            }),
     ];
   }
 
@@ -257,7 +241,7 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
               );
             },
             itemCount: model.activities.length,
-            onReorder: model.onReorder,
+            onReorder: model.onReorderActivities,
           )
         : SliverList(
             delegate: SliverChildBuilderDelegate(

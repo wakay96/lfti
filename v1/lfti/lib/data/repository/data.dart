@@ -451,12 +451,14 @@ class SampleData {
       var rest = Rest(
           IdGenerator.generateV4(), Duration(seconds: Random().nextInt(120)));
       var index = Random().nextInt(options.length);
+
       var act = options[index] as Exercise;
+      act.id = IdGenerator.generateV4();
       act.description =
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
       act.setCount = 3;
       act.repCount = 12;
-      list.add(options[index]);
+      list.add(act);
 
       if (i < options.length - 1) list.add(rest);
     }

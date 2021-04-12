@@ -209,26 +209,15 @@ void repositoryTest() {
         });
       });
 
-      group('clearUserExerciseBank()', () {
-        test(' - exercise exist, should delete all exercises', () {
-          repository = getIt<IRepository>();
-          repository.addExercise(e1!);
-          repository.addExercise(e2!);
-          repository.addExercise(e3!);
-          var original = repository.getAllActivities();
-          repository.clearUserExerciseBank();
-          expect(original.length, repository.getAllActivities().length);
-        });
-      });
-
       group('deleteExerciseById', () {
         test(' - exercise exist, should remove exercise then return item', () {
           repository = getIt<IRepository>();
           repository.addExercise(e1!);
           repository.addExercise(e2!);
           repository.addExercise(e3!);
-          var res = repository.deleteExerciseById(e2!.id);
-          expect(res, true);
+          repository.deleteExerciseById(e2!.id);
+          expect(() => repository.deleteExerciseById(e2!.id),
+              throwsA(isInstanceOf<Exception>()));
         });
 
         test(' - exercise does not exist, should throw exception', () {
@@ -254,8 +243,8 @@ void repositoryTest() {
           repository.addWorkout(data.workouts[0]);
           repository.addWorkout(data.workouts[1]);
           repository.addWorkout(data.workouts[2]);
-          var res = repository.deleteWorkoutById(data.workouts[2].id);
-          expect(res, true);
+          expect(() => repository.deleteExerciseById(data.workouts[2].id),
+              throwsA(isInstanceOf<Exception>()));
         });
 
         test(' - workout does not exist, should throw exception', () {
@@ -273,6 +262,21 @@ void repositoryTest() {
           var w = SampleData().workouts[0];
           expect(() => repository.deleteWorkoutById(w.id),
               throwsA(isInstanceOf<Exception>()));
+        });
+      });
+
+      group('deleteSessionById', () {
+        test(' - existing session, should return true', () {
+          final IRepository repo = GetIt.instance<IRepository>();
+          final SampleData data = SampleData();
+          final session = data.sessions[0];
+          session.id = IdGenerator.generateV4();
+          repo.addSession(session);
+          final checkSession = repo.getSessionById(session.id!);
+          expect(checkSession, null);
+          repo.deleteSessionById(session.id!);
+          final res = repo.getSessionById(session.id!);
+          expect(res, null);
         });
       });
     });
@@ -493,8 +497,8 @@ void repositoryTest() {
             name: newName,
             description: newDescription,
           );
-          repository.updateSessionById(data.sessions[0].id, newSession);
-          final res = repository.getSessionById(data.sessions[0].id)!;
+          repository.updateSessionById(data.sessions[0].id!, newSession);
+          final res = repository.getSessionById(data.sessions[0].id!);
           expect(res.name, newName);
           expect(res.description, newDescription);
         });
@@ -510,8 +514,8 @@ void repositoryTest() {
             name: '',
             description: '',
           );
-          repository.updateSessionById(data.sessions[0].id, newSession);
-          final res = repository.getSessionById(data.sessions[0].id)!;
+          repository.updateSessionById(data.sessions[0].id!, newSession);
+          final res = repository.getSessionById(data.sessions[0].id!);
           expect(res.activities.length, 1);
         });
       });
