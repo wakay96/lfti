@@ -1,47 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:lfti/providers/session/edit_session_screen_provider.dart';
+import 'package:lfti/data/models/activity.dart';
+import 'package:lfti/helpers/app_styles.dart';
+import 'package:lfti/providers/session/create_session_screen_provider.dart.dart';
 import 'package:lfti/screens/session/session_screen.dart';
 import 'package:lfti/shared/activity_tile.dart';
 import 'package:lfti/shared/add_activity_button.dart';
 import 'package:lfti/shared/picker/weekday_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lfti/data/models/exercise.dart';
 import 'package:lfti/helpers/app_icon.dart';
 
-class EditSessionScreenBuilder extends StatelessWidget {
+class CreateSessionScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<EditSessionScreenProvider>(
-      create: (context) => EditSessionScreenProvider(),
-      child: EditSessionScreen(),
+    return ChangeNotifierProvider<CreateSessionScreenProvider>(
+      create: (context) => CreateSessionScreenProvider(),
+      child: CreateSessionScreen(),
     );
   }
 }
 
-class EditSessionScreen extends StatefulWidget {
-  static final String id = 'EditSessionScreen';
-  static final String title = 'Edit Session';
+class CreateSessionScreen extends StatefulWidget {
+  static final String id = 'CreateSessionScreen';
+  static final String title = 'Create Session';
   @override
-  _EditSessionScreenState createState() => _EditSessionScreenState();
+  _CreateSessionScreenState createState() => _CreateSessionScreenState();
 }
 
-class _EditSessionScreenState extends State<EditSessionScreen> {
+class _CreateSessionScreenState extends State<CreateSessionScreen> {
   @override
   void initState() {
-    super.initState();
     SchedulerBinding.instance!.addPostFrameCallback((_) {
-      final EditSessionScreenProvider model =
-          Provider.of<EditSessionScreenProvider>(context, listen: false);
+      final CreateSessionScreenProvider model =
+          Provider.of<CreateSessionScreenProvider>(context, listen: false);
       model.initialize(context);
     });
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(EditSessionScreen.title),
+          title: Text(CreateSessionScreen.title),
           leading: _getBackButtonActionWidget(),
           actions: _getAppBarAction()),
       body: CustomScrollView(slivers: [
@@ -50,6 +53,7 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
         _getActivityWidgets(),
         _getPadding()
       ]),
+      floatingActionButton: _getFloatingActionButton(),
     );
   }
 
@@ -59,9 +63,30 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
     );
   }
 
+  Widget _getFloatingActionButton() {
+    final CreateSessionScreenProvider model =
+        Provider.of<CreateSessionScreenProvider>(context);
+    return FloatingActionButton.extended(
+        backgroundColor: model.scheduleSelection.contains(true)
+            ? primaryColor
+            : Theme.of(context).disabledColor,
+        label: Text('Done'),
+        icon: AppIcon.done,
+        onPressed: () {
+          if (model.scheduleSelection.contains(true)) {
+            model.save();
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              SessionScreen.id,
+              (route) => false,
+            );
+          }
+        });
+  }
+
   Widget _getBackButtonActionWidget() {
-    final EditSessionScreenProvider model =
-        Provider.of<EditSessionScreenProvider>(context);
+    final CreateSessionScreenProvider model =
+        Provider.of<CreateSessionScreenProvider>(context);
     return IconButton(
         icon: AppIcon.backArrow,
         onPressed: () {
@@ -80,47 +105,30 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
   }
 
   List<Widget> _getAppBarAction() {
-    final EditSessionScreenProvider model =
-        Provider.of<EditSessionScreenProvider>(context);
+    final CreateSessionScreenProvider model =
+        Provider.of<CreateSessionScreenProvider>(context);
     return <Widget>[
-      model.editMode
-          ? IconButton(
-              icon: AppIcon.save,
-              onPressed: () {
-                model.save();
-                model.resetSelectedActivity();
-                model.toggleEditMode();
-              })
-          : PopupMenuButton<String>(onSelected: (value) {
-              if (value == 'Edit') {
-                model.toggleEditMode();
-                return;
-              }
-
-              if (value == 'Delete') {
-                model.deleteSession();
-                _showConfirmationDialog(
-                  title: 'Confirm Delete',
-                  content: 'Are you sure you want to delete this Session?',
-                  onConfirm: () => Navigator.pushNamedAndRemoveUntil(
-                      context, SessionScreen.id, (_) => false),
-                );
-                return;
-              }
-            }, itemBuilder: (BuildContext context) {
-              return ['Edit', 'Delete'].map((String choice) {
-                return PopupMenuItem<String>(
-                  value: choice,
-                  child: Text(choice),
-                );
-              }).toList();
-            }),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: model.editMode
+            ? IconButton(
+                icon: AppIcon.save,
+                onPressed: () {
+                  model.save();
+                  model.toggleEditMode();
+                },
+              )
+            : IconButton(
+                icon: AppIcon.edit,
+                onPressed: model.toggleEditMode,
+              ),
+      )
     ];
   }
 
   Widget _getDayPicker() {
-    final EditSessionScreenProvider model =
-        Provider.of<EditSessionScreenProvider>(context);
+    final CreateSessionScreenProvider model =
+        Provider.of<CreateSessionScreenProvider>(context);
     return SliverList(
       delegate: SliverChildListDelegate(
         [
@@ -135,8 +143,8 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
   }
 
   Widget _getHeaderWidget() {
-    final EditSessionScreenProvider model =
-        Provider.of<EditSessionScreenProvider>(context);
+    final CreateSessionScreenProvider model =
+        Provider.of<CreateSessionScreenProvider>(context);
     return SliverList(
       delegate: SliverChildListDelegate([
         Card(
@@ -176,8 +184,8 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
   }
 
   Widget _getActivityWidgets() {
-    final EditSessionScreenProvider model =
-        Provider.of<EditSessionScreenProvider>(context);
+    final CreateSessionScreenProvider model =
+        Provider.of<CreateSessionScreenProvider>(context);
     return model.editMode
         ? SliverReorderableList(
             itemBuilder: (context, index) {

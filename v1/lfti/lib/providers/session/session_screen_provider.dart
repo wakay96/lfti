@@ -1,24 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:lfti/data/models/session.dart';
-import 'package:lfti/providers/screen_provider.dart';
+import 'package:lfti/data/repository/i_repository.dart';
 
-class SessionScreenProvider extends ScreenProvider {
+class SessionScreenProvider extends ChangeNotifier {
   bool editMode = false;
   Session? selectedSession;
   late List<Session> sessions = [];
+  late IRepository repo;
 
   void initialize(BuildContext context) {
-    super.initialize(context);
+    repo = GetIt.instance<IRepository>();
     this.sessions = repo.getAllSessions();
-  }
-
-  void toggleEditMode() {
-    editMode = !editMode;
-    notifyListeners();
-  }
-
-  void saveChanges() {
-    print('Save Changes');
     notifyListeners();
   }
 
@@ -38,24 +31,14 @@ class SessionScreenProvider extends ScreenProvider {
     notifyListeners();
   }
 
-  void deleteSession(String id) {
-    sessions.removeWhere((element) => element.id == id);
-    notifyListeners();
-  }
-
-  bool isSelectedSession(String id) {
+  bool isSelectedSession(String? id) {
     if (selectedSession != null) {
       return id == selectedSession?.id;
-    } else {
-      return false;
     }
+    return false;
   }
 
   void startSession(BuildContext context) {
     print('start session');
-  }
-
-  void refresh() {
-    notifyListeners();
   }
 }

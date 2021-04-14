@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:lfti/data/models/activity.dart';
 import 'package:lfti/data/models/exercise.dart';
 import 'package:lfti/data/models/session.dart';
@@ -6,6 +8,7 @@ import 'package:lfti/data/models/workout.dart';
 import 'package:lfti/data/repository/data.dart';
 import 'package:lfti/data/repository/i_repository.dart';
 import 'package:lfti/helpers/app_strings.dart';
+import 'package:lfti/helpers/id_generator.dart';
 
 class MockRepository implements IRepository {
   final data = SampleData();
@@ -23,12 +26,13 @@ class MockRepository implements IRepository {
       ...data.legExercises,
       ...data.shoulderExercises
     ];
-
-    _userWorkouts = data.workouts;
-    _userSessions = data.sessions;
+    _userWorkouts = [...data.workouts];
+    _userSessions = [...data.sessions];
     _user = data.user;
   }
 
+  /// ------------------------------ ADD ------------------------------ ///
+  ///                                                                   ///
   @override
   void addExercise(Exercise exercise) {
     _userExercises.add(exercise);
@@ -40,13 +44,22 @@ class MockRepository implements IRepository {
   }
 
   @override
+  void addSession(Session session) {
+    session.id = IdGenerator.generateV4();
+    _userSessions.add(session);
+  }
+
+  ///                                                                   ///
+  /// ----------------------------- ADD ------------------------------- ///
+  ///                                                                   ///
+  /// ----------------------------- GET ------------------------------- ///
+  ///
+
+  @override
   User getUser() {
     return _user;
   }
 
-  /// Returns all available exercises
-  /// only use for search functionality
-  /// when adding activities for a workout
   @override
   List<Activity> getAllActivities() {
     return [..._userExercises];
@@ -63,65 +76,112 @@ class MockRepository implements IRepository {
   }
 
   @override
-  Workout getWorkoutById(String id) {
-    if (_userWorkouts.isEmpty) {
-      throw Exception(EMPTY_LIST_ERROR);
-    }
-    return _userWorkouts.firstWhere(
-      (item) => (item.id == id),
-      orElse: () => throw Exception(ITEM_NOT_FOUND_ERROR),
-    );
+  List<Session> getAllSessions() {
+    return [..._userSessions];
   }
 
+  @override
+  List<Exercise> getExercisesByTarget(String type) {
+    if (type == Target.Chest) return [...data.chestExercises];
+    if (type == Target.Back) return [...data.backExercises];
+    if (type == Target.Arm) return [...data.armExercises];
+    if (type == Target.Shoulder) return [...data.shoulderExercises];
+    if (type == Target.Leg) return [...data.legExercises];
+    if (type == Target.Core) return [...data.coreExercises];
+    if (type == Target.Custom) return [...data.chestExercises.getRange(0, 3)];
+    return getAllActivities() as List<Exercise>;
+  }
+
+  /// Returns existing exercise
+  /// throws Exception if DNE
   @override
   Exercise getExerciseById(String id) {
-    var allExercises = getUserActivities();
-    if (allExercises.isEmpty) {
-      throw Exception(EMPTY_LIST_ERROR);
-    } else {
-      return allExercises.firstWhere(
-        (item) => (item.id == id),
-        orElse: () => throw Exception(ITEM_NOT_FOUND_ERROR),
-      ) as Exercise;
+    try {
+      Exercise exercise =
+          _userExercises.firstWhere((item) => item.id == id) as Exercise;
+      return exercise;
+    } catch (e) {
+      throw e;
     }
   }
 
+  /// Returns existing Workout
+  /// throws Exception if DNE
   @override
-  void clearUserExerciseBank() {
-    _userExercises.clear();
+  Workout getWorkoutById(String id) {
+    try {
+      Workout workout = _userWorkouts.firstWhere((element) => element.id == id);
+      return workout;
+    } catch (e) {
+      throw e;
+    }
   }
 
+  /// Returns existing Session
+  /// throws Exception if DNE
   @override
-  void clearUserWorkoutBank() {
-    _userWorkouts.clear();
+  Session getSessionById(String id) {
+    try {
+      Session session = _userSessions.firstWhere((item) => item.id == id);
+      return session;
+    } catch (e) {
+      throw e;
+    }
   }
 
+  ///                                                                   ///
+  /// ----------------------------- GET ------------------------------- ///
+  ///                                                                   ///
+  /// ---------------------------- DELETE ----------------------------- ///
+  ///                                                                   ///
+
+  /// Delete existing Exercise
+  /// throws Exception if DNE
   @override
-  bool deleteExerciseById(String id) {
+  void deleteExerciseById(String id) {
     try {
       var item = getExerciseById(id);
       _userExercises.remove(item);
-      return true;
     } catch (e) {
       throw e;
     }
   }
 
+  /// Delete existing Workout
+  /// throws Exception if DNE
   @override
-  bool deleteWorkoutById(String id) {
+  void deleteWorkoutById(String id) {
     try {
       var item = getWorkoutById(id);
       _userWorkouts.remove(item);
-      return true;
     } catch (e) {
       throw e;
     }
   }
+
+  /// Delete existing Session
+  /// throws Exception if DNE
+  @override
+  void deleteSessionById(String id) {
+    try {
+      var item = getSessionById(id);
+      _userSessions.remove(item);
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  ///                                                                   ///
+  /// ---------------------------- DELETE ----------------------------- ///
+  ///                                                                   ///
+  /// ---------------------------- UPDATE ----------------------------- ///
+  ///                                                                   ///
 
   @override
   void updateExerciseById(String id, Exercise update) {
     try {
-      int index = _userExercises.indexOf(getExerciseById(id));
+      Exercise exercise = getExerciseById(id);
+      int index = _userExercises.indexOf(exercise);
       _userExercises[index] = Exercise(
         id: id,
         name: update.name,
@@ -152,44 +212,51 @@ class MockRepository implements IRepository {
   }
 
   @override
+  void updateSessionById(String id, Session update) {
+    Session newSession = update;
+    newSession.id = id;
+    try {
+      Session? existingSession = getSessionById(id);
+      int index = _userSessions.indexOf(existingSession);
+      _userSessions[index] = newSession;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  @override
   void updateUser(User update) {
     _user = update;
   }
 
-  @override
-  List<Session> getAllSessions() {
-    return [..._userSessions];
-  }
-
-  @override
-  Session getSessionById(String id) {
-    Session session = _userSessions.firstWhere((item) => item.id == id,
-        orElse: () => throw Exception(ITEM_NOT_FOUND_ERROR));
-    return session;
-  }
-
-  @override
-  void addSession(Session session) {
-    _userSessions.add(session);
-  }
+  ///                                                                   ///
+  /// ---------------------------- UPDATE ----------------------------- ///
+  ///                                                                   ///
+  /// ---------------------------- CLEAR ------------------------------ ///
+  ///                                                                   ///
 
   @override
   void resetAllData() {
-    _userExercises = [];
-    _userWorkouts = [];
-    _userSessions = [];
+    clearUserExerciseBank();
+    clearUserWorkoutBank();
+    clearUserSessionBank();
   }
 
   @override
-  void updateSessionById(String id, Session update) {
-    try {
-      Session session = update;
-      session.id = id;
-      int index = _userSessions.indexOf(getSessionById(id));
-      _userSessions[index] = session;
-    } catch (e) {
-      print(e);
-      throw e;
-    }
+  void clearUserExerciseBank() {
+    _userExercises.clear();
   }
+
+  @override
+  void clearUserWorkoutBank() {
+    _userWorkouts.clear();
+  }
+
+  @override
+  void clearUserSessionBank() {
+    _userSessions.clear();
+  }
+
+  ///                                                                   ///
+  /// ---------------------------- CLEAR ----------------------------- ///
 }
