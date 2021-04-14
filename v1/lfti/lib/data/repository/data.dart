@@ -302,42 +302,42 @@ class SampleData {
     _workouts = [
       Workout(
           id: IdGenerator.generateV4(),
-          activities: getActivities(Target.Chest),
+          activities: [...getActivities(Target.Chest)],
           targetBodyParts: [Target.Chest],
           name: 'Chest Day',
           description:
               'Lorem ipsum dolor sit aet, consectetur adipiscing elit iscing elit.'),
       Workout(
           id: IdGenerator.generateV4(),
-          activities: getActivities(Target.Leg),
+          activities: [...getActivities(Target.Leg)],
           targetBodyParts: [Target.Leg],
           name: 'Leg Day',
           description:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elitet, consectetur adipiscing elit.'),
       Workout(
           id: IdGenerator.generateV4(),
-          activities: getActivities(Target.Back),
+          activities: [...getActivities(Target.Back)],
           targetBodyParts: [Target.Back],
           name: 'Back Day',
           description:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit.isplakitengteng '),
       Workout(
           id: IdGenerator.generateV4(),
-          activities: getActivities(Target.Arm),
+          activities: [...getActivities(Target.Arm)],
           targetBodyParts: [Target.Arm],
           name: 'Arm Day',
           description:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elisplakitengteng it.'),
       Workout(
           id: IdGenerator.generateV4(),
-          activities: getActivities(Target.Shoulder),
+          activities: [...getActivities(Target.Shoulder)],
           targetBodyParts: [Target.Shoulder],
           name: 'Shoulder Day',
           description:
               'Lorem ipsum dolor sit amet, consectetur adipiscingisplakitengteng  elit.'),
       Workout(
           id: IdGenerator.generateV4(),
-          activities: getActivities(Target.Core),
+          activities: [...getActivities(Target.Core)],
           targetBodyParts: [Target.Core],
           name: 'Core Day',
           description:
@@ -386,12 +386,9 @@ class SampleData {
       performedExercises: [
         _workouts[0].activities[0],
         _workouts[0].activities[2],
-        _workouts[0].activities[4],
-        _workouts[0].activities[6],
-        _workouts[0].activities[8],
       ],
       skippedExercises: [
-        _workouts[0].activities[10],
+        _workouts[0].activities[4],
       ],
     );
 
@@ -404,17 +401,17 @@ class SampleData {
     /// Session End ///
   }
 
-  List<Activity> get chestExercises => _chestExercises;
+  List<Exercise> get chestExercises => _chestExercises;
 
-  get armExercises => _armExercises;
+  List<Exercise> get armExercises => _armExercises;
 
-  get legExercises => _legExercises;
+  List<Exercise> get legExercises => _legExercises;
 
-  get shoulderExercises => _shoulderExercises;
+  List<Exercise> get shoulderExercises => _shoulderExercises;
 
-  get backExercises => _backExercises;
+  List<Exercise> get backExercises => _backExercises;
 
-  get coreExercises => _coreExercises;
+  List<Exercise> get coreExercises => _coreExercises;
 
   List<Workout> get workouts => _workouts;
 
@@ -426,7 +423,7 @@ class SampleData {
 
   Session get nextSession => _nextSession;
 
-  List<Activity> getActivities(String type, {int count = 8}) {
+  List<Activity> getActivities(String type, {int count = 5}) {
     switch (type) {
       case Target.Chest:
         return generateRandomActivitiesWithRest(chestExercises, count);
@@ -452,14 +449,17 @@ class SampleData {
           IdGenerator.generateV4(), Duration(seconds: Random().nextInt(120)));
       var index = Random().nextInt(options.length);
 
-      var act = options[index] as Exercise;
-      act.id = IdGenerator.generateV4();
-      act.description =
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
-      act.setCount = 3;
-      act.repCount = 12;
-      list.add(act);
-
+      final act = options[index] as Exercise;
+      list.add(
+        Exercise(
+          id: IdGenerator.generateV4(),
+          name: act.name,
+          description: 'Lorem ipsum dolor sit amet, adipiscing elit.',
+          setCount: 3,
+          repCount: 12,
+          target: act.target,
+        ),
+      );
       if (i < options.length - 1) list.add(rest);
     }
     return list;

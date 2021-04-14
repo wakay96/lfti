@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lfti/data/models/workout.dart';
 import 'package:lfti/helpers/id_generator.dart';
-import 'package:lfti/providers/session/i_new_session_screen_provider.dart';
+import 'package:lfti/providers/session/new_session_screen_provider.dart';
 
 class CreateSessionScreenProvider extends NewSessionScreenProvider {
   @override

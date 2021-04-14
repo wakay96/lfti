@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lfti/data/models/session.dart';
-import 'i_new_session_screen_provider.dart';
+import 'new_session_screen_provider.dart';
 
 class EditSessionScreenProvider extends NewSessionScreenProvider {
   @override
@@ -30,6 +30,8 @@ class EditSessionScreenProvider extends NewSessionScreenProvider {
       repo.updateSessionById(id, session);
     } catch (e) {
       print(e);
+      error = true;
+      notifyListeners();
     }
   }
 
@@ -38,6 +40,8 @@ class EditSessionScreenProvider extends NewSessionScreenProvider {
       repo.deleteSessionById(id);
     } catch (e) {
       print(e);
+      error = true;
+      notifyListeners();
     }
   }
 }

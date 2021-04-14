@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lfti/helpers/app_icon.dart';
-import 'package:lfti/screens/session/select_session_workout_screen.dart';
+import 'package:lfti/screens/session/session_workout_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:lfti/helpers/app_styles.dart';
 import 'package:lfti/helpers/string_formatter.dart';

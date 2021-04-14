@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:lfti/helpers/app_styles.dart';
 import 'package:lfti/providers/session/edit_session_screen_provider.dart';
 import 'package:lfti/screens/session/session_screen.dart';
+import 'package:lfti/shared/activity_tile.dart';
+import 'package:lfti/shared/add_activity_button.dart';
 import 'package:lfti/shared/picker/weekday_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lfti/data/models/exercise.dart';
 import 'package:lfti/helpers/app_icon.dart';
 
@@ -79,28 +79,6 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
         });
   }
 
-  void _showConfirmationDialog(
-      {required String title,
-      required Function onConfirm,
-      String buttonText = 'Confirm',
-      String content = ''}) {
-    showDialog(
-        barrierDismissible: true,
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(title),
-            content: Text(content),
-            actions: [
-              ElevatedButton(
-                onPressed: () => onConfirm(),
-                child: Text(buttonText),
-              ),
-            ],
-          );
-        });
-  }
-
   List<Widget> _getAppBarAction() {
     final EditSessionScreenProvider model =
         Provider.of<EditSessionScreenProvider>(context);
@@ -110,6 +88,7 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
               icon: AppIcon.save,
               onPressed: () {
                 model.save();
+                model.resetSelectedActivity();
                 model.toggleEditMode();
               })
           : PopupMenuButton<String>(onSelected: (value) {
@@ -169,27 +148,26 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextFormField(
-                    onChanged: model.updateName,
-                    minLines: 1,
-                    maxLines: 2,
-                    enabled: model.editMode,
-                    decoration: InputDecoration(labelText: 'Name'),
-                    controller: model.nameController,
-                  ),
-                  SizedBox(height: 8.0),
-                  TextFormField(
-                    onChanged: model.updateDescription,
-                    minLines: 1,
-                    maxLines: 2,
-                    enabled: model.editMode,
-                    decoration: InputDecoration(labelText: 'Description'),
-                    controller: model.descriptionController,
-                  ),
-                ],
-              ),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      onChanged: model.updateName,
+                      minLines: 1,
+                      maxLines: 2,
+                      enabled: model.editMode,
+                      decoration: InputDecoration(labelText: 'Name'),
+                      controller: model.nameController,
+                    ),
+                    SizedBox(height: 8.0),
+                    TextFormField(
+                      onChanged: model.updateDescription,
+                      minLines: 1,
+                      maxLines: 2,
+                      enabled: model.editMode,
+                      decoration: InputDecoration(labelText: 'Description'),
+                      controller: model.descriptionController,
+                    ),
+                  ]),
             ),
           ),
         ),
@@ -203,41 +181,23 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
     return model.editMode
         ? SliverReorderableList(
             itemBuilder: (context, index) {
-              var act = model.activities[index];
-              return Dismissible(
+              final act = model.activities[index];
+              final isSelected = model.isActivitySelected(act.id);
+              return Material(
                 key: ValueKey(act.id),
-                direction: DismissDirection.endToStart,
-                onDismissed: (direction) => model.deleteActivity(act),
-                child: Material(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(),
-                      ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    AddActivityButton(isSelected, index - 1),
+                    ActivityTile(
+                      index: index,
+                      act: act,
+                      model: model,
+                      isSelected: isSelected,
                     ),
-                    child: ListTile(
-                      title: Text(act.name),
-                      leading: act is Exercise
-                          ? AppIcon.inactiveWorkout
-                          : AppIcon.rest,
-                      trailing: ReorderableDragStartListener(
-                        index: index,
-                        child: Icon(FontAwesomeIcons.bars),
-                      ),
-                      tileColor: model.editMode
-                          ? Theme.of(context).cardColor
-                          : Theme.of(context).canvasColor,
-                    ),
-                  ),
+                    AddActivityButton(isSelected, index + 1),
+                  ],
                 ),
-                background: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(),
-                      color: dangerColor,
-                    ),
-                    alignment: Alignment.centerRight,
-                    padding: const EdgeInsets.all(10.0),
-                    child: AppIcon.trash),
               );
             },
             itemCount: model.activities.length,
@@ -266,5 +226,27 @@ class _EditSessionScreenState extends State<EditSessionScreen> {
               childCount: model.activities.length,
             ),
           );
+  }
+
+  void _showConfirmationDialog(
+      {required String title,
+      required Function onConfirm,
+      String buttonText = 'Confirm',
+      String content = ''}) {
+    showDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(title),
+            content: Text(content),
+            actions: [
+              ElevatedButton(
+                onPressed: () => onConfirm(),
+                child: Text(buttonText),
+              ),
+            ],
+          );
+        });
   }
 }

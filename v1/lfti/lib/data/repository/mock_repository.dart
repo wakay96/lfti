@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:lfti/data/models/activity.dart';
 import 'package:lfti/data/models/exercise.dart';
 import 'package:lfti/data/models/session.dart';
@@ -5,6 +7,7 @@ import 'package:lfti/data/models/user.dart';
 import 'package:lfti/data/models/workout.dart';
 import 'package:lfti/data/repository/data.dart';
 import 'package:lfti/data/repository/i_repository.dart';
+import 'package:lfti/helpers/app_strings.dart';
 import 'package:lfti/helpers/id_generator.dart';
 
 class MockRepository implements IRepository {
@@ -75,6 +78,18 @@ class MockRepository implements IRepository {
   @override
   List<Session> getAllSessions() {
     return [..._userSessions];
+  }
+
+  @override
+  List<Exercise> getExercisesByTarget(String type) {
+    if (type == Target.Chest) return [...data.chestExercises];
+    if (type == Target.Back) return [...data.backExercises];
+    if (type == Target.Arm) return [...data.armExercises];
+    if (type == Target.Shoulder) return [...data.shoulderExercises];
+    if (type == Target.Leg) return [...data.legExercises];
+    if (type == Target.Core) return [...data.coreExercises];
+    if (type == Target.Custom) return [...data.chestExercises.getRange(0, 3)];
+    return getAllActivities() as List<Exercise>;
   }
 
   /// Returns existing exercise

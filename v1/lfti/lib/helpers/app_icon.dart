@@ -4,11 +4,12 @@ class AppIcon {
   static const done = FaIcon(FontAwesomeIcons.check);
   static const ellipsis = FaIcon(FontAwesomeIcons.ellipsisH);
   static const play = FaIcon(FontAwesomeIcons.play);
-  static const add = FaIcon(FontAwesomeIcons.plus);
+  static const add = FaIcon(FontAwesomeIcons.plus, size: 18);
   static const trash = FaIcon(FontAwesomeIcons.trash);
   static const backArrow = FaIcon(FontAwesomeIcons.angleLeft);
   static const weight = FaIcon(FontAwesomeIcons.weight);
-  static const save = FaIcon(FontAwesomeIcons.solidSave);
+  static const save = FaIcon(FontAwesomeIcons.solidSave, size: 18);
+  static const edit = FaIcon(FontAwesomeIcons.solidEdit, size: 18);
 
   static const bodyFat = FaIcon(FontAwesomeIcons.fire);
 

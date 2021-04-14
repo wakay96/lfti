@@ -13,6 +13,7 @@ abstract class IRepository {
   List<Activity> getAllActivities();
   List<Workout> getAllWorkouts();
   List<Session> getAllSessions();
+  List<Exercise> getExercisesByTarget(String type);
 
   Workout getWorkoutById(String id);
   Exercise getExerciseById(String id);

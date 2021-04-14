@@ -11,6 +11,7 @@ class NewSessionScreenProvider extends ChangeNotifier {
   late IRepository repo;
   List<Activity> activities = [];
   List<bool> scheduleSelection = [];
+  Activity? selectedActivity;
   String? name;
   String? description;
   TextEditingController nameController = TextEditingController();
@@ -24,6 +25,8 @@ class NewSessionScreenProvider extends ChangeNotifier {
     repo = GetIt.instance<IRepository>();
     args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
   }
+
+  void addActivity(int index) {}
 
   void updateName(String val) {
     name = val;
@@ -49,6 +52,26 @@ class NewSessionScreenProvider extends ChangeNotifier {
   void toggleEditMode() {
     editMode = !editMode;
     notifyListeners();
+  }
+
+  void setSelectedActivity(String id) {
+    try {
+      selectedActivity = activities.firstWhere((element) => element.id == id);
+      notifyListeners();
+    } catch (e) {
+      print(e);
+      error = true;
+    }
+  }
+
+  void resetSelectedActivity() {
+    selectedActivity = null;
+    notifyListeners();
+  }
+
+  bool isActivitySelected(String id) {
+    if (selectedActivity == null) return false;
+    return selectedActivity!.id == id;
   }
 
   void save() {
@@ -113,6 +136,7 @@ class NewSessionScreenProvider extends ChangeNotifier {
       });
     } catch (e) {
       print(e);
+      error = true;
     }
     return sched;
   }
