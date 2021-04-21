@@ -1,7 +1,7 @@
 import 'package:lfti/data/models/activity.dart';
 
-class ExerciseListData {
+class ActivityListData {
   final String name;
   final List<Activity> activities;
-  ExerciseListData(this.name, this.activities);
+  ActivityListData(this.name, this.activities);
 }

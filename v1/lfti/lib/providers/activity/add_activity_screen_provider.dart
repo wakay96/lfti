@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lfti/data/models/activity.dart';
-import 'package:lfti/data/models/exercise.dart';
 import 'package:lfti/data/models/activity_list_data.dart';
-import 'package:lfti/data/models/rest.dart';
 import 'package:lfti/data/repository/i_repository.dart';
 import 'package:lfti/helpers/app_strings.dart';
 import 'package:lfti/helpers/id_generator.dart';
 
-class ExerciseScreenProvider extends ChangeNotifier {
+class AddActivityScreenProvider extends ChangeNotifier {
   late final IRepository repo;
   List<ActivityListData> data = [];
   Set<String> selectedExercises = Set();
-  bool editMode = false;
+  bool error = false;
 
   void initialize(BuildContext context) {
     repo = GetIt.instance<IRepository>();
@@ -32,40 +30,32 @@ class ExerciseScreenProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // TODO: Implement
-  void editActivity() {
-    print('Need to implement');
-  }
-
-  // TODO Implement
-  void deleteActivity() {
-    print('Need to implement');
-  }
-
-  //TODO: implement
-  void addActivity(Map<String, dynamic> data) {}
-
-  // {  name: String,
-  //    description: String,
-  //    target: String,
-  //    duration: int,
-  //    type: String  }
-  Activity? _createActivity(Map<String, dynamic> data) {
-    String id = IdGenerator.generateV4();
-    String type = data['type'] as String;
-
-    if (type == 'Exercise') {
-      String name = data['name'] as String;
-      String description = data['description'] as String;
-      String target = data['target'] as String;
-      return Exercise(
-          id: id, name: name, description: description, target: target);
-    }
-    if (type == 'Rest') {
-      Duration duration = Duration(seconds: data['duration']);
-      return Rest(id, duration);
-    }
-    return null;
+  List<Activity> generateSelectedActivities() {
+    List<Activity> all = [
+      ...data[0].activities,
+      ...data[1].activities,
+      ...data[2].activities,
+      ...data[3].activities,
+      ...data[4].activities,
+      ...data[5].activities,
+      ...data[6].activities,
+    ];
+    List<Activity> activities = [];
+    selectedExercises.forEach((id) {
+      final Activity? act = all.firstWhere((element) => element.id == id);
+      if (act == null) {
+        error = true;
+        notifyListeners();
+        return;
+      }
+      activities.add(
+        Activity(
+            id: IdGenerator.generateV4(),
+            name: act.name,
+            description: act.description),
+      );
+    });
+    return activities;
   }
 
   void toggleActivity(String id) {

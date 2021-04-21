@@ -10,6 +10,7 @@ class AppIcon {
   static const weight = FaIcon(FontAwesomeIcons.weight);
   static const save = FaIcon(FontAwesomeIcons.solidSave, size: 18);
   static const edit = FaIcon(FontAwesomeIcons.solidEdit, size: 18);
+  static const send = FaIcon(FontAwesomeIcons.paperPlane, size: 18);
 
   static const bodyFat = FaIcon(FontAwesomeIcons.fire);
 

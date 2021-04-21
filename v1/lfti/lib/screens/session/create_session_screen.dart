@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:lfti/data/models/activity.dart';
 import 'package:lfti/helpers/app_styles.dart';
 import 'package:lfti/providers/session/create_session_screen_provider.dart.dart';
 import 'package:lfti/screens/session/session_screen.dart';
@@ -51,15 +50,9 @@ class _CreateSessionScreenState extends State<CreateSessionScreen> {
         _getDayPicker(),
         _getHeaderWidget(),
         _getActivityWidgets(),
-        _getPadding()
+        SliverPadding(padding: EdgeInsets.only(bottom: 50))
       ]),
       floatingActionButton: _getFloatingActionButton(),
-    );
-  }
-
-  Widget _getPadding() {
-    return SliverPadding(
-      padding: EdgeInsets.only(bottom: 50),
     );
   }
 
@@ -93,7 +86,7 @@ class _CreateSessionScreenState extends State<CreateSessionScreen> {
           model.editMode
               ? _showConfirmationDialog(
                   title: 'Discard changes?',
-                  content: 'Unsaved changes will be discarded.',
+                  content: Text('Unsaved changes will be discarded.'),
                   onConfirm: () {
                     // Pop Dialog Box
                     Navigator.pop(context);
@@ -147,11 +140,11 @@ class _CreateSessionScreenState extends State<CreateSessionScreen> {
         Provider.of<CreateSessionScreenProvider>(context);
     return SliverList(
       delegate: SliverChildListDelegate([
-        Card(
+        AnimatedContainer(
           color: model.editMode
               ? Theme.of(context).cardColor
               : Theme.of(context).canvasColor,
-          elevation: 8.0,
+          duration: Duration(milliseconds: 200),
           child: Form(
             child: Padding(
               padding: const EdgeInsets.all(10.0),
@@ -186,68 +179,62 @@ class _CreateSessionScreenState extends State<CreateSessionScreen> {
   Widget _getActivityWidgets() {
     final CreateSessionScreenProvider model =
         Provider.of<CreateSessionScreenProvider>(context);
-    return model.editMode
-        ? SliverReorderableList(
-            itemBuilder: (context, index) {
-              final act = model.activities[index];
-              final isSelected = model.isActivitySelected(act.id);
-              return Material(
-                key: ValueKey(act.id),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    AddActivityButton(isSelected, index - 1),
-                    ActivityTile(
-                      index: index,
-                      act: act,
-                      model: model,
-                      isSelected: isSelected,
-                    ),
-                    AddActivityButton(isSelected, index + 1),
-                  ],
-                ),
-              );
-            },
-            itemCount: model.activities.length,
-            onReorder: model.onReorderActivities,
-          )
-        : SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                var act = model.activities[index];
-                return Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(),
-                    ),
-                  ),
-                  child: ListTile(
-                    title: Text(act.name),
-                    leading: act is Exercise
-                        ? AppIcon.inactiveWorkout
-                        : AppIcon.rest,
-                    // trailing:
-                    //     model.editMode ? Icon(FontAwesomeIcons.bars) : SizedBox(),
-                  ),
-                );
-              },
-              childCount: model.activities.length,
-            ),
-          );
+    return SliverReorderableList(
+      itemBuilder: (context, index) {
+        final act = model.activities[index];
+        final isSelected = model.isActivitySelected(act.id);
+        return Material(
+          key: ValueKey(act.id),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (isSelected)
+                AddActivityButton(isSelected, index - 1, model.addActivity),
+              ActivityTile(
+                  index: index,
+                  act: act,
+                  leading:
+                      act is Exercise ? AppIcon.inactiveWorkout : AppIcon.rest,
+                  trailing: model.editMode
+                      ? ReorderableDragStartListener(
+                          index: index,
+                          child: Icon(FontAwesomeIcons.gripLines),
+                        )
+                      : null,
+                  active: model.editMode,
+                  isSelected: isSelected,
+                  onDismiss: (item) => model.deleteActivity(item),
+                  onTap: model.editMode
+                      ? () {
+                          isSelected
+                              ? model.resetSelectedActivity()
+                              : model.setSelectedActivity(act.id);
+                        }
+                      : null),
+              if (isSelected)
+                AddActivityButton(isSelected, index + 1, model.addActivity),
+            ],
+          ),
+        );
+      },
+      itemCount: model.activities.length,
+      onReorder: model.onReorderActivities,
+    );
   }
 
-  void _showConfirmationDialog(
-      {required String title,
-      required Function onConfirm,
-      String buttonText = 'Confirm',
-      String content = ''}) {
+  void _showConfirmationDialog({
+    required String title,
+    required Function onConfirm,
+    String buttonText = 'Confirm',
+    Widget? content,
+  }) {
     showDialog(
         barrierDismissible: true,
         context: context,
         builder: (context) {
           return AlertDialog(
             title: Text(title),
-            content: Text(content),
+            content: content,
             actions: [
               ElevatedButton(
                 onPressed: () => onConfirm(),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lfti/data/models/activity.dart';
+import 'package:lfti/data/models/exercise.dart';
+import 'package:lfti/data/models/rest.dart';
 import 'package:lfti/data/models/session.dart';
 import 'package:lfti/data/repository/i_repository.dart';
 import 'package:lfti/helpers/app_strings.dart';
@@ -26,7 +28,22 @@ class NewSessionScreenProvider extends ChangeNotifier {
     args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
   }
 
-  void addActivity(int index) {}
+  void addActivity(int index, Activity newActivity) {
+    print(newActivity.name);
+    if (index < 0) {
+      activities.insert(0, newActivity);
+    }
+
+    if (index >= activities.length) {
+      activities.add(newActivity);
+    }
+
+    if (index < activities.length) {
+      activities.insert(index, newActivity);
+    }
+
+    notifyListeners();
+  }
 
   void updateName(String val) {
     name = val;
@@ -38,9 +55,36 @@ class NewSessionScreenProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateExercise(int index, Map<String, String> data) {
+    try {
+      final Exercise act = activities[index] as Exercise;
+      act.setCount = int.parse(data['setCount']!);
+      act.repCount = int.parse(data['repCount']!);
+      act.target = act.target;
+    } catch (e) {
+      error = true;
+    }
+    notifyListeners();
+  }
+
+  void updateRest(int index, String seconds) {
+    try {
+      final Rest act = activities[index] as Rest;
+      act.duration = Duration(seconds: int.parse(seconds));
+      activities[index] = act;
+    } catch (e) {
+      error = true;
+    }
+    notifyListeners();
+  }
+
   void deleteActivity(Activity activity) {
-    int index = activities.indexOf(activity);
-    activities.removeAt(index);
+    try {
+      int index = activities.indexOf(activity);
+      activities.removeAt(index);
+    } catch (e) {
+      error = true;
+    }
     notifyListeners();
   }
 
