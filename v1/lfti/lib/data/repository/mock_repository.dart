@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:lfti/data/models/activity.dart';
 import 'package:lfti/data/models/exercise.dart';
 import 'package:lfti/data/models/session.dart';

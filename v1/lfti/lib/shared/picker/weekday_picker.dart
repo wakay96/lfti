@@ -34,20 +34,17 @@ class WeekdayPicker extends StatelessWidget {
           child: AnimatedContainer(
             height: Theme.of(context).buttonTheme.height,
             decoration: BoxDecoration(
-              border: Border.all(),
               color: selections[i]
-                  ? Theme.of(context).primaryColor
-                  : Theme.of(context).cardColor,
+                  ? Theme.of(context).backgroundColor
+                  : Theme.of(context).canvasColor,
             ),
-            duration: Duration(milliseconds: 100),
+            duration: Duration(milliseconds: 200),
             child: InkWell(
               onTap: () => onTap(i),
               child: Center(
                 child: Text(
                   dayNames[i].substring(0, 1),
-                  style: selections[i]
-                      ? Theme.of(context).textTheme.bodyText1
-                      : Theme.of(context).accentTextTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ),
             ),
@@ -69,20 +66,16 @@ class WeekdayPicker extends StatelessWidget {
         Expanded(
           flex: 1,
           child: Container(
+            padding: EdgeInsets.symmetric(vertical: 4.0),
             height: Theme.of(context).buttonTheme.height,
             decoration: BoxDecoration(
-              border: Border.all(),
               color: selections[i]
-                  ? Theme.of(context).primaryColor
+                  ? Theme.of(context).cardColor
                   : Theme.of(context).canvasColor,
             ),
             child: Center(
-              child: Text(
-                dayNames[i].substring(0, 1),
-                style: selections[i]
-                    ? Theme.of(context).textTheme.bodyText1
-                    : Theme.of(context).accentTextTheme.bodyText1,
-              ),
+              child: Text(dayNames[i].substring(0, 1),
+                  style: Theme.of(context).textTheme.bodyText1),
             ),
           ),
         ),
