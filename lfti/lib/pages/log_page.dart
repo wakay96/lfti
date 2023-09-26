@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lfti/constants/enums.dart';
+import 'package:lfti/shared/header.dart';
 
 class LogPage extends StatelessWidget {
   static final String path = AppPage.log.path;
@@ -9,11 +10,11 @@ class LogPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Workout Log'),
-      ),
-      body: const Center(
-        child: Text('This is the workout log screen.'),
+      body: Column(
+        children: [
+          Header(title: AppPage.log.title),
+          const Text('This is the workout log screen.'),
+        ],
       ),
     );
   }

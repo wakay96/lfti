@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lfti/constants/enums.dart';
+import 'package:lfti/shared/header.dart';
 
 class ProfilePage extends StatelessWidget {
   static final String path = AppPage.profile.path;
@@ -9,8 +10,9 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          Header(title: AppPage.profile.title),
           const CircleAvatar(
             radius: 50,
             backgroundImage:

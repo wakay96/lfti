@@ -4,7 +4,7 @@ class Header extends StatelessWidget {
   const Header({
     Key? key,
     required this.title,
-    required this.subtitle,
+    this.subtitle = '',
   }) : super(key: key);
 
   final String title;
@@ -13,18 +13,21 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 16.0),
+      padding: const EdgeInsets.only(left: 14.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.titleMedium,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 8),
-          Text(
-            subtitle,
-            style: Theme.of(context).textTheme.bodyLarge,
+          Visibility(
+            visible: subtitle.isNotEmpty,
+            child: Text(
+              subtitle,
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
           ),
           const SizedBox(height: 16),
         ],

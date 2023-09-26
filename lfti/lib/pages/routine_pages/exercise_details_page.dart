@@ -21,10 +21,14 @@ class ExerciseDetailsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(
+              exercise.name,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
             if (exercise.description != null)
               Text(
                 exercise.description!,
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             if (exercise.instructions != null)
               Padding(
@@ -60,7 +64,7 @@ class ExerciseDetailsPage extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-            if (exercise.seconds != null)
+            if (exercise.seconds != null && exercise.minutes! > 0)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
@@ -68,7 +72,7 @@ class ExerciseDetailsPage extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-            if (exercise.minutes != null)
+            if (exercise.minutes != null && exercise.minutes! > 0)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(

@@ -20,52 +20,30 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentPageIndex = AppPage.routines.index;
-  List<Widget> pages = [Container()];
+  List<Widget> pages = [];
+  List<Routine> routines = [];
 
   @override
   void initState() {
-    EasyLoading.show(status: 'Loading...');
-    final List<Routine> routines = Repository().fetchAllRoutines();
-
-    pages = [
-      const LogPage(),
-      RoutinesPage(routines),
-      const StatisticsPage(),
-      const ProfilePage(),
-    ];
-
+    fetchData();
     super.initState();
+  }
+
+  Future<void> fetchData() async {
+    EasyLoading.show(status: 'Loading...');
+    // await Future.delayed(const Duration(seconds: 3));
+    routines = Repository().fetchAllRoutines();
+
+    setState(() {
+      pages = [
+        const LogPage(),
+        const RoutinesPage(),
+        const StatisticsPage(),
+        const ProfilePage(),
+      ];
+    });
+
     EasyLoading.dismiss();
-  }
-
-  Widget getPage(int index) {
-    switch (index) {
-      case 0:
-        return pages[0];
-      case 1:
-        return pages[1];
-      case 2:
-        return pages[2];
-      case 3:
-        return pages[3];
-      default:
-    }
-    return pages[index];
-  }
-
-  String getPageTitle(int index) {
-    switch (index) {
-      case 0:
-        return AppPage.log.title;
-      case 1:
-        return AppPage.routines.title;
-      case 2:
-        return AppPage.statistics.title;
-      case 3:
-        return AppPage.profile.title;
-      default:
-    }
-    return pages[index].toString();
   }
 
   @override
@@ -86,19 +64,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 14.0),
-              child: Text(
-                getPageTitle(currentPageIndex),
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-            ),
-            Expanded(child: getPage(currentPageIndex)),
-          ],
-        ),
+        body: Container(child: pages[currentPageIndex]),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           selectedItemColor: Theme.of(context).colorScheme.primary,
