@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:lfti/constants/enums.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:lfti/models/exercise.dart';
 import 'package:lfti/models/routine.dart';
+import 'package:lfti/pages/routine_pages/add_routine.dart';
+import 'package:lfti/pages/routine_pages/exercise_list_page.dart';
 import 'package:lfti/pages/routine_pages/routine_details_page.dart';
 import 'package:lfti/pages/page_container.dart';
 import 'package:lfti/pages/routine_pages/exercise_details_page.dart';
+import 'package:lfti/pages/routine_pages/add_exercise_details_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,18 +36,26 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
+      builder: EasyLoading.init(),
       initialRoute: HomePage.path,
       routes: {
         HomePage.path: (context) => const HomePage(),
-        AppSubPage.routineDetails.path: (context) {
+        RoutineDetailsPage.path: (context) {
           final Routine args =
               ModalRoute.of(context)?.settings.arguments as Routine;
           return RoutineDetailsPage(routine: args);
         },
-        AppSubPage.exerciseDetails.path: (context) {
+        ExerciseDetailsPage.path: (context) {
           final Exercise args =
               ModalRoute.of(context)?.settings.arguments as Exercise;
           return ExerciseDetailsPage(exercise: args);
+        },
+        AddRoutinePage.path: (context) => const AddRoutinePage(),
+        ExerciseListPage.path: (context) => const ExerciseListPage(),
+        AddExerciseDetailsPage.path: (context) {
+          final Exercise args =
+              ModalRoute.of(context)?.settings.arguments as Exercise;
+          return AddExerciseDetailsPage(exercise: args);
         },
         // LoginPage.id: (context) =>  LoginPage(),
         // SignupPage.id: (context) =>  SignupPage(),

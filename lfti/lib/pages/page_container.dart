@@ -48,40 +48,38 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          leading: const Icon(
-            Icons.power_settings_new,
-            color: Colors.blueGrey,
+    return Scaffold(
+      appBar: AppBar(
+        leading: const Icon(
+          Icons.power_settings_new,
+          color: Colors.blueGrey,
+        ),
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {
+              log('more tapped!');
+            },
+            icon: const Icon(Icons.more_horiz),
           ),
-          actions: <Widget>[
-            IconButton(
-              onPressed: () {
-                log('more tapped!');
-              },
-              icon: const Icon(Icons.more_horiz),
-            ),
-          ],
-        ),
-        body: Container(child: pages[currentPageIndex]),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: Theme.of(context).colorScheme.primary,
-          unselectedItemColor: Theme.of(context).colorScheme.onBackground,
-          currentIndex: currentPageIndex,
-          onTap: (int index) {
-            setState(() {
-              currentPageIndex = index;
-            });
-          },
-          items: AppPage.values.map((pageInfo) {
-            return BottomNavigationBarItem(
-              icon: pageInfo.icon,
-              label: pageInfo.title,
-            );
-          }).toList(),
-        ),
+        ],
+      ),
+      body: Container(child: pages[currentPageIndex]),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Theme.of(context).colorScheme.primary,
+        unselectedItemColor: Theme.of(context).colorScheme.onBackground,
+        currentIndex: currentPageIndex,
+        onTap: (int index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        items: AppPage.values.map((pageInfo) {
+          return BottomNavigationBarItem(
+            icon: pageInfo.icon,
+            label: pageInfo.title,
+          );
+        }).toList(),
       ),
     );
   }

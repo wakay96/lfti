@@ -1,5 +1,9 @@
+import 'package:lfti/constants/enums.dart';
+
 class Exercise {
   final String name;
+  final MuscleGroup muscleGroup;
+  final String? videoUrl;
   final String? description;
   final String? instructions;
   final String? tips;
@@ -10,6 +14,8 @@ class Exercise {
 
   const Exercise({
     required this.name,
+    required this.muscleGroup,
+    this.videoUrl,
     this.description,
     this.instructions,
     this.tips,
@@ -20,8 +26,40 @@ class Exercise {
   });
 
   factory Exercise.fromJson(Map<String, dynamic> json) {
+    const String muscleGroupKey = 'muscleGroup';
+    final int index = MuscleGroup.values.indexWhere(
+        (element) => element.toString() == json[muscleGroupKey] as String);
+    late MuscleGroup muscleGroup;
+    switch (index) {
+      case 0:
+        muscleGroup = MuscleGroup.chest;
+        break;
+      case 1:
+        muscleGroup = MuscleGroup.back;
+        break;
+      case 2:
+        muscleGroup = MuscleGroup.legs;
+        break;
+      case 3:
+        muscleGroup = MuscleGroup.bicep;
+        break;
+      case 4:
+        muscleGroup = MuscleGroup.tricep;
+        break;
+      case 5:
+        muscleGroup = MuscleGroup.shoulders;
+        break;
+      case 6:
+        muscleGroup = MuscleGroup.abs;
+        break;
+      default:
+        muscleGroup = MuscleGroup.none;
+    }
+
     return Exercise(
       name: json['name'] as String,
+      muscleGroup: muscleGroup,
+      videoUrl: json['videoUrl'] as String?,
       description:
           json['description'] == null ? '' : json['description'] as String?,
       instructions:
@@ -37,6 +75,8 @@ class Exercise {
   Map<String, dynamic> toJson() {
     return {
       'name': name,
+      'muscleGroup': muscleGroup.name,
+      'videoUrl': videoUrl,
       'description': description,
       'instructions': instructions,
       'tips': tips,

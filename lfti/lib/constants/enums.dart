@@ -38,9 +38,24 @@ enum AppSubPage {
     'Routine Details',
     Icon(Icons.fitness_center),
   ),
+  addRoutine(
+    '/addRoutine',
+    'Add Routine',
+    Icon(Icons.fitness_center),
+  ),
   exerciseDetails(
     '/exerciseDetails',
     'Exercise Details',
+    Icon(Icons.fitness_center),
+  ),
+  exerciseList(
+    '/exerciseList',
+    'Exercises',
+    Icon(Icons.fitness_center),
+  ),
+  updateExercise(
+    '/updateDetails',
+    'Update Exercise',
     Icon(Icons.fitness_center),
   );
 
@@ -53,4 +68,18 @@ enum AppSubPage {
     this.title,
     this.icon,
   );
+}
+
+enum MuscleGroup {
+  chest('Chest'),
+  back('Back'),
+  legs('Legs'),
+  shoulders('Shoulders'),
+  tricep('Tricep'),
+  bicep('Bicep'),
+  abs('Abs'),
+  none('None');
+
+  final String name;
+  const MuscleGroup(this.name);
 }
