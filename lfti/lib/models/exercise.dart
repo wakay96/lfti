@@ -86,4 +86,30 @@ class Exercise {
       'minutes': minutes,
     };
   }
+
+  Exercise copyWith({
+    String? name,
+    MuscleGroup? muscleGroup,
+    String? videoUrl,
+    String? description,
+    String? instructions,
+    String? tips,
+    int? reps,
+    int? sets,
+    int? seconds,
+    int? minutes,
+  }) {
+    return Exercise(
+      name: name ?? this.name,
+      muscleGroup: muscleGroup ?? this.muscleGroup,
+      videoUrl: videoUrl ?? this.videoUrl,
+      description: description ?? this.description,
+      instructions: instructions ?? this.instructions,
+      tips: tips ?? this.tips,
+      reps: reps ?? this.reps,
+      sets: sets ?? this.sets,
+      seconds: seconds ?? this.seconds,
+      minutes: minutes ?? this.minutes,
+    );
+  }
 }

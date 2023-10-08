@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lfti/constants/enums.dart';
 import 'package:lfti/models/routine.dart';
 import 'package:lfti/pages/routine_pages/add_routine.dart';
@@ -37,16 +38,35 @@ class _RoutinesPageState extends State<RoutinesPage> {
             child: Column(
               children: routines
                   .map(
-                    (routine) => ListTile(
-                      title: Text(routine.name),
-                      trailing: const Icon(Icons.arrow_forward),
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          RoutineDetailsPage.path,
-                          arguments: routine,
-                        );
-                      },
+                    (routine) => Slidable(
+                      key: UniqueKey(),
+                      endActionPane: ActionPane(
+                        motion: const ScrollMotion(),
+                        children: [
+                          SlidableAction(
+                            autoClose: true,
+                            onPressed: (context) {
+                              setState(() {
+                                // TODO: delete routine from repo
+                                routines.remove(routine);
+                              });
+                            },
+                            icon: Icons.delete,
+                            backgroundColor: Colors.red,
+                          ),
+                        ],
+                      ),
+                      child: ListTile(
+                        title: Text(routine.name),
+                        trailing: const Icon(Icons.arrow_forward),
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            RoutineDetailsPage.path,
+                            arguments: routine,
+                          );
+                        },
+                      ),
                     ),
                   )
                   .toList(),
@@ -59,7 +79,7 @@ class _RoutinesPageState extends State<RoutinesPage> {
           Navigator.pushNamed(context, AddRoutinePage.path);
         },
         child: const Icon(Icons.add),
-      )
+      ),
     );
   }
 }

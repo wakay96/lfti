@@ -1,9 +1,14 @@
 import 'package:lfti/constants/enums.dart';
 import 'package:lfti/models/exercise.dart';
 import 'package:lfti/models/routine.dart';
+import 'package:uuid/uuid.dart';
 
 abstract class BaseRepository {
   List<Routine> fetchAllRoutines();
+  List<Exercise> fetchAllExercises();
+  Future<Routine> addRoutine(Routine routine);
+  Future<List<Routine>> deleteRoutine(String id);
+  Future<List<Routine>> updateRoutines(String id, Routine routine);
 }
 
 class Repository implements BaseRepository {
@@ -13,6 +18,7 @@ class Repository implements BaseRepository {
 
   final List<Routine> allRoutines = [
     const Routine(
+      id: 'r1',
       name: 'Chest Workout',
       description: 'A chest workout routine for intermediate lifters',
       exercises: [
@@ -53,6 +59,7 @@ class Repository implements BaseRepository {
       ],
     ),
     const Routine(
+      id: 'r2',
       name: 'Back Workout',
       description: 'A back workout routine for intermediate lifters',
       exercises: [
@@ -104,6 +111,7 @@ class Repository implements BaseRepository {
       ],
     ),
     const Routine(
+      id: 'r3',
       name: 'Leg Workout',
       description: 'A routine for building strong legs',
       exercises: [
@@ -159,6 +167,7 @@ class Repository implements BaseRepository {
       ],
     ),
     const Routine(
+      id: 'r4',
       name: 'Bicep Workout',
       description: 'A routine for building great biceps',
       exercises: [
@@ -217,6 +226,7 @@ class Repository implements BaseRepository {
       ],
     ),
     const Routine(
+      id: 'r5',
       name: 'Tricep Workout',
       description: 'A routine for building great triceps',
       exercises: [
@@ -302,7 +312,7 @@ class Repository implements BaseRepository {
     )
   ];
 
-  List<Exercise> allExercises = [
+  final List<Exercise> allExercises = [
     const Exercise(
       name: "Push-up",
       muscleGroup: MuscleGroup.chest,
@@ -628,5 +638,30 @@ class Repository implements BaseRepository {
   @override
   List<Routine> fetchAllRoutines() => allRoutines;
 
+  @override
   List<Exercise> fetchAllExercises() => allExercises;
+
+  @override
+  Future<Routine> addRoutine(Routine data) async {
+    if (data.id == null) {
+      Routine routine = data.copyWith(id: const Uuid().v4());
+      allRoutines.add(routine);
+      return routine;
+    }
+
+    allRoutines.add(data);
+    return data;
+  }
+
+  @override
+  Future<List<Routine>> deleteRoutine(String id) {
+    // TODO: implement deleteRoutine
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Routine>> updateRoutines(String id, Routine routine) {
+    // TODO: implement updateRoutines
+    throw UnimplementedError();
+  }
 }

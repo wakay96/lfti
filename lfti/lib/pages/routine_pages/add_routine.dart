@@ -46,8 +46,9 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: TextFormField(
-                        validator: (value) =>
-                            value?.isEmpty == true ? 'Enter a name' : null,
+                        validator: (value) => value?.isEmpty == true
+                            ? 'Enter routine name'
+                            : null,
                         controller: _nameController,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.all(12.0),
@@ -201,15 +202,16 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                                 final String name = _nameController.text;
                                 final String type = _descriptionController.text;
                                 EasyLoading.show(status: 'Saving routine...');
+                                // TODO: Add check and snackbar for empty exercises
                                 // TODO: Save the routine to a database
-                                Future.delayed(const Duration(seconds: 2), () {
+                                Future.delayed(const Duration(seconds: 1), () {
                                   EasyLoading.dismiss();
                                   Navigator.pop(context);
                                 });
                               }
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                  duration: Duration(milliseconds: 300),
+                                  duration: Duration(seconds: 1),
                                   content: Text(
                                     'Please fill in the required fields',
                                   ),
