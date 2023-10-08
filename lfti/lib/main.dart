@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:lfti/models/exercise.dart';
 import 'package:lfti/models/routine.dart';
@@ -15,19 +16,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Lfti',
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
-          onBackground: Colors.black,
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(),
         ),
         textTheme: const TextTheme(
           titleLarge: TextStyle(
@@ -61,6 +49,8 @@ class MyApp extends StatelessWidget {
         // SignupPage.id: (context) =>  SignupPage(),
         // SettingsPage.id: (context) =>  SettingsPage(),
         // AboutPage.id: (context) =>  AboutPage(),
+        ),
+      ),
       },
     );
   }
