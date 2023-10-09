@@ -33,6 +33,11 @@ enum AppPage {
 }
 
 enum AppSubPage {
+  sessionPage(
+    '/sessionPage',
+    'Running Session',
+    Icon(Icons.directions_run_rounded),
+  ),
   routineDetails(
     '/routineDetails',
     'Routine Details',
