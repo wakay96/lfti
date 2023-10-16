@@ -13,11 +13,10 @@ class ProfilePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Header(title: AppPage.profile.title),
-          const CircleAvatar(
-            radius: 50,
-            backgroundImage:
-                AssetImage('assets/images/profile_placeholder.png'),
-          ),
+          // const CircleAvatar(
+          //   radius: 50,
+          // ),
+          const Icon(Icons.person_outline, size: 100),
           const SizedBox(height: 16),
           Text(
             'Username',
