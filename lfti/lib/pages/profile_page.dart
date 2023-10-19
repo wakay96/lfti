@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lfti/constants/enums.dart';
+import 'package:lfti/data/constants/enums.dart';
 import 'package:lfti/shared/header.dart';
 
 class ProfilePage extends StatelessWidget {

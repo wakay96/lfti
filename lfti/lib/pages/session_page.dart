@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:lfti/constants/enums.dart';
-import 'package:lfti/models/exercise.dart';
-import 'package:lfti/models/routine.dart';
-import 'package:lfti/services/date_service.dart';
+import 'package:lfti/data/constants/enums.dart';
+import 'package:lfti/data/models/exercise.dart';
+import 'package:lfti/data/models/routine.dart';
+import '../../data/services/date_service.dart';
 
 class SessionPage extends StatefulWidget {
   static final String path = AppSubPage.sessionPage.path;

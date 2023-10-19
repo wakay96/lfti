@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:lfti/constants/enums.dart';
-import 'package:lfti/models/exercise.dart';
+import 'package:lfti/data/constants/enums.dart';
+import 'package:lfti/data/models/exercise.dart';
+import 'package:lfti/data/models/routine.dart';
+import 'package:lfti/data/routine_repository.dart';
+import 'package:lfti/pages/home_page.dart';
 import 'package:lfti/pages/routine_pages/exercise_list_page.dart';
+import 'package:uuid/uuid.dart';
 
 class AddRoutinePage extends StatefulWidget {
   static final String path = AppSubPage.addRoutine.path;
@@ -24,6 +28,30 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
     _nameController.dispose();
     _descriptionController.dispose();
     super.dispose();
+  }
+
+  Future<bool> saveRoutine() async {
+    _formKey.currentState?.save();
+    if (_formKey.currentState?.validate() != false) {
+      return await RoutineRepository().add(
+        Routine(
+          id: const Uuid().v4(),
+          name: _nameController.text,
+          description: _descriptionController.text,
+          exercises: exercises,
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          duration: Duration(milliseconds: 300),
+          content: Text(
+            'Please fill in the required fields',
+          ),
+        ),
+      );
+      return false;
+    }
   }
 
   @override
@@ -188,33 +216,27 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
+                            onPressed: () => Navigator.pop(context),
                             child: const Text('Cancel'),
                           ),
                           ElevatedButton(
-                            onPressed: () {
-                              // Validate returns true if the form is valid, or false otherwise.
-                              if (_formKey.currentState?.validate() != false) {
-                                _formKey.currentState?.save();
-                                final String name = _nameController.text;
-                                final String type = _descriptionController.text;
-                                EasyLoading.show(status: 'Saving routine...');
-                                // TODO: Save the routine to a database
-                                Future.delayed(const Duration(seconds: 2), () {
-                                  EasyLoading.dismiss();
-                                  Navigator.pop(context);
-                                });
+                            onPressed: () async {
+                              try {
+                                final bool isSuccess = await saveRoutine();
+                                if (isSuccess) {
+                                  if (context.mounted) {
+                                    Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      HomePage.path,
+                                      (_) => false,
+                                    );
+                                  }
+                                } else {
+                                  throw Exception('Failed to save routine');
+                                }
+                              } catch (e) {
+                                EasyLoading.showError('Failed to save routine');
                               }
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  duration: Duration(milliseconds: 300),
-                                  content: Text(
-                                    'Please fill in the required fields',
-                                  ),
-                                ),
-                              );
                             },
                             child: const Text('Submit'),
                           ),

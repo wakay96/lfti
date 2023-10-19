@@ -1,4 +1,4 @@
-import 'package:lfti/constants/enums.dart';
+import 'package:lfti/data/constants/enums.dart';
 
 class Exercise {
   final String name;

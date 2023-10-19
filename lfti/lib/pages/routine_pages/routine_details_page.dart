@@ -2,9 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:lfti/constants/enums.dart';
-import 'package:lfti/models/exercise.dart';
-import 'package:lfti/models/routine.dart';
+import 'package:lfti/data/constants/enums.dart';
+import 'package:lfti/data/models/exercise.dart';
+import 'package:lfti/data/models/routine.dart';
 import 'package:lfti/pages/routine_pages/exercise_list_page.dart';
 import 'package:lfti/pages/session_page.dart';
 import 'package:lfti/shared/header.dart';

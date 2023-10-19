@@ -1,18 +1,19 @@
-import 'package:lfti/constants/enums.dart';
-import 'package:lfti/models/exercise.dart';
-import 'package:lfti/models/routine.dart';
+import 'dart:async';
 
-abstract class BaseRepository {
-  List<Routine> fetchAllRoutines();
-}
+import 'package:lfti/data/constants/enums.dart';
+import 'package:lfti/data/models/exercise.dart';
+import 'package:lfti/data/models/routine.dart';
+import 'package:lfti/data/services/interface/base_repository.dart';
+import 'package:uuid/uuid.dart';
 
-class Repository implements BaseRepository {
-  static final Repository _instance = Repository._internal();
-  factory Repository() => _instance;
-  Repository._internal();
+class RoutineRepository implements BaseRepository<Routine, Routine?> {
+  static final RoutineRepository _instance = RoutineRepository._internal();
+  factory RoutineRepository() => _instance;
+  RoutineRepository._internal();
 
   final List<Routine> allRoutines = [
-    const Routine(
+    Routine(
+      id: const Uuid().v4(),
       name: 'Chest Workout',
       description: 'A chest workout routine for intermediate lifters',
       exercises: [
@@ -52,7 +53,8 @@ class Repository implements BaseRepository {
         ),
       ],
     ),
-    const Routine(
+    Routine(
+      id: const Uuid().v4(),
       name: 'Back Workout',
       description: 'A back workout routine for intermediate lifters',
       exercises: [
@@ -103,7 +105,8 @@ class Repository implements BaseRepository {
         ),
       ],
     ),
-    const Routine(
+    Routine(
+      id: const Uuid().v4(),
       name: 'Leg Workout',
       description: 'A routine for building strong legs',
       exercises: [
@@ -158,7 +161,8 @@ class Repository implements BaseRepository {
         ),
       ],
     ),
-    const Routine(
+    Routine(
+      id: const Uuid().v4(),
       name: 'Bicep Workout',
       description: 'A routine for building great biceps',
       exercises: [
@@ -216,7 +220,8 @@ class Repository implements BaseRepository {
         ),
       ],
     ),
-    const Routine(
+    Routine(
+      id: const Uuid().v4(),
       name: 'Tricep Workout',
       description: 'A routine for building great triceps',
       exercises: [
@@ -626,7 +631,49 @@ class Repository implements BaseRepository {
   ];
 
   @override
-  List<Routine> fetchAllRoutines() => allRoutines;
+  Future<bool> add(Routine data) async {
+    Timer(const Duration(seconds: 2), () => false);
+    allRoutines.add(data);
+    return true;
+  }
 
-  List<Exercise> fetchAllExercises() => allExercises;
+  @override
+  Future<bool> delete(String id) async {
+    Timer(const Duration(seconds: 2), () => false);
+    try {
+      allRoutines.removeWhere((element) => element.id == id);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  @override
+  Future<List<Routine>> getAll() async {
+    Timer(const Duration(seconds: 2), () => false);
+    return allRoutines;
+  }
+
+  @override
+  Future<Routine?> getById(String id) async {
+    Timer(const Duration(seconds: 2), () => false);
+    try {
+      return allRoutines.firstWhere((element) => element.id == id);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  @override
+  Future<bool> update(Routine data) async {
+    Timer(const Duration(seconds: 2), () => false);
+    final int index =
+        allRoutines.indexWhere((element) => element.id == data.id);
+    try {
+      allRoutines.replaceRange(index, index + 1, [data]);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

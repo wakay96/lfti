@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:lfti/constants/enums.dart';
-import 'package:lfti/models/exercise.dart';
+import 'package:lfti/data/constants/enums.dart';
+import 'package:lfti/data/models/exercise.dart';
 import 'package:lfti/pages/routine_pages/add_exercise_details_page.dart';
-import 'package:lfti/services/repository.dart';
 
 class ExerciseListPage extends StatefulWidget {
   static final String path = AppSubPage.exerciseList.path;
@@ -17,7 +16,8 @@ class _ExerciseListPageState extends State<ExerciseListPage> {
 
   @override
   void initState() {
-    exercises = Repository().fetchAllExercises();
+    // TODO: Add excercis fetching logic
+    exercises = [];
     super.initState();
   }
 

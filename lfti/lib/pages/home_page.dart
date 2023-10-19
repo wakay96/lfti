@@ -2,13 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:lfti/constants/enums.dart';
-import 'package:lfti/models/routine.dart';
+import 'package:lfti/data/constants/enums.dart';
+import 'package:lfti/data/routine_repository.dart';
 import 'package:lfti/pages/log_page.dart';
 import 'package:lfti/pages/profile_page.dart';
 import 'package:lfti/pages/routine_pages/routines_page.dart';
 import 'package:lfti/pages/statistics_page.dart';
-import 'package:lfti/services/repository.dart';
 
 class HomePage extends StatefulWidget {
   static const String path = '/';
@@ -20,30 +19,26 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentPageIndex = AppPage.routines.index;
-  List<Widget> pages = [];
-  List<Routine> routines = [];
+  final List<Widget> pages = [
+    const LogPage(),
+    const RoutinesPage(routines: []),
+    const StatisticsPage(),
+    const ProfilePage(),
+  ];
 
   @override
-  void initState() {
-    fetchData();
+  initState() {
     super.initState();
+    fetchRoutines();
   }
 
-  Future<void> fetchData() async {
-    EasyLoading.show(status: 'Loading...');
-    // await Future.delayed(const Duration(seconds: 3));
-    routines = Repository().fetchAllRoutines();
-
-    setState(() {
-      pages = [
-        const LogPage(),
-        const RoutinesPage(),
-        const StatisticsPage(),
-        const ProfilePage(),
-      ];
-    });
-
+  Future<void> fetchRoutines() async {
+    EasyLoading.show(status: 'Loading routines...');
+    final data = await RoutineRepository().getAll();
     EasyLoading.dismiss();
+    setState(() {
+      pages[1] = RoutinesPage(routines: data);
+    });
   }
 
   @override
