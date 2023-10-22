@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lfti/data/constants/enums.dart';
-import 'package:lfti/data/models/exercise.dart';
+import 'package:lfti/packages/models/exercise.dart';
 
 class AddExerciseDetailsPage extends StatefulWidget {
-  static String path = AppSubPage.updateExercise.path;
+  static const String path = 'AddExerciseDetailsPage';
   const AddExerciseDetailsPage({super.key, required this.exercise});
   final Exercise exercise;
   @override

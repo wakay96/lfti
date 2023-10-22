@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:lfti/data/constants/enums.dart';
-import 'package:lfti/data/models/routine.dart';
+
+import 'package:lfti/packages/models/routine.dart';
 import 'package:lfti/pages/routine_pages/add_routine.dart';
 import 'package:lfti/pages/routine_pages/routine_details_page.dart';
 import 'package:lfti/shared/header.dart';
 
 class RoutinesPage extends StatelessWidget {
-  static final String path = AppPage.routines.path;
+  static const String path = 'Routines';
 
   const RoutinesPage({this.routines, super.key});
 
@@ -18,7 +18,7 @@ class RoutinesPage extends StatelessWidget {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Header(title: AppPage.routines.title),
+            const Header(title: 'Routines'),
             Visibility(
               visible: routines != null,
               child: SingleChildScrollView(

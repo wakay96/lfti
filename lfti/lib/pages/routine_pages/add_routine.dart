@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:lfti/data/constants/enums.dart';
-import 'package:lfti/data/models/exercise.dart';
-import 'package:lfti/data/models/routine.dart';
+import 'package:lfti/packages/models/exercise.dart';
+import 'package:lfti/packages/models/routine.dart';
 import 'package:lfti/data/routine_repository.dart';
 import 'package:lfti/pages/home_page.dart';
 import 'package:lfti/pages/routine_pages/exercise_list_page.dart';
 import 'package:uuid/uuid.dart';
 
 class AddRoutinePage extends StatefulWidget {
-  static final String path = AppSubPage.addRoutine.path;
+  static const String path = 'AddRoutinePage';
   const AddRoutinePage({super.key});
 
   @override

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lfti/data/constants/enums.dart';
+
 import 'package:lfti/shared/header.dart';
 
 class StatisticsPage extends StatelessWidget {
-  static final String path = AppPage.statistics.path;
+  static const String path = 'StatisticsPage';
   const StatisticsPage({super.key});
 
   @override
@@ -12,7 +12,7 @@ class StatisticsPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Header(title: AppPage.profile.title),
+          const Header(title: 'Statistics'),
           Text(
             'Workout History',
             style: Theme.of(context).textTheme.titleLarge,

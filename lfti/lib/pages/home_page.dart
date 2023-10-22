@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:lfti/data/constants/enums.dart';
 import 'package:lfti/data/routine_repository.dart';
 import 'package:lfti/pages/log_page.dart';
 import 'package:lfti/pages/profile_page.dart';
@@ -18,7 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int currentPageIndex = AppPage.routines.index;
+  int currentPageIndex = 1;
   final List<Widget> pages = [
     const LogPage(),
     const RoutinesPage(routines: []),
@@ -69,12 +68,24 @@ class _HomePageState extends State<HomePage> {
             currentPageIndex = index;
           });
         },
-        items: AppPage.values.map((pageInfo) {
-          return BottomNavigationBarItem(
-            icon: pageInfo.icon,
-            label: pageInfo.title,
-          );
-        }).toList(),
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.timer),
+            label: 'Log',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.fitness_center),
+            label: 'Routines',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bar_chart),
+            label: 'Statistics',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
       ),
     );
   }

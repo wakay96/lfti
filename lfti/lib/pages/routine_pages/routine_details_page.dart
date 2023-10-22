@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:lfti/data/constants/enums.dart';
-import 'package:lfti/data/models/exercise.dart';
-import 'package:lfti/data/models/routine.dart';
+
+import 'package:lfti/packages/models/exercise.dart';
+import 'package:lfti/packages/models/routine.dart';
+import 'package:lfti/pages/routine_pages/exercise_details_page.dart';
 import 'package:lfti/pages/routine_pages/exercise_list_page.dart';
 import 'package:lfti/pages/session_page.dart';
 import 'package:lfti/shared/header.dart';
 
 class RoutineDetailsPage extends StatefulWidget {
-  static final String path = AppSubPage.routineDetails.path;
+  static const String path = 'RoutineDetailsPage';
 
   const RoutineDetailsPage({required this.routine, Key? key}) : super(key: key);
   final Routine routine;
@@ -20,7 +21,7 @@ class RoutineDetailsPage extends StatefulWidget {
 class _RoutineDetailsPageState extends State<RoutineDetailsPage> {
   void _onTapExercise(Exercise exercise) {
     Navigator.of(context).pushNamed(
-      AppSubPage.exerciseDetails.path,
+      ExerciseDetailsPage.path,
       arguments: exercise,
     );
   }

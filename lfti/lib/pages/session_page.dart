@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:lfti/data/constants/enums.dart';
-import 'package:lfti/data/models/exercise.dart';
-import 'package:lfti/data/models/routine.dart';
+
+import 'package:lfti/packages/models/exercise.dart';
+import 'package:lfti/packages/models/routine.dart';
 import '../../data/services/date_service.dart';
 
 class SessionPage extends StatefulWidget {
-  static final String path = AppSubPage.sessionPage.path;
+  static const String path = 'SessionPage';
   const SessionPage({super.key, required this.routine});
   final Routine routine;
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:lfti/data/models/exercise.dart';
-import 'package:lfti/data/models/routine.dart';
+import 'package:lfti/packages/models/exercise.dart';
+import 'package:lfti/packages/models/routine.dart';
 import 'package:lfti/pages/routine_pages/add_routine.dart';
 import 'package:lfti/pages/routine_pages/exercise_list_page.dart';
 import 'package:lfti/pages/routine_pages/routine_details_page.dart';

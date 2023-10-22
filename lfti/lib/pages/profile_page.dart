@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lfti/data/constants/enums.dart';
+
 import 'package:lfti/shared/header.dart';
 
 class ProfilePage extends StatelessWidget {
-  static final String path = AppPage.profile.path;
+  static const String path = '/profile';
 
   const ProfilePage({super.key});
   @override
@@ -12,7 +12,7 @@ class ProfilePage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Header(title: AppPage.profile.title),
+          const Header(title: 'Profile'),
           // const CircleAvatar(
           //   radius: 50,
           // ),

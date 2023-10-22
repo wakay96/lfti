@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:lfti/data/constants/enums.dart';
-import 'package:lfti/data/models/exercise.dart';
+
+import 'package:lfti/packages/models/exercise.dart';
 import 'package:lfti/pages/routine_pages/add_exercise_details_page.dart';
 
 class ExerciseListPage extends StatefulWidget {
-  static final String path = AppSubPage.exerciseList.path;
+  static const String path = 'ExerciseListPage';
   const ExerciseListPage({Key? key}) : super(key: key);
   @override
   State<ExerciseListPage> createState() => _ExerciseListPageState();
@@ -57,7 +57,7 @@ class _ExerciseListPageState extends State<ExerciseListPage> {
                           AddExerciseDetailsPage.path,
                           arguments: exercise,
                         );
-                        if (res is Exercise) {
+                        if (res is Exercise && context.mounted) {
                           Navigator.pop(context, res);
                         }
                       } catch (e) {

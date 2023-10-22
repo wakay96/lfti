@@ -1,9 +1,8 @@
 import 'dart:async';
 
-import 'package:lfti/data/constants/enums.dart';
-import 'package:lfti/data/models/exercise.dart';
-import 'package:lfti/data/models/routine.dart';
 import 'package:lfti/data/services/interface/base_repository.dart';
+import 'package:lfti/packages/models/exercise.dart';
+import 'package:lfti/packages/models/routine.dart';
 import 'package:uuid/uuid.dart';
 
 class RoutineRepository implements BaseRepository<Routine, Routine?> {
@@ -17,7 +16,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       name: 'Chest Workout',
       description: 'A chest workout routine for intermediate lifters',
       exercises: [
-        const Exercise(
+        Exercise(
           name: "Push-up",
           muscleGroup: MuscleGroup.chest,
           description: "A classic bodyweight exercise for chest muscles.",
@@ -28,7 +27,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
           reps: 8,
           sets: 3,
         ),
-        const Exercise(
+        Exercise(
           name: "Incline Bench Press",
           muscleGroup: MuscleGroup.chest,
           description:
@@ -39,7 +38,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
           reps: 8,
           sets: 3,
         ),
-        const Exercise(
+        Exercise(
           name: "Bench Press",
           muscleGroup: MuscleGroup.chest,
           description:
@@ -58,7 +57,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       name: 'Back Workout',
       description: 'A back workout routine for intermediate lifters',
       exercises: [
-        const Exercise(
+        Exercise(
           name: "Deadlift",
           muscleGroup: MuscleGroup.back,
           description:
@@ -70,7 +69,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
           reps: 8,
           sets: 3,
         ),
-        const Exercise(
+        Exercise(
           name: "Pull-up",
           muscleGroup: MuscleGroup.back,
           description:
@@ -81,7 +80,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
           reps: 8,
           sets: 3,
         ),
-        const Exercise(
+        Exercise(
           name: "Barbell Row",
           muscleGroup: MuscleGroup.back,
           description:
@@ -92,7 +91,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
           reps: 8,
           sets: 3,
         ),
-        const Exercise(
+        Exercise(
           name: "Lat Pulldown",
           muscleGroup: MuscleGroup.back,
           description:
@@ -110,7 +109,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       name: 'Leg Workout',
       description: 'A routine for building strong legs',
       exercises: [
-        const Exercise(
+        Exercise(
           name: 'Squats',
           muscleGroup: MuscleGroup.legs,
           videoUrl: 'https://www.youtube.com/watch?v=ultWZbUMPL8',
@@ -122,7 +121,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
           reps: 12,
           sets: 4,
         ),
-        const Exercise(
+        Exercise(
           name: 'Lunges',
           muscleGroup: MuscleGroup.legs,
           videoUrl: 'https://www.youtube.com/watch?v=QOVaHwm-Q6U',
@@ -135,7 +134,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
           reps: 10,
           sets: 3,
         ),
-        const Exercise(
+        Exercise(
           name: 'Deadlifts',
           muscleGroup: MuscleGroup.legs,
           videoUrl: 'https://www.youtube.com/watch?v=ytGaGIn3SjE',
@@ -147,7 +146,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
           reps: 8,
           sets: 3,
         ),
-        const Exercise(
+        Exercise(
           name: 'Step-ups',
           muscleGroup: MuscleGroup.legs,
           videoUrl: 'https://www.youtube.com/watch?v=QDpJZ-EVYFA',
@@ -166,7 +165,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       name: 'Bicep Workout',
       description: 'A routine for building great biceps',
       exercises: [
-        const Exercise(
+        Exercise(
           name: 'Barbell curls',
           muscleGroup: MuscleGroup.bicep,
           videoUrl: 'https://www.youtube.com/watch?v=kwG2ipFRgfo',
@@ -179,7 +178,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
           reps: 8,
           sets: 3,
         ),
-        const Exercise(
+        Exercise(
           name: 'Dumbbell curls',
           muscleGroup: MuscleGroup.bicep,
           videoUrl: 'https://www.youtube.com/watch?v=5Msl9ZxVtJ4',
@@ -192,7 +191,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
           reps: 8,
           sets: 3,
         ),
-        const Exercise(
+        Exercise(
           name: 'Hammer curls',
           muscleGroup: MuscleGroup.bicep,
           videoUrl: 'https://www.youtube.com/watch?v=TwD-YGVP4Bk',
@@ -205,7 +204,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
           reps: 8,
           sets: 3,
         ),
-        const Exercise(
+        Exercise(
           name: 'Preacher curls',
           muscleGroup: MuscleGroup.bicep,
           videoUrl: 'https://www.youtube.com/watch?v=K7Vr2v2l5VY',
@@ -225,7 +224,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       name: 'Tricep Workout',
       description: 'A routine for building great triceps',
       exercises: [
-        const Exercise(
+        Exercise(
           name: 'Close-grip bench press',
           muscleGroup: MuscleGroup.tricep,
           videoUrl: 'https://www.youtube.com/watch?v=JGwWNGJdvx8',
@@ -238,7 +237,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
           reps: 8,
           sets: 3,
         ),
-        const Exercise(
+        Exercise(
           name: 'Tricep dips',
           muscleGroup: MuscleGroup.tricep,
           videoUrl: 'https://www.youtube.com/watch?v=32DquB9w0gk',
@@ -251,7 +250,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
           reps: 10,
           sets: 3,
         ),
-        const Exercise(
+        Exercise(
           name: 'Overhead tricep extension',
           muscleGroup: MuscleGroup.tricep,
           videoUrl: 'https://www.youtube.com/watch?v=4pJgTfjJN44',
@@ -264,7 +263,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
           reps: 10,
           sets: 3,
         ),
-        const Exercise(
+        Exercise(
           name: 'Tricep kickbacks',
           muscleGroup: MuscleGroup.tricep,
           videoUrl: 'https://www.youtube.com/watch?v=I33uEyxmVJk',
@@ -277,7 +276,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
           reps: 12,
           sets: 3,
         ),
-        const Exercise(
+        Exercise(
           name: 'Skull crushers',
           muscleGroup: MuscleGroup.tricep,
           videoUrl: 'https://www.youtube.com/watch?v=BYZF8zVl5xM',
@@ -290,7 +289,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
           reps: 10,
           sets: 3,
         ),
-        const Exercise(
+        Exercise(
           name: 'Diamond push-ups',
           muscleGroup: MuscleGroup.tricep,
           videoUrl: 'https://www.youtube.com/watch?v=J1v2McKbkLo',
@@ -308,7 +307,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
   ];
 
   List<Exercise> allExercises = [
-    const Exercise(
+    Exercise(
       name: "Push-up",
       muscleGroup: MuscleGroup.chest,
       description: "A classic bodyweight exercise for chest muscles.",
@@ -319,7 +318,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 8,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: "Incline Bench Press",
       muscleGroup: MuscleGroup.chest,
       description:
@@ -330,7 +329,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 8,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: "Bench Press",
       muscleGroup: MuscleGroup.chest,
       description:
@@ -342,7 +341,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 8,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: "Dumbbell Press",
       muscleGroup: MuscleGroup.chest,
       description:
@@ -353,7 +352,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 8,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: "Incline Dumbbell Press",
       muscleGroup: MuscleGroup.chest,
       description:
@@ -364,7 +363,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 8,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: "Cable Fly",
       muscleGroup: MuscleGroup.chest,
       description:
@@ -376,7 +375,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 8,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: "Decline Push-up",
       muscleGroup: MuscleGroup.chest,
       description: "A push-up variation that targets the lower chest muscles.",
@@ -387,7 +386,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 8,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: "Deadlift",
       muscleGroup: MuscleGroup.back,
       description:
@@ -399,7 +398,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 8,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: "Pull-up",
       muscleGroup: MuscleGroup.back,
       description:
@@ -410,7 +409,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 8,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: "Barbell Row",
       muscleGroup: MuscleGroup.back,
       description: "A compound exercise for the middle and upper back muscles.",
@@ -420,7 +419,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 8,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: "Lat Pulldown",
       muscleGroup: MuscleGroup.back,
       description:
@@ -431,7 +430,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 8,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: "T-Bar Row",
       muscleGroup: MuscleGroup.back,
       description:
@@ -443,7 +442,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 8,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: "Bent Over Row",
       muscleGroup: MuscleGroup.back,
       description:
@@ -454,7 +453,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 8,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: 'Calf raises',
       muscleGroup: MuscleGroup.legs,
       videoUrl: 'https://www.youtube.com/watch?v=2pX7wKlAtR8',
@@ -466,7 +465,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 15,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: 'Leg press',
       muscleGroup: MuscleGroup.legs,
       videoUrl: 'https://www.youtube.com/watch?v=DKG2ZJjUoWk',
@@ -478,7 +477,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 10,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: 'Leg extensions',
       muscleGroup: MuscleGroup.legs,
       videoUrl: 'https://www.youtube.com/watch?v=YyvSfVjQeL0',
@@ -491,7 +490,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 12,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: 'Hamstring curls',
       muscleGroup: MuscleGroup.legs,
       videoUrl: 'https://www.youtube.com/watch?v=0M4bwPYJFy4',
@@ -504,7 +503,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 12,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: 'Box jumps',
       muscleGroup: MuscleGroup.legs,
       videoUrl: 'https://www.youtube.com/watch?v=hxldGZ0i3pE',
@@ -517,7 +516,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 8,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: 'Wall sits',
       muscleGroup: MuscleGroup.legs,
       videoUrl: 'https://www.youtube.com/watch?v=y-wV4Venusw',
@@ -529,7 +528,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       seconds: 30,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: 'Squats',
       muscleGroup: MuscleGroup.legs,
       videoUrl: 'https://www.youtube.com/watch?v=ultWZbUMPL8',
@@ -540,7 +539,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 12,
       sets: 4,
     ),
-    const Exercise(
+    Exercise(
       name: 'Lunges',
       muscleGroup: MuscleGroup.legs,
       videoUrl: 'https://www.youtube.com/watch?v=QOVaHwm-Q6U',
@@ -553,7 +552,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 10,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: 'Deadlifts',
       muscleGroup: MuscleGroup.legs,
       videoUrl: 'https://www.youtube.com/watch?v=ytGaGIn3SjE',
@@ -565,7 +564,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 8,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: 'Step-ups',
       muscleGroup: MuscleGroup.legs,
       videoUrl: 'https://www.youtube.com/watch?v=QDpJZ-EVYFA',
@@ -577,7 +576,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 12,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: 'Barbell curls',
       muscleGroup: MuscleGroup.bicep,
       videoUrl: 'https://www.youtube.com/watch?v=kwG2ipFRgfo',
@@ -589,7 +588,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 8,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: 'Dumbbell curls',
       muscleGroup: MuscleGroup.bicep,
       videoUrl: 'https://www.youtube.com/watch?v=5Msl9ZxVtJ4',
@@ -602,7 +601,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 8,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: 'Hammer curls',
       muscleGroup: MuscleGroup.bicep,
       videoUrl: 'https://www.youtube.com/watch?v=TwD-YGVP4Bk',
@@ -615,7 +614,7 @@ class RoutineRepository implements BaseRepository<Routine, Routine?> {
       reps: 8,
       sets: 3,
     ),
-    const Exercise(
+    Exercise(
       name: 'Preacher curls',
       muscleGroup: MuscleGroup.bicep,
       videoUrl: 'https://www.youtube.com/watch?v=K7Vr2v2l5VY',

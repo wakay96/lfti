@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lfti/data/constants/enums.dart';
-import 'package:lfti/data/models/exercise.dart';
+import 'package:lfti/packages/models/exercise.dart';
 
 class ExerciseDetailsPage extends StatelessWidget {
-  static final String path = AppSubPage.exerciseDetails.path;
+  static const String path = 'ExerciseDetailsPage';
 
   final Exercise exercise;
 
