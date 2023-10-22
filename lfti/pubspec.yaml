@@ -17,6 +17,9 @@ dependencies:
   flutter_slidable: ^3.0.0
   get_it: ^7.6.4
   uuid: ^4.1.0
+  equatable: ^2.0.5
+  meta: ^1.9.1
+  json_annotation: ^4.8.1
 
 dev_dependencies:
   flutter_test:

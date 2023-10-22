@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:lfti/data/constants/enums.dart';
 import 'package:lfti/data/models/routine.dart';
 import 'package:lfti/pages/routine_pages/add_routine.dart';
