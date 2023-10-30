@@ -33,9 +33,10 @@ class _HomePageState extends State<HomePage> {
   Future<void> fetchRoutines() async {
     EasyLoading.show(status: 'Loading routines...');
     // final data = await RoutineRepository().getAll();
+    // final data = await RoutineRepository().getAll();
     EasyLoading.dismiss();
     setState(() {
-      pages[1] = RoutinesPage(routines: []);
+      pages[1] = const RoutinesPage(routines: []);
     });
   }
 

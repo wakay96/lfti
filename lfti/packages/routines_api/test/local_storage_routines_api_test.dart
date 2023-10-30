@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:localstorage/localstorage.dart';
 import 'package:routines_api/src/local_storage_routines_api.dart';
 import 'package:routines_api/src/models/exeptions.dart';
@@ -204,7 +202,7 @@ void main() {
         exercises: [],
       );
 
-      final returnValue = await api.pushRoutine(routine);
+      final returnValue = await api.saveRoutine(routine);
 
       expect(returnValue, equals([routine]));
 
@@ -221,9 +219,9 @@ void main() {
         exercises: [],
       );
 
-      await api.pushRoutine(routine);
+      await api.saveRoutine(routine);
       final updated = routine.copyWith(name: 'Updated Routine');
-      final returnValue = await api.pushRoutine(updated);
+      final returnValue = await api.saveRoutine(updated);
 
       expect(returnValue, equals([updated]));
 
