@@ -1,12 +1,11 @@
+import 'package:exercises_api/exercises_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
-import 'package:lfti/packages/models/exercise.dart';
 import 'package:lfti/pages/routine_pages/add_exercise_details_page.dart';
 
 class ExerciseListPage extends StatefulWidget {
   static const String path = 'ExerciseListPage';
-  const ExerciseListPage({Key? key}) : super(key: key);
+  const ExerciseListPage({super.key});
   @override
   State<ExerciseListPage> createState() => _ExerciseListPageState();
 }

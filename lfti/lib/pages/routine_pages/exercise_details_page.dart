@@ -1,5 +1,5 @@
+import 'package:exercises_api/exercises_api.dart';
 import 'package:flutter/material.dart';
-import 'package:lfti/packages/models/exercise.dart';
 
 class ExerciseDetailsPage extends StatelessWidget {
   static const String path = 'ExerciseDetailsPage';
@@ -7,9 +7,9 @@ class ExerciseDetailsPage extends StatelessWidget {
   final Exercise exercise;
 
   const ExerciseDetailsPage({
-    Key? key,
+    super.key,
     required this.exercise,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

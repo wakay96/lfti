@@ -5,7 +5,7 @@ import 'package:lfti/shared/header.dart';
 class LogPage extends StatelessWidget {
   static const String path = 'LogPage';
 
-  const LogPage({Key? key}) : super(key: key);
+  const LogPage({super.key});
 
   @override
   Widget build(BuildContext context) {

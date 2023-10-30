@@ -1,8 +1,7 @@
+import 'package:exercises_api/exercises_api.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:lfti/packages/models/exercise.dart';
-import 'package:lfti/packages/models/routine.dart';
 import 'package:lfti/pages/routine_pages/add_routine.dart';
 import 'package:lfti/pages/routine_pages/exercise_list_page.dart';
 import 'package:lfti/pages/routine_pages/routine_details_page.dart';
@@ -10,13 +9,14 @@ import 'package:lfti/pages/home_page.dart';
 import 'package:lfti/pages/routine_pages/exercise_details_page.dart';
 import 'package:lfti/pages/routine_pages/add_exercise_details_page.dart';
 import 'package:lfti/pages/session_page.dart';
+import 'package:routines_api/routines_api.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {

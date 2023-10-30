@@ -1,10 +1,11 @@
+import 'package:exercises_api/exercises_api.dart';
 import 'package:flutter/material.dart';
-import 'package:lfti/packages/models/exercise.dart';
 
 class AddExerciseDetailsPage extends StatefulWidget {
   static const String path = 'AddExerciseDetailsPage';
   const AddExerciseDetailsPage({super.key, required this.exercise});
   final Exercise exercise;
+
   @override
   State<AddExerciseDetailsPage> createState() => _AddExerciseDetailsPageState();
 }

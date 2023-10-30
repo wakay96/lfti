@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:lfti/data/routine_repository.dart';
 import 'package:lfti/pages/log_page.dart';
 import 'package:lfti/pages/profile_page.dart';
 import 'package:lfti/pages/routine_pages/routines_page.dart';
@@ -33,10 +32,10 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> fetchRoutines() async {
     EasyLoading.show(status: 'Loading routines...');
-    final data = await RoutineRepository().getAll();
+    // final data = await RoutineRepository().getAll();
     EasyLoading.dismiss();
     setState(() {
-      pages[1] = RoutinesPage(routines: data);
+      pages[1] = RoutinesPage(routines: []);
     });
   }
 

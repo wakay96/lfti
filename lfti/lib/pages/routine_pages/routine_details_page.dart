@@ -1,17 +1,16 @@
+import 'package:exercises_api/exercises_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
-import 'package:lfti/packages/models/exercise.dart';
-import 'package:lfti/packages/models/routine.dart';
 import 'package:lfti/pages/routine_pages/exercise_details_page.dart';
 import 'package:lfti/pages/routine_pages/exercise_list_page.dart';
 import 'package:lfti/pages/session_page.dart';
 import 'package:lfti/shared/header.dart';
+import 'package:routines_api/routines_api.dart';
 
 class RoutineDetailsPage extends StatefulWidget {
   static const String path = 'RoutineDetailsPage';
 
-  const RoutineDetailsPage({required this.routine, Key? key}) : super(key: key);
+  const RoutineDetailsPage({required this.routine, super.key});
   final Routine routine;
 
   @override
