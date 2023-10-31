@@ -1,0 +1,21 @@
+name: lfti_api
+description: Package to access data for the app.
+version: 1.0.0
+# repository: https://github.com/my_org/my_repo
+
+environment:
+  sdk: ^3.1.4
+
+# Add regular dependencies here.
+dependencies:
+  uuid: ^4.1.0
+  equatable: ^2.0.5
+  meta: ^1.9.1
+  json_annotation: ^4.8.1
+  localstorage: ^4.0.1+4
+
+dev_dependencies:
+  lints: ^3.0.0
+  json_serializable: ^6.7.1
+  test: ^1.24.8
+  build_runner: ^2.4.6

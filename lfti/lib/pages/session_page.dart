@@ -1,5 +1,4 @@
-import 'package:exercises_api/exercises_api.dart';
-import 'package:routines_api/routines_api.dart';
+import 'package:lfti_api/lfti_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import '../../data/services/date_service.dart';

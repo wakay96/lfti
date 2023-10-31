@@ -1,5 +1,5 @@
-import 'package:exercises_api/exercises_api.dart';
 import 'package:flutter/material.dart';
+import 'package:lfti_api/lfti_api.dart';
 
 class AddExerciseDetailsPage extends StatefulWidget {
   static const String path = 'AddExerciseDetailsPage';

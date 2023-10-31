@@ -1,4 +1,4 @@
-import 'package:exercises_api/exercises_api.dart';
+import 'package:lfti_api/lfti_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:lfti/pages/routine_pages/add_exercise_details_page.dart';

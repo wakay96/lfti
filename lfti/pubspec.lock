@@ -193,13 +193,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.5"
-  exercises_api:
-    dependency: "direct main"
-    description:
-      path: "packages/exercises_api"
-      relative: true
-    source: path
-    version: "1.0.0"
   fake_async:
     dependency: transitive
     description:
@@ -346,6 +339,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.8.1"
+  lfti_api:
+    dependency: "direct main"
+    description:
+      path: "packages/lfti_api"
+      relative: true
+    source: path
+    version: "1.0.0"
   lints:
     dependency: transitive
     description:
@@ -387,7 +387,7 @@ packages:
     source: hosted
     version: "0.5.0"
   meta:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: meta
       sha256: "3c74dbf8763d36539f114c799d8a2d87343b5067e9d796ca22b5eb8437090ee3"
@@ -514,13 +514,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
-  routines_api:
-    dependency: "direct main"
-    description:
-      path: "packages/routines_api"
-      relative: true
-    source: path
-    version: "1.0.0"
   shelf:
     dependency: transitive
     description:

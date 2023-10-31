@@ -17,11 +17,9 @@ dependencies:
   flutter_slidable: ^3.0.0
   get_it: ^7.6.4
   uuid: ^4.1.0
-  routines_api:
-    path: packages/routines_api
-  exercises_api:
-    path: packages/exercises_api
-
+  lfti_api:
+    path: packages/lfti_api
+  meta: ^1.9.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

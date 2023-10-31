@@ -1,11 +1,10 @@
-import 'package:exercises_api/exercises_api.dart';
+import 'package:lfti_api/lfti_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:lfti/pages/home_page.dart';
 import 'package:lfti/pages/routine_pages/exercise_list_page.dart';
-import 'package:routines_api/routines_api.dart';
 import 'package:uuid/uuid.dart';
 
 class AddRoutinePage extends StatefulWidget {
