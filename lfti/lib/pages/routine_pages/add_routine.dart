@@ -31,7 +31,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
   Future<bool> saveRoutine() async {
     _formKey.currentState?.save();
     if (_formKey.currentState?.validate() != false) {
-      return await RoutineRepository().add(
+      final List<Routine> updated = await RoutineRepository().add(
         Routine(
           id: const Uuid().v4(),
           name: _nameController.text,
@@ -39,6 +39,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
           exercises: exercises,
         ),
       );
+      return true;
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

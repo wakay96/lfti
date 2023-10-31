@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:lfti_api/src/routines/interface/routines_api_base.dart';
+import 'package:lfti_api/src/routines/interface/base_routines_api.dart';
 import 'package:lfti_api/src/routines/models/exeptions.dart';
 import 'package:lfti_api/src/type_definitions.dart';
 import 'package:localstorage/localstorage.dart';
@@ -10,9 +10,14 @@ import 'package:meta/meta.dart';
 /// A [RoutinesBaseApi] that stores routines in local storage using `local_store` package.
 /// {@endtemplate}
 
-class LocalStorageRoutinesApi implements RoutinessBaseApi {
-  LocalStorageRoutinesApi({required LocalStorage plugin}) : _plugin = plugin {
-    plugin.ready.then((isReady) {
+class LocalStorageRoutinesApi implements RoutinesApi {
+  @visibleForTesting
+  static const String key = '__routine_collection__';
+  @visibleForTesting
+  static const String subKey = '__routines__';
+
+  LocalStorageRoutinesApi() : _plugin = LocalStorage(key) {
+    _plugin.ready.then((isReady) {
       if (!isReady) {
         throw UninitializedException('LocalStorage is not initialized.');
       }
@@ -21,16 +26,15 @@ class LocalStorageRoutinesApi implements RoutinessBaseApi {
 
   final LocalStorage _plugin;
 
-  @visibleForTesting
-  static const String key = '__routine_collection__';
-  @visibleForTesting
-  static const String subKey = '__routines__';
-
   @override
   Future<dynamic> deleteRoutine(String id) async {
     assert(id.isNotEmpty);
 
-    final List<dynamic> routines = await _plugin.getItem(subKey);
+    final List<dynamic>? routines = await _plugin.getItem(subKey);
+    if (routines == null) {
+      throw UninitializedException('Routines uninitialized.');
+    }
+
     final int index = routines.indexWhere((r) => r['id'] == id);
     if (index >= 0) {
       final json = routines[index] as JsonMap;
@@ -75,4 +79,7 @@ class LocalStorageRoutinesApi implements RoutinessBaseApi {
     _plugin.setItem(subKey, [data]);
     return allRoutines;
   }
+
+  @override
+  Future<void> clear() async => await _plugin.clear();
 }
